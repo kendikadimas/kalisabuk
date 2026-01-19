@@ -29,7 +29,12 @@ class InstitutionController extends Controller
             'abbreviation' => 'nullable|string|max:50',
             'leader_name' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'logo' => 'nullable|image|max:2048', // 2MB Max
         ]);
+
+        if ($request->hasFile('logo')) {
+            $validated['logo'] = $request->file('logo')->store('institutions', 'public');
+        }
 
         Institution::create($validated);
 
@@ -50,7 +55,12 @@ class InstitutionController extends Controller
             'abbreviation' => 'nullable|string|max:50',
             'leader_name' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'logo' => 'nullable|image|max:2048',
         ]);
+
+        if ($request->hasFile('logo')) {
+            $validated['logo'] = $request->file('logo')->store('institutions', 'public');
+        }
 
         $institution->update($validated);
 

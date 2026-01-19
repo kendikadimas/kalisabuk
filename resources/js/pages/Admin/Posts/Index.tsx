@@ -38,64 +38,65 @@ export default function PostIndex({ posts }: { posts: any }) {
                     </div>
                 )}
 
-                <div className="overflow-x-auto relative shadow-md sm:rounded-lg border border-slate-200">
-                    <table className="w-full text-sm text-left text-slate-500">
-                        <thead className="text-xs text-slate-700 uppercase bg-slate-50">
-                            <tr>
-                                <th scope="col" className="py-3 px-6">Judul</th>
-                                <th scope="col" className="py-3 px-6">Kategori</th>
-                                <th scope="col" className="py-3 px-6">Tanggal</th>
-                                <th scope="col" className="py-3 px-6 text-right">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {posts.data.length > 0 ? (
-                                posts.data.map((post: any) => (
-                                    <tr key={post.id} className="bg-white border-b hover:bg-slate-50">
-                                        <td className="py-4 px-6 font-medium text-slate-900 whitespace-nowrap">
-                                            {post.title}
-                                        </td>
-                                        <td className="py-4 px-6">
-                                            <span className={`px-2 py-1 rounded-full text-xs font-semibold ${post.category === 'news' ? 'bg-blue-100 text-blue-800' : 'bg-yellow-100 text-yellow-800'
-                                                }`}>
-                                                {post.category === 'news' ? 'Berita' : 'Pengumuman'}
-                                            </span>
-                                        </td>
-                                        <td className="py-4 px-6">
-                                            {post.published_at ? new Date(post.published_at).toLocaleDateString() : '-'}
-                                        </td>
-                                        <td className="py-4 px-6 text-right flex justify-end gap-2">
-                                            <Link
-                                                href={`/dashboard/posts/${post.id}/edit`}
-                                                className="font-medium text-blue-600 hover:underline flex items-center"
-                                            >
-                                                <Pencil className="w-4 h-4" />
-                                            </Link>
-                                            <Link
-                                                href={`/dashboard/posts/${post.id}`}
-                                                method="delete"
-                                                as="button"
-                                                className="font-medium text-red-600 hover:underline flex items-center"
-                                                onClick={(e) => {
-                                                    if (!confirm('Apakah Anda yakin ingin menghapus berita ini?')) {
-                                                        e.preventDefault();
-                                                    }
-                                                }}
-                                            >
-                                                <Trash2 className="w-4 h-4" />
-                                            </Link>
-                                        </td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan={4} className="py-8 text-center text-slate-400">
-                                        Belum ada data berita.
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {posts.data.length > 0 ? (
+                        posts.data.map((post: any) => (
+                            <div key={post.id} className="bg-white border boundary-slate-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden group">
+                                {post.image_path && (
+                                    <div className="h-48 w-full overflow-hidden bg-slate-100 border-b border-slate-100">
+                                        <img
+                                            src={post.image_path.startsWith('http') ? post.image_path : `/storage/${post.image_path}`}
+                                            alt={post.title}
+                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                        />
+                                    </div>
+                                )}
+                                <div className="p-6 flex-1 flex flex-col">
+                                    <div className="flex justify-between items-start mb-4">
+                                        <span className="text-xs text-slate-400 font-medium">
+                                            {post.published_at ? new Date(post.published_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : '-'}
+                                        </span>
+                                    </div>
+
+                                    <h3 className="text-lg font-bold text-slate-900 mb-3 line-clamp-2 leading-tight group-hover:text-emerald-600 transition-colors">
+                                        {post.title}
+                                    </h3>
+
+                                    <div className="mt-auto pt-4 border-t border-slate-100 flex justify-end gap-2">
+                                        <Link
+                                            href={`/dashboard/posts/${post.id}/edit`}
+                                            className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-slate-50 text-blue-600 hover:bg-blue-50 transition-colors"
+                                            title="Edit Berita"
+                                        >
+                                            <Pencil className="w-4 h-4" />
+                                        </Link>
+                                        <Link
+                                            href={`/dashboard/posts/${post.id}`}
+                                            method="delete"
+                                            as="button"
+                                            className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-slate-50 text-red-600 hover:bg-red-50 transition-colors"
+                                            onClick={(e) => {
+                                                if (!confirm('Apakah Anda yakin ingin menghapus berita ini?')) {
+                                                    e.preventDefault();
+                                                }
+                                            }}
+                                            title="Hapus Berita"
+                                        >
+                                            <Trash2 className="w-4 h-4" />
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <div className="col-span-full py-12 text-center bg-slate-50 rounded-xl border border-dashed border-slate-300">
+                            <BookOpen className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+                            <p className="text-slate-500 font-medium">Belum ada data berita.</p>
+                            <Link href="/dashboard/posts/create" className="text-emerald-600 font-bold hover:underline text-sm mt-2 inline-block">
+                                Buat Berita Baru
+                            </Link>
+                        </div>
+                    )}
                 </div>
 
                 {/* Pagination can be added here using posts.links */}

@@ -5,6 +5,7 @@ import { FormEventHandler } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import RichTextEditor from '@/components/RichTextEditor';
 
 export default function PostCreate() {
     const breadcrumbs: BreadcrumbItem[] = [
@@ -50,21 +51,7 @@ export default function PostCreate() {
                             {errors.title && <p className="text-sm text-red-500">{errors.title}</p>}
                         </div>
 
-                        <div className="grid w-full max-w-sm items-center gap-1.5">
-                            <Label htmlFor="category">Kategori</Label>
-                            <div className="relative">
-                                <select
-                                    id="category"
-                                    value={data.category}
-                                    onChange={(e) => setData('category', e.target.value)}
-                                    className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none"
-                                >
-                                    <option value="news">Berita</option>
-                                    <option value="announcement">Pengumuman</option>
-                                </select>
-                            </div>
-                            {errors.category && <p className="text-sm text-red-500">{errors.category}</p>}
-                        </div>
+
 
                         <div className="grid w-full max-w-sm items-center gap-1.5">
                             <Label htmlFor="published_at">Tanggal Publish</Label>
@@ -78,25 +65,23 @@ export default function PostCreate() {
                         </div>
 
                         <div className="grid w-full max-w-sm items-center gap-1.5">
-                            <Label htmlFor="image">Gambar Utama</Label>
+                            <Label htmlFor="image">Gambar Utama (Wajib)</Label>
                             <Input
                                 id="image"
                                 type="file"
                                 onChange={(e) => setData('image', e.target.files ? e.target.files[0] : null)}
                                 className="cursor-pointer"
+                                required
                             />
                             {errors.image && <p className="text-sm text-red-500">{errors.image}</p>}
                         </div>
 
                         <div className="grid w-full gap-1.5">
                             <Label htmlFor="content">Konten</Label>
-                            <textarea
-                                id="content"
-                                rows={8}
+                            <RichTextEditor
                                 value={data.content}
-                                onChange={(e) => setData('content', e.target.value)}
-                                className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                required
+                                onChange={(content) => setData('content', content)}
+                                error={errors.content}
                             />
                             {errors.content && <p className="text-sm text-red-500">{errors.content}</p>}
                         </div>

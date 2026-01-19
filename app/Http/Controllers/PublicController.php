@@ -11,7 +11,7 @@ use App\Models\Post;
 use App\Models\Potential;
 use App\Models\Institution;
 use App\Models\Demographic;
-use App\Models\Budget;
+
 
 class PublicController extends Controller
 {
@@ -22,9 +22,8 @@ class PublicController extends Controller
             'latestNews' => Post::where('category', 'news')->latest()->take(3)->get(),
             'featuredPotentials' => Potential::latest()->take(3)->get(),
             'stats' => [
-                'population' => Demographic::where('type', 'gender')->sum('value'),
-                // Area could be added to DB, hardcoded for now or derived
-                'area' => '120 Ha',
+                'population' => VillageInfo::first()->population ?? 0,
+                'area' => VillageInfo::first()->area_size ?? '120 Ha',
             ]
         ]);
     }
@@ -49,7 +48,6 @@ class PublicController extends Controller
     {
         return Inertia::render('Public/Data', [
             'demographics' => Demographic::all(),
-            'budgets' => Budget::orderBy('year', 'desc')->get(),
         ]);
     }
 
@@ -70,6 +68,9 @@ class PublicController extends Controller
     public function newsShow($slug)
     {
         $post = Post::where('slug', $slug)->firstOrFail();
+
+        $post->increment('views');
+
         return Inertia::render('Public/News/Show', [
             'post' => $post,
             'related' => Post::where('id', '!=', $post->id)->latest()->take(3)->get(),

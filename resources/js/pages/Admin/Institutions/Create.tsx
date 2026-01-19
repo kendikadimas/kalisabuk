@@ -18,6 +18,7 @@ export default function InstitutionCreate() {
         abbreviation: '',
         leader_name: '',
         description: '',
+        logo: null,
     });
 
     const submit: FormEventHandler = (e) => {
@@ -71,6 +72,17 @@ export default function InstitutionCreate() {
                                 required
                             />
                             {errors.leader_name && <p className="text-sm text-red-500">{errors.leader_name}</p>}
+                        </div>
+
+                        <div className="grid w-full max-w-sm items-center gap-1.5">
+                            <Label htmlFor="logo">Logo Lembaga</Label>
+                            <Input
+                                id="logo"
+                                type="file"
+                                onChange={(e) => setData('logo', e.target.files ? e.target.files[0] : null)}
+                                accept="image/*"
+                            />
+                            {errors.logo && <p className="text-sm text-red-500">{errors.logo}</p>}
                         </div>
 
                         <div className="grid w-full gap-1.5">

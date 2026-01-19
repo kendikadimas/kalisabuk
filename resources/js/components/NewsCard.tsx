@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Calendar, ArrowRight } from 'lucide-react';
+import { Calendar, ArrowRight, Eye } from 'lucide-react';
 
 interface Post {
     id: number;
@@ -9,6 +9,7 @@ interface Post {
     image_path?: string;
     published_at: string;
     category: string;
+    views?: number;
 }
 
 export default function NewsCard({ post }: { post: Post }) {
@@ -18,14 +19,9 @@ export default function NewsCard({ post }: { post: Post }) {
                 <div className="aspect-[16/9] overflow-hidden">
                     <img
                         className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                        src={post.image_path ? `/storage/${post.image_path}` : 'https://placehold.co/600x400?text=Berita+Desa'}
+                        src={post.image_path ? (post.image_path.startsWith('http') ? post.image_path : `/storage/${post.image_path}`) : 'https://placehold.co/600x400?text=Berita+Desa'}
                         alt={post.title}
                     />
-                </div>
-                <div className="absolute top-4 left-4">
-                    <span className="inline-flex items-center rounded-full bg-white/90 backdrop-blur-sm px-3 py-1 text-xs font-bold uppercase tracking-wider text-emerald-700 shadow-sm border border-emerald-100">
-                        {post.category}
-                    </span>
                 </div>
                 {/* Gradient Overlay on Hover */}
                 <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-emerald-900/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -42,6 +38,10 @@ export default function NewsCard({ post }: { post: Post }) {
                                 year: 'numeric'
                             })}
                         </time>
+                        <span className="flex items-center gap-1 ml-auto">
+                            <Eye className="h-3.5 w-3.5" />
+                            {post.views || 0}
+                        </span>
                     </div>
 
                     <Link href={`/news/${post.slug}`}>

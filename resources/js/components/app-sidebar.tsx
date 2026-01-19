@@ -28,7 +28,7 @@ const mainNavItems: NavItem[] = [
         icon: BookOpen,
     },
     {
-        title: 'Potensi Desa',
+        title: 'Potensi',
         href: '/dashboard/potentials',
         icon: Folder,
     },
@@ -38,13 +38,8 @@ const mainNavItems: NavItem[] = [
         icon: Building2,
     },
     {
-        title: 'Demografi',
+        title: 'Statistik',
         href: '/dashboard/demographics',
-        icon: Users,
-    },
-    {
-        title: 'Data APBDes',
-        href: '/dashboard/budgets',
         icon: ChartBar,
     },
 ];
@@ -82,7 +77,6 @@ export function AppSidebar() {
             </SidebarContent>
 
             <SidebarFooter>
-                <NavFooter items={footerNavItems} className="mt-auto" />
                 <NavUser />
             </SidebarFooter>
         </Sidebar>

@@ -39,72 +39,78 @@ export default function InstitutionIndex({ institutions }: { institutions: any }
                     </div>
                 )}
 
-                <div className="rounded-md border bg-card text-card-foreground shadow-sm">
-                    <div className="relative w-full overflow-auto">
-                        <table className="w-full caption-bottom text-sm">
-                            <thead className="[&_tr]:border-b">
-                                <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                                    <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">Nama Lembaga</th>
-                                    <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">Singkatan</th>
-                                    <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">Ketua / Pimpinan</th>
-                                    <th className="h-12 px-4 text-right align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody className="[&_tr:last-child]:border-0">
-                                {institutions.data.length > 0 ? (
-                                    institutions.data.map((institution: any) => (
-                                        <tr key={institution.id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                                            <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0 font-medium">
-                                                {institution.name}
-                                            </td>
-                                            <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                                                {institution.abbreviation ? (
-                                                    <Badge variant="outline">
-                                                        {institution.abbreviation}
-                                                    </Badge>
-                                                ) : '-'}
-                                            </td>
-                                            <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                                                <div className="flex items-center text-muted-foreground">
-                                                    <User className="mr-2 h-4 w-4" />
-                                                    {institution.leader_name}
-                                                </div>
-                                            </td>
-                                            <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0 text-right">
-                                                <div className="flex justify-end gap-2">
-                                                    <Button variant="ghost" size="icon" asChild>
-                                                        <Link href={`/dashboard/institutions/${institution.id}/edit`}>
-                                                            <Pencil className="h-4 w-4 text-blue-600" />
-                                                        </Link>
-                                                    </Button>
-                                                    <Button variant="ghost" size="icon" asChild>
-                                                        <Link
-                                                            href={`/dashboard/institutions/${institution.id}`}
-                                                            method="delete"
-                                                            as="button"
-                                                            onClick={(e) => {
-                                                                if (!confirm('Apakah Anda yakin ingin menghapus lembaga ini?')) {
-                                                                    e.preventDefault();
-                                                                }
-                                                            }}
-                                                        >
-                                                            <Trash2 className="h-4 w-4 text-red-600" />
-                                                        </Link>
-                                                    </Button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan={4} className="p-4 text-center text-muted-foreground">
-                                            Belum ada data lembaga desa.
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
-                    </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {institutions.data.length > 0 ? (
+                        institutions.data.map((institution: any) => (
+                            <div key={institution.id} className="bg-white border boundary-slate-200 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group relative overflow-hidden">
+                                {/* Decorative patterned background for top part */}
+                                <div className="absolute top-0 inset-x-0 h-24 bg-gradient-to-br from-slate-50 to-slate-100 opacity-50"></div>
+
+                                <div className="p-6 relative">
+                                    <div className="flex justify-between items-start mb-4">
+                                        <div className="w-12 h-12 rounded-xl bg-white shadow-sm border border-slate-100 flex items-center justify-center text-emerald-600 overflow-hidden">
+                                            {institution.logo ? (
+                                                <img src={`/storage/${institution.logo}`} alt={institution.name} className="w-full h-full object-cover" />
+                                            ) : (
+                                                <User className="w-6 h-6" />
+                                            )}
+                                        </div>
+                                        {institution.abbreviation && (
+                                            <Badge variant="outline" className="bg-white border-slate-200 text-slate-600">
+                                                {institution.abbreviation}
+                                            </Badge>
+                                        )}
+                                    </div>
+
+                                    <h3 className="text-xl font-bold text-slate-900 mb-1 group-hover:text-emerald-700 transition-colors">
+                                        {institution.name}
+                                    </h3>
+
+                                    <p className="text-sm text-slate-500 mb-6 flex items-center gap-2">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                        Ketua: <span className="font-medium text-slate-700">{institution.leader_name}</span>
+                                    </p>
+
+                                    <div className="border-t border-slate-100 pt-4 flex justify-end gap-2">
+                                        <Button variant="ghost" size="sm" asChild className="hover:bg-blue-50 hover:text-blue-600">
+                                            <Link href={`/dashboard/institutions/${institution.id}/edit`}>
+                                                <Pencil className="h-4 w-4 mr-1.5" />
+                                                Edit
+                                            </Link>
+                                        </Button>
+                                        <Button variant="ghost" size="sm" asChild className="hover:bg-red-50 hover:text-red-600">
+                                            <Link
+                                                href={`/dashboard/institutions/${institution.id}`}
+                                                method="delete"
+                                                as="button"
+                                                onClick={(e) => {
+                                                    if (!confirm('Apakah Anda yakin ingin menghapus lembaga ini?')) {
+                                                        e.preventDefault();
+                                                    }
+                                                }}
+                                            >
+                                                <Trash2 className="h-4 w-4 mr-1.5" />
+                                                Hapus
+                                            </Link>
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <div className="col-span-full py-16 text-center bg-slate-50 rounded-xl border border-dashed border-slate-300">
+                            <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <User className="w-8 h-8 text-slate-400" />
+                            </div>
+                            <h3 className="text-lg font-medium text-slate-900">Belum ada data lembaga</h3>
+                            <p className="text-slate-500 mb-6">Tambahkan lembaga desa untuk melengkapi struktur.</p>
+                            <Button asChild>
+                                <Link href="/dashboard/institutions/create">
+                                    Tambah Lembaga
+                                </Link>
+                            </Button>
+                        </div>
+                    )}
                 </div>
 
                 {/* Simple Pagination */}

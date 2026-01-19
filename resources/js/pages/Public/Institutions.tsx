@@ -44,9 +44,17 @@ export default function Institutions({ institutions }: InstitutionsProps) {
                             institutions.map((inst) => (
                                 <div key={inst.id} className="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group">
                                     <div className="flex items-center gap-x-4 border-b border-slate-100 pb-4 mb-4">
-                                        <div className="h-14 w-14 rounded-2xl bg-emerald-50 group-hover:bg-emerald-100 transition-colors flex items-center justify-center text-emerald-600 font-bold text-2xl shadow-sm">
-                                            {inst.abbreviation ? inst.abbreviation.substring(0, 2) : inst.name.charAt(0)}
-                                        </div>
+                                        {inst.logo ? (
+                                            <img
+                                                src={`/storage/${inst.logo}`}
+                                                alt={`${inst.name} Logo`}
+                                                className="h-16 w-16 rounded-2xl object-cover shadow-sm border border-slate-100 bg-white"
+                                            />
+                                        ) : (
+                                            <div className="h-14 w-14 rounded-2xl bg-emerald-50 group-hover:bg-emerald-100 transition-colors flex items-center justify-center text-emerald-600 font-bold text-2xl shadow-sm">
+                                                {inst.abbreviation ? inst.abbreviation.substring(0, 2) : inst.name.charAt(0)}
+                                            </div>
+                                        )}
                                         <div>
                                             <h3 className="text-lg font-bold leading-tight text-slate-900 group-hover:text-emerald-700 transition-colors">{inst.name}</h3>
                                             <p className="text-sm font-semibold text-emerald-600 mt-1">{inst.abbreviation}</p>

@@ -6,11 +6,11 @@ export default function AppLogo() {
             <div className="flex aspect-square size-8 items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground">
                 <AppLogoIcon className="size-5 fill-current text-white dark:text-black" />
             </div>
-            <div className="ml-1 grid flex-1 text-left text-base">
-                <span className="mb-0.5 truncate leading-tight font-semibold text-sidebar-foreground">
+            <div className="ml-3 grid flex-1 text-left text-base leading-tight">
+                <span className="truncate font-bold text-white tracking-wide text-lg">
                     Admin Kalisabuk
                 </span>
-                <span className="text-sm font-normal text-sidebar-foreground/70">
+                <span className="truncate text-sm text-white/80">
                     Sistem Informasi Desa
                 </span>
             </div>

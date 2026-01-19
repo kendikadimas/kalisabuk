@@ -81,9 +81,79 @@ export default function Home({ villageInfo, latestNews, featuredPotentials, stat
                 <div className="max-w-7xl mx-auto px-6 lg:px-8">
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
                         <StatCard label="Penduduk" value={stats.population.toLocaleString('id-ID')} icon={<Users className="w-6 h-6" />} />
-                        <StatCard label="Luas Wilayah" value={stats.area} icon={<MapPin className="w-6 h-6" />} />
-                        <StatCard label="Tahun Berdiri" value="1830" icon={<Building2 className="w-6 h-6" />} />
-                        <StatCard label="Status Desa" value="Mandiri" icon={<CheckCircle className="w-6 h-6" />} />
+                        <StatCard label="Luas Wilayah" value={villageInfo?.area_size || '120 Ha'} icon={<MapPin className="w-6 h-6" />} />
+                        <StatCard label="Tahun Berdiri" value={villageInfo?.founded_year || '1830'} icon={<Building2 className="w-6 h-6" />} />
+                        <StatCard label="Status Desa" value={villageInfo?.village_status || 'Mandiri'} icon={<CheckCircle className="w-6 h-6" />} />
+                    </div>
+                </div>
+            </section>
+
+            {/* Detailed Stats & Boundaries Section */}
+            <section className="py-24 bg-white relative">
+                <div className="max-w-7xl mx-auto px-6 lg:px-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+
+                        {/* Administrative Area */}
+                        <div>
+                            <h3 className="text-2xl font-black font-serif text-slate-900 mb-8 border-l-4 border-emerald-500 pl-4">Pembagian Wilayah</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 hover:border-emerald-200 transition-colors text-center">
+                                    <p className="text-4xl font-black text-emerald-800 mb-2">{villageInfo?.hamlet_count || 0}</p>
+                                    <p className="text-sm font-bold uppercase tracking-widest text-slate-500">Dusun</p>
+                                </div>
+                                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 hover:border-emerald-200 transition-colors text-center">
+                                    <p className="text-4xl font-black text-emerald-800 mb-2">{villageInfo?.rw_count || 0}</p>
+                                    <p className="text-sm font-bold uppercase tracking-widest text-slate-500">RW</p>
+                                </div>
+                                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 hover:border-emerald-200 transition-colors text-center">
+                                    <p className="text-4xl font-black text-emerald-800 mb-2">{villageInfo?.rt_count || 0}</p>
+                                    <p className="text-sm font-bold uppercase tracking-widest text-slate-500">RT</p>
+                                </div>
+                            </div>
+                            <p className="mt-6 text-slate-600 leading-relaxed">
+                                Desa Kalisabuk terbagi menjadi beberapa wilayah administratif untuk memudahkan pelayanan dan pengelolaan kemasyarakatan.
+                            </p>
+                        </div>
+
+                        {/* Boundaries */}
+                        <div>
+                            <h3 className="text-2xl font-black font-serif text-slate-900 mb-8 border-l-4 border-emerald-500 pl-4">Batas Wilayah</h3>
+                            <div className="bg-slate-50 rounded-3xl p-8 border border-slate-100 relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-100 rounded-bl-full opacity-50"></div>
+
+                                <ul className="space-y-6 relative z-10">
+                                    <li className="flex items-start gap-4">
+                                        <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-emerald-700 font-bold text-sm border border-emerald-100">U</div>
+                                        <div>
+                                            <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Utara</p>
+                                            <p className="text-lg font-bold text-slate-900">{villageInfo?.boundary_north || '-'}</p>
+                                        </div>
+                                    </li>
+                                    <li className="flex items-start gap-4">
+                                        <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-emerald-700 font-bold text-sm border border-emerald-100">S</div>
+                                        <div>
+                                            <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Selatan</p>
+                                            <p className="text-lg font-bold text-slate-900">{villageInfo?.boundary_south || '-'}</p>
+                                        </div>
+                                    </li>
+                                    <li className="flex items-start gap-4">
+                                        <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-emerald-700 font-bold text-sm border border-emerald-100">T</div>
+                                        <div>
+                                            <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Timur</p>
+                                            <p className="text-lg font-bold text-slate-900">{villageInfo?.boundary_east || '-'}</p>
+                                        </div>
+                                    </li>
+                                    <li className="flex items-start gap-4">
+                                        <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-emerald-700 font-bold text-sm border border-emerald-100">B</div>
+                                        <div>
+                                            <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Barat</p>
+                                            <p className="text-lg font-bold text-slate-900">{villageInfo?.boundary_west || '-'}</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </section>

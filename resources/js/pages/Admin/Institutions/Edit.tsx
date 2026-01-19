@@ -13,16 +13,18 @@ export default function InstitutionEdit({ institution }: { institution: any }) {
         { title: 'Edit', href: '#' },
     ];
 
-    const { data, setData, put, processing, errors } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
+        _method: 'PUT',
         name: institution.name,
         abbreviation: institution.abbreviation || '',
         leader_name: institution.leader_name,
         description: institution.description || '',
+        logo: null as File | null,
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        put(`/dashboard/institutions/${institution.id}`);
+        post(`/dashboard/institutions/${institution.id}`);
     };
 
     return (
@@ -71,6 +73,22 @@ export default function InstitutionEdit({ institution }: { institution: any }) {
                                 required
                             />
                             {errors.leader_name && <p className="text-sm text-red-500">{errors.leader_name}</p>}
+                        </div>
+
+                        <div className="grid w-full max-w-sm items-center gap-1.5">
+                            <Label htmlFor="logo">Logo Lembaga</Label>
+                            {institution.logo && (
+                                <div className="mb-2">
+                                    <img src={`/storage/${institution.logo}`} alt="Current Logo" className="h-20 w-auto rounded-md border" />
+                                </div>
+                            )}
+                            <Input
+                                id="logo"
+                                type="file"
+                                onChange={(e) => setData('logo', e.target.files ? e.target.files[0] : null)}
+                                accept="image/*"
+                            />
+                            {errors.logo && <p className="text-sm text-red-500">{errors.logo}</p>}
                         </div>
 
                         <div className="grid w-full gap-1.5">

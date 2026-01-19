@@ -5,9 +5,10 @@ import { Menu, X, Facebook, Instagram, Youtube, Phone, Mail, MapPin, ExternalLin
 interface PublicLayoutProps {
     title?: string;
     headerStyle?: 'light' | 'dark'; // 'light' means light content (for dark backgrounds), 'dark' means dark content (for light backgrounds)
+    forceBackground?: boolean;
 }
 
-export default function PublicLayout({ children, headerStyle = 'light' }: PropsWithChildren<PublicLayoutProps>) {
+export default function PublicLayout({ children, headerStyle = 'light', forceBackground = false }: PropsWithChildren<PublicLayoutProps>) {
     const { url } = usePage();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
@@ -21,12 +22,13 @@ export default function PublicLayout({ children, headerStyle = 'light' }: PropsW
     }, []);
 
     const isLightHeader = headerStyle === 'light';
+    const isScrolled = scrolled || forceBackground;
 
     return (
         <div className="min-h-screen bg-background font-sans text-foreground selection:bg-primary selection:text-white flex flex-col">
             {/* Navbar - Sticky Glassmorphic */}
             <nav
-                className={`fixed top-0 z-50 w-full transition-all duration-300 ${scrolled
+                className={`fixed top-0 z-50 w-full transition-all duration-300 ${isScrolled
                     ? 'bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-200/50 py-3'
                     : 'bg-transparent py-5'
                     }`}
@@ -35,18 +37,18 @@ export default function PublicLayout({ children, headerStyle = 'light' }: PropsW
                     <div className="flex items-center justify-between">
                         {/* Logo */}
                         <div className="flex items-center gap-3">
-                            <div className={`flex items-center justify-center rounded-xl transition-all duration-300 ${scrolled ? 'w-10 h-10 bg-primary text-white shadow-emerald-900/20 shadow-lg' : 'w-12 h-12 bg-white text-emerald-900 shadow-xl'
+                            <div className={`flex items-center justify-center rounded-xl transition-all duration-300 ${isScrolled ? 'w-10 h-10 bg-primary text-white shadow-emerald-900/20 shadow-lg' : 'w-12 h-12 bg-white text-emerald-900 shadow-xl'
                                 }`}>
                                 <span className="font-serif font-black text-xl">D</span>
                             </div>
                             <Link href="/" className="flex flex-col group">
-                                <span className={`text-xl font-bold tracking-tight leading-none font-serif transition-colors ${scrolled
+                                <span className={`text-xl font-bold tracking-tight leading-none font-serif transition-colors ${isScrolled
                                     ? 'text-slate-900'
                                     : (isLightHeader ? 'text-white lg:drop-shadow-md' : 'text-slate-900')
                                     }`}>
                                     Desa Kalisabuk
                                 </span>
-                                <span className={`text-xs font-medium tracking-wide uppercase transition-colors ${scrolled
+                                <span className={`text-xs font-medium tracking-wide uppercase transition-colors ${isScrolled
                                     ? 'text-emerald-700'
                                     : (isLightHeader ? 'text-emerald-100 lg:text-emerald-50' : 'text-emerald-700')
                                     }`}>
@@ -57,12 +59,12 @@ export default function PublicLayout({ children, headerStyle = 'light' }: PropsW
 
                         {/* Desktop Menu */}
                         <div className="hidden md:block">
-                            <div className={`flex items-center space-x-1 rounded-full px-4 py-2 backdrop-blur-sm border transition-all ${scrolled ? 'bg-white/5 border-slate-200/50' : 'bg-white/10 border-white/10'}`}>
-                                <NavLink href="/" active={url === '/'} scrolled={scrolled} isLightHeader={isLightHeader}>Beranda</NavLink>
-                                <NavLink href="/profile" active={url.startsWith('/profile')} scrolled={scrolled} isLightHeader={isLightHeader}>Profil</NavLink>
-                                <NavLink href="/potentials" active={url.startsWith('/potentials')} scrolled={scrolled} isLightHeader={isLightHeader}>Potensi</NavLink>
-                                <NavLink href="/data" active={url.startsWith('/data')} scrolled={scrolled} isLightHeader={isLightHeader}>Data</NavLink>
-                                <NavLink href="/news" active={url.startsWith('/news')} scrolled={scrolled} isLightHeader={isLightHeader}>Berita</NavLink>
+                            <div className={`flex items-center space-x-1 rounded-full px-4 py-2 backdrop-blur-sm border transition-all ${isScrolled ? 'bg-white/5 border-slate-200/50' : 'bg-white/10 border-white/10'}`}>
+                                <NavLink href="/" active={url === '/'} scrolled={isScrolled} isLightHeader={isLightHeader}>Beranda</NavLink>
+                                <NavLink href="/profile" active={url.startsWith('/profile')} scrolled={isScrolled} isLightHeader={isLightHeader}>Profil</NavLink>
+                                <NavLink href="/potentials" active={url.startsWith('/potentials')} scrolled={isScrolled} isLightHeader={isLightHeader}>Potensi</NavLink>
+                                <NavLink href="/data" active={url.startsWith('/data')} scrolled={isScrolled} isLightHeader={isLightHeader}>Data</NavLink>
+                                <NavLink href="/news" active={url.startsWith('/news')} scrolled={isScrolled} isLightHeader={isLightHeader}>Berita</NavLink>
                             </div>
                         </div>
 
@@ -71,7 +73,7 @@ export default function PublicLayout({ children, headerStyle = 'light' }: PropsW
                             <div className="hidden md:block">
                                 <Link
                                     href="/login"
-                                    className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 ${scrolled
+                                    className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 ${isScrolled
                                         ? 'bg-emerald-900 text-white hover:bg-emerald-800'
                                         : 'bg-white text-emerald-900 hover:bg-emerald-50'
                                         }`}
@@ -84,7 +86,7 @@ export default function PublicLayout({ children, headerStyle = 'light' }: PropsW
                             <div className="flex md:hidden">
                                 <button
                                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                                    className={`p-2 rounded-lg transition-colors ${scrolled
+                                    className={`p-2 rounded-lg transition-colors ${isScrolled
                                         ? 'text-slate-900 hover:bg-slate-100'
                                         : (isLightHeader ? 'text-white hover:bg-white/10' : 'text-slate-900 hover:bg-emerald-50')
                                         }`}

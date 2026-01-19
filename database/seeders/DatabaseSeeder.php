@@ -46,14 +46,26 @@ class DatabaseSeeder extends Seeder
             'Pembangunan Jalan Usaha Tani Dusun Melati Resmi Dimulai',
         ];
 
-        foreach ($newsTitles as $title) {
+        $newsImages = [
+            'https://images.unsplash.com/photo-1565514020176-13d85ee8d617?w=1200&q=80', // Money/Hand
+            'https://images.unsplash.com/photo-1590486803833-1c5dc8ddd4c8?w=1200&q=80', // Work/Construction
+            'https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=1200&q=80', // Meeting
+            'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&q=80', // UMKM/Food
+            'https://images.unsplash.com/photo-1584515933487-98db75f56f18?w=1200&q=80', // Health
+            'https://images.unsplash.com/photo-1518391846015-55a9cc003b25?w=1200&q=80', // Festival
+            'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=1200&q=80', // Law/Award
+            'https://images.unsplash.com/photo-1625246333195-f819634473ce?w=1200&q=80', // Rice field
+        ];
+
+        foreach ($newsTitles as $index => $title) {
             Post::create([
                 'title' => $title,
                 'slug' => Str::slug($title) . '-' . Str::random(5),
                 'content' => $faker->paragraphs(5, true),
                 'category' => 'news', // 'news', 'announcement', etc
                 'published_at' => $faker->dateTimeBetween('-6 months', 'now'),
-                'image_path' => null,
+                'image_path' => $newsImages[$index] ?? null,
+                'views' => $faker->numberBetween(50, 500),
             ]);
         }
 
@@ -138,5 +150,16 @@ class DatabaseSeeder extends Seeder
 
         Budget::create(['year' => 2025, 'name' => 'Bidang Penyelenggaraan Pemdes', 'type' => 'expense', 'amount' => 600000000, 'realized_amount' => null]);
         Budget::create(['year' => 2025, 'name' => 'Bidang Pembangunan Desa', 'type' => 'expense', 'amount' => 850000000, 'realized_amount' => null]);
+
+        // Admin User
+        $user = \App\Models\User::where('email', 'admin@kalisabuk.desa.id')->first();
+        if (!$user) {
+            \App\Models\User::create([
+                'name' => 'Administrator',
+                'email' => 'admin@kalisabuk.desa.id',
+                'password' => bcrypt('password'), // Change this in production
+                'email_verified_at' => now(),
+            ]);
+        }
     }
 }

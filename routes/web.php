@@ -16,7 +16,16 @@ Route::get('/news/{slug}', [PublicController::class, 'newsShow'])->name('news.sh
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
+        return Inertia::render('dashboard', [
+            'stats' => [
+                'posts' => \App\Models\Post::count(),
+                'potentials' => \App\Models\Potential::count(),
+                'users' => \App\Models\User::count(),
+                'demographics' => \App\Models\Demographic::where('type', 'gender')->sum('value'),
+            ],
+            'latest_posts' => \App\Models\Post::latest()->take(3)->get(),
+            'demographics_data' => \App\Models\Demographic::where('type', 'gender')->get(),
+        ]);
     })->name('dashboard');
 
     Route::prefix('dashboard')->group(function () {
@@ -24,7 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('potentials', \App\Http\Controllers\Admin\PotentialController::class);
         Route::resource('institutions', \App\Http\Controllers\Admin\InstitutionController::class);
         Route::resource('demographics', \App\Http\Controllers\Admin\DemographicController::class);
-        Route::resource('budgets', \App\Http\Controllers\Admin\BudgetController::class);
+        Route::post('stats/general', [\App\Http\Controllers\Admin\DemographicController::class, 'updateGeneralStats'])->name('stats.general.update');
     });
 });
 

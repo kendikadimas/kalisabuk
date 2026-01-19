@@ -39,77 +39,87 @@ export default function PotentialIndex({ potentials }: { potentials: any }) {
                     </div>
                 )}
 
-                <div className="rounded-md border bg-card text-card-foreground shadow-sm">
-                    <div className="relative w-full overflow-auto">
-                        <table className="w-full caption-bottom text-base border-collapse">
-                            <thead className="bg-gray-100 dark:bg-gray-800">
-                                <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                                    <th className="h-12 px-4 text-left align-middle font-bold text-gray-900 dark:text-gray-100 border [&:has([role=checkbox])]:pr-0">Nama Potensi</th>
-                                    <th className="h-12 px-4 text-left align-middle font-bold text-gray-900 dark:text-gray-100 border [&:has([role=checkbox])]:pr-0">Kategori</th>
-                                    <th className="h-12 px-4 text-left align-middle font-bold text-gray-900 dark:text-gray-100 border [&:has([role=checkbox])]:pr-0">Lokasi</th>
-                                    <th className="h-12 px-4 text-left align-middle font-bold text-gray-900 dark:text-gray-100 border [&:has([role=checkbox])]:pr-0">Kontak</th>
-                                    <th className="h-12 px-4 text-right align-middle font-bold text-gray-900 dark:text-gray-100 border [&:has([role=checkbox])]:pr-0">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody className="[&_tr:last-child]:border-0">
-                                {potentials.data.length > 0 ? (
-                                    potentials.data.map((potential: any) => (
-                                        <tr key={potential.id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                                            <td className="p-4 align-middle border [&:has([role=checkbox])]:pr-0 font-semibold text-gray-900 dark:text-gray-100">
-                                                {potential.name}
-                                            </td>
-                                            <td className="p-4 align-middle border [&:has([role=checkbox])]:pr-0">
-                                                <Badge variant={potential.category === 'tourism' ? 'default' : 'secondary'} className={potential.category === 'tourism' ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200 text-sm' : 'bg-purple-100 text-purple-800 hover:bg-purple-200 text-sm'}>
-                                                    {potential.category === 'tourism' ? 'Wisata' : 'Produk Unggulan'}
-                                                </Badge>
-                                            </td>
-                                            <td className="p-4 align-middle border [&:has([role=checkbox])]:pr-0 text-gray-900 dark:text-gray-100">
-                                                <div className="flex items-center">
-                                                    <MapPin className="mr-2 h-4 w-4 text-gray-600 dark:text-gray-400" />
-                                                    {potential.location}
-                                                </div>
-                                            </td>
-                                            <td className="p-4 align-middle border [&:has([role=checkbox])]:pr-0 text-gray-900 dark:text-gray-100">
-                                                <div className="flex items-center">
-                                                    <Phone className="mr-2 h-4 w-4 text-gray-600 dark:text-gray-400" />
-                                                    {potential.contact_info || '-'}
-                                                </div>
-                                            </td>
-                                            <td className="p-4 align-middle border [&:has([role=checkbox])]:pr-0 text-right">
-                                                <div className="flex justify-end gap-2">
-                                                    <Button variant="outline" size="icon" asChild className="border-blue-200 hover:bg-blue-50">
-                                                        <Link href={`/dashboard/potentials/${potential.id}/edit`}>
-                                                            <Pencil className="h-5 w-5 text-blue-700" />
-                                                        </Link>
-                                                    </Button>
-                                                    <Button variant="outline" size="icon" asChild className="border-red-200 hover:bg-red-50">
-                                                        <Link
-                                                            href={`/dashboard/potentials/${potential.id}`}
-                                                            method="delete"
-                                                            as="button"
-                                                            onClick={(e) => {
-                                                                if (!confirm('Apakah Anda yakin ingin menghapus potensi ini?')) {
-                                                                    e.preventDefault();
-                                                                }
-                                                            }}
-                                                        >
-                                                            <Trash2 className="h-5 w-5 text-red-700" />
-                                                        </Link>
-                                                    </Button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {potentials.data.length > 0 ? (
+                        potentials.data.map((potential: any) => (
+                            <div key={potential.id} className="bg-white border border-slate-200 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group overflow-hidden">
+                                {potential.image_path ? (
+                                    <div className="h-48 w-full overflow-hidden bg-slate-100 relative">
+                                        <img src={`/storage/${potential.image_path}`} alt={potential.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                                        <div className={`absolute bottom-0 left-0 right-0 h-1.5 ${potential.category === 'tourism' ? 'bg-emerald-500' : 'bg-purple-500'}`}></div>
+                                    </div>
                                 ) : (
-                                    <tr>
-                                        <td colSpan={5} className="p-4 text-center text-gray-500 font-medium">
-                                            Belum ada data potensi desa.
-                                        </td>
-                                    </tr>
+                                    <>
+                                        {potential.category === 'tourism' && (
+                                            <div className="h-2 bg-emerald-500 w-full"></div>
+                                        )}
+                                        {potential.category !== 'tourism' && (
+                                            <div className="h-2 bg-purple-500 w-full"></div>
+                                        )}
+                                    </>
                                 )}
-                            </tbody>
-                        </table>
-                    </div>
+
+                                <div className="p-6 flex-1 flex flex-col gap-4">
+                                    <div className="flex justify-between items-start">
+                                        <Badge variant={potential.category === 'tourism' ? 'default' : 'secondary'} className={potential.category === 'tourism' ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' : 'bg-purple-100 text-purple-800 hover:bg-purple-200'}>
+                                            {potential.category === 'tourism' ? 'Wisata' : 'Produk Unggulan'}
+                                        </Badge>
+                                    </div>
+
+                                    <h3 className="text-xl font-bold text-slate-900 leading-tight group-hover:text-emerald-700 transition-colors">
+                                        {potential.name}
+                                    </h3>
+
+                                    <div className="space-y-2 text-sm text-slate-600 mt-2">
+                                        <div className="flex items-start gap-3">
+                                            <MapPin className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+                                            <span className="line-clamp-2">{potential.location}</span>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <Phone className="w-4 h-4 text-slate-400 shrink-0" />
+                                            <span>{potential.contact_info || '-'}</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-auto pt-4 flex gap-2 justify-end border-t border-slate-100">
+                                        <Button variant="outline" size="sm" asChild className="h-9 w-9 p-0 rounded-full border-slate-200 hover:border-blue-300 hover:bg-blue-50">
+                                            <Link href={`/dashboard/potentials/${potential.id}/edit`} title="Edit">
+                                                <Pencil className="h-4 w-4 text-blue-600" />
+                                            </Link>
+                                        </Button>
+                                        <Button variant="outline" size="sm" asChild className="h-9 w-9 p-0 rounded-full border-slate-200 hover:border-red-300 hover:bg-red-50">
+                                            <Link
+                                                href={`/dashboard/potentials/${potential.id}`}
+                                                method="delete"
+                                                as="button"
+                                                onClick={(e) => {
+                                                    if (!confirm('Apakah Anda yakin ingin menghapus potensi ini?')) {
+                                                        e.preventDefault();
+                                                    }
+                                                }}
+                                                title="Hapus"
+                                            >
+                                                <Trash2 className="h-4 w-4 text-red-600" />
+                                            </Link>
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <div className="col-span-full py-16 text-center bg-slate-50 rounded-xl border-2 border-dashed border-slate-200">
+                            <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <Plus className="w-8 h-8 text-slate-400" />
+                            </div>
+                            <h3 className="text-lg font-bold text-slate-900">Belum ada data</h3>
+                            <p className="text-slate-500 mb-6">Mulai dengan menambahkan potensi desa baru.</p>
+                            <Button asChild>
+                                <Link href="/dashboard/potentials/create">
+                                    Tambah Potensi
+                                </Link>
+                            </Button>
+                        </div>
+                    )}
                 </div>
 
                 {/* Simple Pagination */}
