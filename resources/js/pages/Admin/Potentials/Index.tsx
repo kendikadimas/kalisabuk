@@ -45,7 +45,7 @@ export default function PotentialIndex({ potentials }: { potentials: any }) {
                             <div key={potential.id} className="bg-white border border-slate-200 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group overflow-hidden">
                                 {potential.image_path ? (
                                     <div className="h-48 w-full overflow-hidden bg-slate-100 relative">
-                                        <img src={`/storage/${potential.image_path}`} alt={potential.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                                        <img src={`/storage/${potential.image_path}`} alt={potential.name} loading="lazy" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                                         <div className={`absolute bottom-0 left-0 right-0 h-1.5 ${potential.category === 'tourism' ? 'bg-emerald-500' : 'bg-purple-500'}`}></div>
                                     </div>
                                 ) : (

@@ -29,7 +29,7 @@ class InstitutionController extends Controller
             'abbreviation' => 'nullable|string|max:50',
             'leader_name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'logo' => 'nullable|image|max:2048', // 2MB Max
+            'logo' => 'nullable|image|max:10240', // 10MB Max
         ]);
 
         if ($request->hasFile('logo')) {
@@ -55,7 +55,7 @@ class InstitutionController extends Controller
             'abbreviation' => 'nullable|string|max:50',
             'leader_name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'logo' => 'nullable|image|max:2048',
+            'logo' => 'nullable|image|max:10240',
         ]);
 
         if ($request->hasFile('logo')) {

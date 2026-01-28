@@ -30,7 +30,7 @@ class PotentialController extends Controller
             'description' => 'required|string',
             'location' => 'required|string',
             'contact_info' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:10240',
         ]);
 
         $path = null;
@@ -65,7 +65,7 @@ class PotentialController extends Controller
             'description' => 'required|string',
             'location' => 'required|string',
             'contact_info' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:10240',
         ]);
 
         if ($request->hasFile('image')) {

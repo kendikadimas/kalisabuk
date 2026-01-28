@@ -11,6 +11,10 @@ use App\Models\Post;
 use App\Models\Potential;
 use App\Models\Institution;
 use App\Models\Demographic;
+use App\Models\VillageOfficial;
+use App\Models\VillageStat;
+use App\Models\Announcement;
+use App\Models\Development;
 
 
 class PublicController extends Controller
@@ -19,8 +23,17 @@ class PublicController extends Controller
     {
         return Inertia::render('Public/Home', [
             'villageInfo' => VillageInfo::first(),
+            'villageHead' => VillageOfficial::active()->head()->first(),
+            'villageOfficials' => VillageOfficial::active()->where('position', '!=', 'Kepala Desa')->ordered()->get(),
             'latestNews' => Post::where('category', 'news')->latest()->take(3)->get(),
             'featuredPotentials' => Potential::latest()->take(3)->get(),
+            'announcements' => Announcement::where('is_active', true)
+                ->orderBy('event_date', 'asc')
+                ->take(5)
+                ->get(),
+            'developments' => Development::latest()
+                ->take(6)
+                ->get(),
             'stats' => [
                 'population' => VillageInfo::first()->population ?? 0,
                 'area' => VillageInfo::first()->area_size ?? '120 Ha',
@@ -48,6 +61,7 @@ class PublicController extends Controller
     {
         return Inertia::render('Public/Data', [
             'demographics' => Demographic::all(),
+            'villageStats' => VillageStat::active()->ordered()->get(),
         ]);
     }
 

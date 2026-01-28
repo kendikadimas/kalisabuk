@@ -17,6 +17,12 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        // Call specific seeders
+        $this->call([
+            VillageOfficialSeeder::class,
+            VillageStatSeeder::class,
+        ]);
+
         $faker = Faker::create('id_ID');
 
         // Village Info

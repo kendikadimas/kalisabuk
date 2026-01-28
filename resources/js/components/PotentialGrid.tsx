@@ -1,4 +1,4 @@
-import { ArrowRight, MapPin } from 'lucide-react';
+import { ArrowRight, MapPin, Phone } from 'lucide-react';
 
 interface Potential {
     id: number;
@@ -7,6 +7,7 @@ interface Potential {
     description: string;
     image_path?: string;
     location?: string;
+    contact_info?: string;
 }
 
 export default function PotentialGrid({ items }: { items: Potential[] }) {
@@ -19,6 +20,7 @@ export default function PotentialGrid({ items }: { items: Potential[] }) {
                         <img
                             src={item.image_path ? `/storage/${item.image_path}` : 'https://placehold.co/800x600/022c22/ffffff?text=Potensi+Desa'}
                             alt={item.name}
+                            loading="lazy"
                             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                         />
                         <div className="absolute top-4 left-4">
@@ -35,12 +37,20 @@ export default function PotentialGrid({ items }: { items: Potential[] }) {
                             <h3 className="text-2xl font-black font-serif text-slate-900 mb-2 leading-tight group-hover:text-emerald-800 transition-colors">
                                 {item.name}
                             </h3>
-                            {item.location && (
-                                <div className="flex items-center gap-1 text-slate-500 text-sm">
-                                    <MapPin className="w-4 h-4 text-emerald-500" />
-                                    <span>{item.location}</span>
-                                </div>
-                            )}
+                            <div className="space-y-1">
+                                {item.location && (
+                                    <div className="flex items-center gap-1 text-slate-500 text-sm">
+                                        <MapPin className="w-4 h-4 text-emerald-500" />
+                                        <span>{item.location}</span>
+                                    </div>
+                                )}
+                                {item.contact_info && (
+                                    <div className="flex items-center gap-1 text-slate-500 text-sm">
+                                        <Phone className="w-4 h-4 text-blue-500" />
+                                        <span>{item.contact_info}</span>
+                                    </div>
+                                )}
+                            </div>
                         </div>
 
                         <p className="text-slate-600 mb-8 line-clamp-3 leading-relaxed flex-grow">

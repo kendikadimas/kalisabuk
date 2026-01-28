@@ -78,8 +78,7 @@ export default function Index({ posts }: NewsIndexProps) {
                         {/* Sidebar */}
                         <div className="lg:col-span-4 space-y-8">
                             {/* Search Widget */}
-                            <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 sticky top-24">
-                                <h3 className="text-xl font-bold font-serif text-slate-900 mb-6">Cari Berita</h3>
+                            <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-slate-100 lg:sticky lg:top-24">\n                                <h3 className="text-xl font-bold font-serif text-slate-900 mb-6">Cari Berita</h3>
                                 <div className="relative group">
                                     <input
                                         type="text"

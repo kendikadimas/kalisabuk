@@ -15,8 +15,7 @@ export default function PageHeader({ title, subtitle, image, breadcrumbs }: Page
                 {image ? (
                     <img
                         src={image}
-                        alt=""
-                        className="h-full w-full object-cover opacity-30"
+                        alt=""                        loading="lazy"                        className="h-full w-full object-cover opacity-30"
                     />
                 ) : (
                     <div className="h-full w-full bg-gradient-to-br from-emerald-900 via-slate-900 to-slate-950 opacity-90" />

@@ -17,6 +17,7 @@ export default function AuthLayout({
                         src="https://images.unsplash.com/photo-1596422846543-75c6fc197f07?q=80&w=2000"
                         alt="Desa Kalisabuk Landscape"
                         className="w-full h-full object-cover opacity-50 transition-transform duration-[20s] hover:scale-110"
+                        loading="eager"
                     />
                     <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/90 via-slate-900/80 to-slate-950/90 mix-blend-multiply" />
                     {/* Decorative Patterns */}

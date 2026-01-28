@@ -63,6 +63,8 @@ export default function PublicLayout({ children, headerStyle = 'light', forceBac
                                 <NavLink href="/" active={url === '/'} scrolled={isScrolled} isLightHeader={isLightHeader}>Beranda</NavLink>
                                 <NavLink href="/profile" active={url.startsWith('/profile')} scrolled={isScrolled} isLightHeader={isLightHeader}>Profil</NavLink>
                                 <NavLink href="/potentials" active={url.startsWith('/potentials')} scrolled={isScrolled} isLightHeader={isLightHeader}>Potensi</NavLink>
+                                <NavLink href="/pembangunan" active={url.startsWith('/pembangunan')} scrolled={isScrolled} isLightHeader={isLightHeader}>Pembangunan</NavLink>
+                                <NavLink href="/layanan" active={url.startsWith('/layanan')} scrolled={isScrolled} isLightHeader={isLightHeader}>Layanan</NavLink>
                                 <NavLink href="/data" active={url.startsWith('/data')} scrolled={isScrolled} isLightHeader={isLightHeader}>Data</NavLink>
                                 <NavLink href="/news" active={url.startsWith('/news')} scrolled={isScrolled} isLightHeader={isLightHeader}>Berita</NavLink>
                             </div>
@@ -106,6 +108,8 @@ export default function PublicLayout({ children, headerStyle = 'light', forceBac
                             <MobileNavLink href="/" active={url === '/'}>Beranda</MobileNavLink>
                             <MobileNavLink href="/profile" active={url.startsWith('/profile')}>Profil</MobileNavLink>
                             <MobileNavLink href="/potentials" active={url.startsWith('/potentials')}>Potensi</MobileNavLink>
+                            <MobileNavLink href="/pembangunan" active={url.startsWith('/pembangunan')}>Pembangunan</MobileNavLink>
+                            <MobileNavLink href="/layanan" active={url.startsWith('/layanan')}>Layanan</MobileNavLink>
                             <MobileNavLink href="/data" active={url.startsWith('/data')}>Data</MobileNavLink>
                             <MobileNavLink href="/news" active={url.startsWith('/news')}>Berita</MobileNavLink>
                             <div className="pt-4 mt-4 border-t border-slate-100">

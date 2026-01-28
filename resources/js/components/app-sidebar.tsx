@@ -1,4 +1,3 @@
-import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import {
@@ -10,50 +9,87 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Building2, Users, ChartBar } from 'lucide-react';
+import { 
+    FileText, 
+    Building2, 
+    LayoutGrid, 
+    BookOpen, 
+    Folder, 
+    Building, 
+    Tag, 
+    PieChart, 
+    Users,
+    Megaphone,
+    UserCheck
+} from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
-        href: '/dashboard',
+        url: '/dashboard',
         icon: LayoutGrid,
     },
     {
-        title: 'Berita',
-        href: '/dashboard/posts',
+        title: 'Konten',
+        url: '#',
         icon: BookOpen,
+        items: [
+            {
+                title: 'Berita & Artikel',
+                url: '/dashboard/posts',
+                icon: FileText,
+            },
+            {
+                title: 'Potensi Desa',
+                url: '/dashboard/potentials',
+                icon: Folder,
+            },
+            {
+                title: 'Pengumuman',
+                url: '/dashboard/announcements',
+                icon: Megaphone,
+            },
+        ],
     },
     {
-        title: 'Potensi',
-        href: '/dashboard/potentials',
-        icon: Folder,
-    },
-    {
-        title: 'Lembaga',
-        href: '/dashboard/institutions',
+        title: 'Infrastruktur',
+        url: '#',
         icon: Building2,
+        items: [
+            {
+                title: 'Lembaga Desa',
+                url: '/dashboard/institutions',
+                icon: Building2,
+            },
+            {
+                title: 'Pembangunan',
+                url: '/dashboard/developments',
+                icon: Building,
+            },
+        ],
     },
     {
-        title: 'Statistik',
-        href: '/dashboard/demographics',
-        icon: ChartBar,
-    },
-];
-
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
+        title: 'Layanan Desa',
+        url: '/dashboard/services',
+        icon: Tag,
     },
     {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
+        title: 'Statistik Desa',
+        url: '/dashboard/village-stats',
+        icon: PieChart,
+    },
+    {
+        title: 'Perangkat Desa',
+        url: '/dashboard/village-officials',
+        icon: UserCheck,
+    },
+    {
+        title: 'Manajemen User',
+        url: '/dashboard/users',
+        icon: Users,
     },
 ];
 

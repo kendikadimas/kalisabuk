@@ -50,7 +50,7 @@ export default function InstitutionIndex({ institutions }: { institutions: any }
                                     <div className="flex justify-between items-start mb-4">
                                         <div className="w-12 h-12 rounded-xl bg-white shadow-sm border border-slate-100 flex items-center justify-center text-emerald-600 overflow-hidden">
                                             {institution.logo ? (
-                                                <img src={`/storage/${institution.logo}`} alt={institution.name} className="w-full h-full object-cover" />
+                                                <img src={`/storage/${institution.logo}`} alt={institution.name} loading="lazy" className="w-full h-full object-cover" />
                                             ) : (
                                                 <User className="w-6 h-6" />
                                             )}

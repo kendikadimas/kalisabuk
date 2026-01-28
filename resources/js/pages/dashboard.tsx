@@ -1,75 +1,19 @@
-import { Head, Link, usePage } from '@inertiajs/react';
-import { AppContent } from '@/components/app-content';
-import { AppShell } from '@/components/app-shell';
-import { AppSidebarHeader } from '@/components/app-sidebar-header';
-import { NavMain } from '@/components/nav-main';
-import { NavUser } from '@/components/nav-user';
+import { Head, Link } from '@inertiajs/react';
+import AppSidebarLayout from '@/layouts/app/app-sidebar-layout';
+import { type BreadcrumbItem } from '@/types';
 import {
-    Sidebar,
-    SidebarContent,
-    SidebarFooter,
-    SidebarHeader,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
-} from '@/components/ui/sidebar';
-import AppLogo from '@/components/app-logo';
-import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
-import { FileText, Users, Mountain, Building2, LayoutGrid, BookOpen, ChartBar, Folder, Activity, ChevronRight, Zap } from 'lucide-react';
-
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: '/dashboard',
-        icon: LayoutGrid,
-    },
-    {
-        title: 'Berita',
-        href: '/dashboard/posts',
-        icon: BookOpen,
-    },
-    {
-        title: 'Potensi',
-        href: '/dashboard/potentials',
-        icon: Folder,
-    },
-    {
-        title: 'Lembaga',
-        href: '/dashboard/institutions',
-        icon: Building2,
-    },
-    {
-        title: 'Penduduk',
-        href: '/dashboard/demographics',
-        icon: Users,
-    },
-];
-
-function DashboardSidebar() {
-    return (
-        <Sidebar collapsible="icon" variant="inset">
-            <SidebarHeader>
-                <SidebarMenu>
-                    <SidebarMenuItem>
-                        <SidebarMenuButton size="lg" asChild>
-                            <Link href="/dashboard" prefetch>
-                                <AppLogo />
-                            </Link>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
-                </SidebarMenu>
-            </SidebarHeader>
-
-            <SidebarContent>
-                <NavMain items={mainNavItems} />
-            </SidebarContent>
-
-            <SidebarFooter>
-                <NavUser />
-            </SidebarFooter>
-        </Sidebar>
-    );
-}
+    Users,
+    LayoutGrid,
+    TrendingUp,
+    FileText,
+    ChevronRight,
+    Mountain,
+    ClipboardList,
+    UserCheck,
+    PieChart,
+    Building2,
+    Building
+} from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -100,276 +44,263 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ stats, latest_posts, demographics_data }: DashboardProps) {
-    const currentDate = new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long' });
+    const currentDate = new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 
     return (
-        <AppShell variant="sidebar">
-            <DashboardSidebar />
-            <AppContent variant="sidebar" className="overflow-x-hidden">
-                <AppSidebarHeader breadcrumbs={breadcrumbs} />
-                <Head title="Admin Dashboard" />
+        <AppSidebarLayout breadcrumbs={breadcrumbs}>
+            <Head title="Dashboard" />
 
-                <div className="bg-gray-50 min-h-screen pb-20">
+            <div className="min-h-screen bg-slate-50/50 p-6 md:p-8 space-y-8">
 
-                    <div className="max-w-7xl mx-auto">
-                        {/* Custom Breadcrumbs */}
-                        <div className="mb-6 px-6 md:px-0">
-                            <nav className="flex" aria-label="Breadcrumb">
-                                <ol className="inline-flex items-center space-x-1 md:space-x-3">
-                                    <li className="inline-flex items-center">
-                                        <a href="/dashboard" className="inline-flex items-center text-sm font-medium text-slate-500 hover:text-emerald-600">
-                                            <svg className="w-3 h-3 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                                <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
-                                            </svg>
-                                            Dashboard
-                                        </a>
-                                    </li>
-                                </ol>
-                            </nav>
+                {/* Header Section */}
+                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-800 to-teal-900 p-8 text-white shadow-lg">
+                    <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                        <div>
+                            <h1 className="text-3xl font-bold tracking-tight">
+                                Dashboard Overview
+                            </h1>
+                            <p className="text-emerald-100 mt-2 text-lg">
+                                Selamat datang kembali, Administrator.
+                            </p>
                         </div>
-
-                        {/* --- SECTION 1: HEADER & HERO --- */}
-                        <div className="bg-slate-900 text-white rounded-b-[2.5rem] md:rounded-[2.5rem] p-6 md:p-10 pb-16 md:pb-10 shadow-xl relative overflow-hidden md:mx-6 md:mt-6">
-                            {/* Decorative Blobs */}
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/20 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
-                            <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl -ml-10 -mb-10 pointer-events-none" />
-
-                            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                                {/* Left Side: Greeting */}
-                                <div>
-                                    <div className="flex justify-between items-start mb-6 md:mb-4">
-                                        <div>
-                                            <p className="text-slate-400 text-sm font-medium mb-1">{currentDate}</p>
-                                            <h1 className="text-2xl md:text-3xl font-bold">Halo, Admin 👋</h1>
-                                        </div>
-                                        <div className="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center border border-slate-700 md:hidden">
-                                            <Building2 className="w-5 h-5 text-emerald-400" />
-                                        </div>
-                                    </div>
-                                    <p className="hidden md:block text-slate-400 leading-relaxed max-w-md">
-                                        Selamat datang di panel kontrol Sistem Informasi Desa. Kelola data penduduk, berita, dan anggaran desa dengan mudah.
-                                    </p>
-                                </div>
-
-                                {/* Right Side: Hero Card (Population) */}
-                                <div className="bg-white/10 backdrop-blur-md border border-white/10 p-5 rounded-2xl relative overflow-hidden group hover:bg-white/15 transition-colors">
-                                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                                        <Users className="w-24 h-24" />
-                                    </div>
-                                    <div className="relative z-10">
-                                        <div className="flex items-center gap-2 mb-2">
-                                            <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-                                            <span className="text-emerald-400 text-xs font-bold uppercase tracking-wider">Live Data</span>
-                                        </div>
-                                        <div className="flex justify-between items-end mt-4">
-                                            <div>
-                                                <p className="text-slate-300 text-sm mb-1">Total Penduduk Desa</p>
-                                                <h2 className="text-4xl font-black tracking-tight">{stats.demographics.toLocaleString('id-ID')}</h2>
-                                            </div>
-                                            <div className="bg-emerald-500 p-2 rounded-lg text-white mb-1 shadow-lg shadow-emerald-500/20 md:hidden">
-                                                <Users className="w-6 h-6" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* --- SECTION 2: KEY STATS --- */}
-                        <div className="relative z-20 -mt-8 px-6 md:mt-8 md:px-6">
-                            {/* Mobile: Swipeable, Desktop: Grid */}
-                            <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x md:grid md:grid-cols-3 md:gap-6 md:overflow-visible">
-
-                                {/* Stat 1: Berita */}
-                                <Link href="/dashboard/posts" className="snap-start flex-shrink-0 w-36 h-36 md:w-auto md:h-auto bg-white rounded-2xl shadow-sm border border-slate-100 p-4 md:p-6 flex flex-col md:flex-row md:items-center md:gap-4 justify-between active:scale-95 md:hover:scale-105 md:hover:shadow-md transition-all">
-                                    <div className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-                                        <FileText className="w-4 h-4 md:w-6 md:h-6" />
-                                    </div>
-                                    <div className="md:flex-1">
-                                        <h3 className="text-2xl font-bold text-slate-800 md:text-3xl">{stats.posts}</h3>
-                                        <p className="text-xs text-slate-500 font-medium md:text-sm">Berita Terbit</p>
-                                    </div>
-                                    <div className="hidden md:block text-slate-300">
-                                        <ChevronRight className="w-5 h-5" />
-                                    </div>
-                                </Link>
-
-                                {/* Stat 2: Potensi */}
-                                <Link href="/dashboard/potentials" className="snap-start flex-shrink-0 w-36 h-36 md:w-auto md:h-auto bg-white rounded-2xl shadow-sm border border-slate-100 p-4 md:p-6 flex flex-col md:flex-row md:items-center md:gap-4 justify-between active:scale-95 md:hover:scale-105 md:hover:shadow-md transition-all">
-                                    <div className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                                        <Mountain className="w-4 h-4 md:w-6 md:h-6" />
-                                    </div>
-                                    <div className="md:flex-1">
-                                        <h3 className="text-2xl font-bold text-slate-800 md:text-3xl">{stats.potentials}</h3>
-                                        <p className="text-xs text-slate-500 font-medium md:text-sm">Potensi Desa</p>
-                                    </div>
-                                    <div className="hidden md:block text-slate-300">
-                                        <ChevronRight className="w-5 h-5" />
-                                    </div>
-                                </Link>
-
-                                {/* Stat 3: Admin */}
-                                <div className="snap-start flex-shrink-0 w-36 h-36 md:w-auto md:h-auto bg-white rounded-2xl shadow-sm border border-slate-100 p-4 md:p-6 flex flex-col md:flex-row md:items-center md:gap-4 justify-between md:hover:shadow-md transition-all cursor-default">
-                                    <div className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center">
-                                        <Users className="w-4 h-4 md:w-6 md:h-6" />
-                                    </div>
-                                    <div className="md:flex-1">
-                                        <h3 className="text-2xl font-bold text-slate-800 md:text-3xl">{stats.users}</h3>
-                                        <p className="text-xs text-slate-500 font-medium md:text-sm">Admin Aktif</p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        {/* --- SECTION 3: CONTROL CENTER --- */}
-                        <div className="px-6 mt-2 md:mt-8">
-                            <div className="flex items-center justify-between mb-4">
-                                <h3 className="text-slate-800 font-bold text-lg">Menu Cepat</h3>
-                                <span className="text-xs text-slate-400">Akses fitur utama</span>
-                            </div>
-
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                {/* Action 1 */}
-                                <Link href="/dashboard/posts" className="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center gap-3 active:bg-slate-50 md:hover:-translate-y-1 md:hover:shadow-lg transition-all">
-                                    <div className="w-12 h-12 md:w-14 md:h-14 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600">
-                                        <FileText className="w-6 h-6" />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold text-slate-800 text-sm md:text-base">Tulis Berita</h4>
-                                        <p className="text-[10px] md:text-xs text-slate-400 leading-tight mt-1">Update info desa</p>
-                                    </div>
-                                </Link>
-
-                                {/* Action 2 */}
-                                <Link href="/dashboard/potentials" className="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center gap-3 active:bg-slate-50 md:hover:-translate-y-1 md:hover:shadow-lg transition-all">
-                                    <div className="w-12 h-12 md:w-14 md:h-14 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-600">
-                                        <Mountain className="w-6 h-6" />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold text-slate-800 text-sm md:text-base">Data Potensi</h4>
-                                        <p className="text-[10px] md:text-xs text-slate-400 leading-tight mt-1">Wisata & UMKM</p>
-                                    </div>
-                                </Link>
-
-                                {/* Action 3 (Removed Budget, moved Lainnya here or remove Lainnya) */}
-                                <button className="bg-slate-50 p-4 md:p-6 rounded-2xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center text-center gap-3 text-slate-400 hover:text-slate-600 hover:border-slate-300 hover:bg-slate-100 transition-all">
-                                    <div className="w-12 h-12 md:w-14 md:h-14 bg-slate-100 rounded-xl flex items-center justify-center group-hover:bg-white transition-colors">
-                                        <Zap className="w-6 h-6" />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold text-inherit text-sm md:text-base">Lainnya</h4>
-                                        <p className="text-[10px] md:text-xs text-inherit leading-tight mt-1 opacity-70">Fitur tambahan</p>
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* --- SECTION 4: DATA WIDGETS (New Important Widgets) --- */}
-                        <div className="px-6 mt-8">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {/* Removed APBDes Widget */}
-
-                                {/* Widget 2: Demographics */}
-                                <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-                                    <div className="flex items-center justify-between mb-6">
-                                        <h4 className="font-bold text-slate-800 flex items-center gap-2">
-                                            <Users className="w-5 h-5 text-blue-500" />
-                                            Demografi
-                                        </h4>
-                                        <Link href="/dashboard/demographics" className="text-xs font-bold text-emerald-600 hover:underline">Detail</Link>
-                                    </div>
-                                    <div className="space-y-4">
-                                        {demographics_data.length > 0 ? (
-                                            demographics_data.map((item) => (
-                                                <div key={item.id} className="flex items-center gap-4">
-                                                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${item.label.toLowerCase() === 'laki-laki' ? 'bg-blue-50 text-blue-600' : 'bg-pink-50 text-pink-600'}`}>
-                                                        <Users className="w-5 h-5" />
-                                                    </div>
-                                                    <div className="flex-1">
-                                                        <div className="flex justify-between mb-1">
-                                                            <span className="text-sm font-bold text-slate-700">{item.label}</span>
-                                                            <span className="text-sm font-black text-slate-900">{item.value.toLocaleString('id-ID')}</span>
-                                                        </div>
-                                                        <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
-                                                            <div
-                                                                className={`h-full rounded-full ${item.label.toLowerCase() === 'laki-laki' ? 'bg-blue-500' : 'bg-pink-500'}`}
-                                                                style={{ width: `${(item.value / stats.demographics) * 100}%` }}
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ))
-                                        ) : (
-                                            <div className="text-center py-8 text-slate-400 text-sm">Belum ada data</div>
-                                        )}
-                                    </div>
-                                </div>
-
-                                {/* Widget 3: Latest News */}
-                                <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-                                    <div className="flex items-center justify-between mb-6">
-                                        <h4 className="font-bold text-slate-800 flex items-center gap-2">
-                                            <FileText className="w-5 h-5 text-emerald-500" />
-                                            Berita Terbaru
-                                        </h4>
-                                        <Link href="/dashboard/posts" className="text-xs font-bold text-emerald-600 hover:underline">Semua</Link>
-                                    </div>
-                                    <div className="space-y-4">
-                                        {latest_posts.length > 0 ? (
-                                            latest_posts.map((post) => (
-                                                <div key={post.id} className="flex gap-3 group">
-                                                    <div className="w-12 h-12 rounded-lg bg-slate-100 flex-shrink-0 overflow-hidden">
-                                                        <div className="w-full h-full bg-slate-200 flex items-center justify-center text-slate-400">
-                                                            <FileText className="w-5 h-5" />
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex-1 min-w-0">
-                                                        <h5 className="text-sm font-bold text-slate-800 line-clamp-1 group-hover:text-emerald-700 transition-colors">{post.title}</h5>
-                                                        <div className="flex items-center gap-2 mt-1">
-                                                            <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 font-bold uppercase tracking-wide">{post.category || 'Umum'}</span>
-                                                            <span className="text-[10px] text-slate-400">
-                                                                {new Date(post.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ))
-                                        ) : (
-                                            <div className="text-center py-8 text-slate-400 text-sm">Belum ada berita</div>
-                                        )}
-                                    </div>
-                                    <Link href="/dashboard/posts/create" className="mt-6 block w-full py-2 bg-slate-50 hover:bg-slate-100 text-slate-600 font-bold text-xs rounded-xl text-center transition-colors">
-                                        + Tulis Berita Baru
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* --- SECTION 5: SYSTEM STATUS --- */}
-                        <div className="px-6 mt-8">
-                            <div className="bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-slate-100 flex items-center justify-between hover:shadow-md transition-shadow">
-                                <div className="flex items-center gap-4">
-                                    <div className="relative">
-                                        <div className="w-3 h-3 bg-green-500 rounded-full" />
-                                        <div className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-20" />
-                                    </div>
-                                    <div>
-                                        <h5 className="text-sm font-bold text-slate-800 md:text-base">Sistem Informasi Desa Online</h5>
-                                        <p className="text-xs text-slate-400 md:text-sm">Website publik dapat diakses oleh masyarakat</p>
-                                    </div>
-                                </div>
-                                <Link href="/" target="_blank">
-                                    <div className="w-8 h-8 md:w-10 md:h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-400 hover:bg-emerald-50 hover:text-emerald-600 transition-all">
-                                        <ChevronRight className="w-5 h-5" />
-                                    </div>
-                                </Link>
-                            </div>
+                        <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 text-sm font-medium text-white shadow-sm">
+                            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse outline outline-4 outline-emerald-500/20" />
+                            {currentDate}
                         </div>
                     </div>
 
+                    {/* Abstract Shapes */}
+                    <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
+                    <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl" />
                 </div>
-            </AppContent>
-        </AppShell>
+
+                {/* Stats Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <StatsCard
+                        title="Total Penduduk"
+                        value={stats.demographics}
+                        icon={Users}
+                        trend="+12%"
+                        trendLabel="bulan ini"
+                        theme="emerald"
+                    />
+                    <StatsCard
+                        title="Berita & Artikel"
+                        value={stats.posts}
+                        icon={FileText}
+                        trend="+4"
+                        trendLabel="minggu ini"
+                        theme="blue"
+                    />
+                    <StatsCard
+                        title="Potensi Desa"
+                        value={stats.potentials}
+                        icon={Mountain}
+                        trend="Stabil"
+                        trendLabel="data"
+                        theme="teal"
+                    />
+                    <StatsCard
+                        title="Pengguna Sistem"
+                        value={stats.users}
+                        icon={UserCheck}
+                        trend="Aktif"
+                        trendLabel="user admin"
+                        theme="orange"
+                    />
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                    {/* Main Content (2/3) */}
+                    <div className="lg:col-span-2 space-y-8">
+
+                        {/* Quick Access */}
+                        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
+                            <h3 className="font-semibold text-slate-800 mb-6 flex items-center gap-2 text-lg">
+                                <span className="p-1.5 bg-emerald-100 rounded-lg text-emerald-600">
+                                    <LayoutGrid className="w-5 h-5" />
+                                </span>
+                                Akses Cepat
+                            </h3>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <QuickAction href="/dashboard/posts/create" icon={FileText} label="Tulis Berita" color="blue" />
+                                <QuickAction href="/dashboard/developments/create" icon={Building} label="Input Proyek" color="orange" />
+                                <QuickAction href="/dashboard/potentials/create" icon={Mountain} label="Tambah Potensi" color="emerald" />
+                                <QuickAction href="/dashboard/village-officials/create" icon={UserCheck} label="Tambah Perangkat" color="purple" />
+                                <QuickAction href="/dashboard/demographics/create" icon={Users} label="Input Penduduk" color="indigo" />
+                                <QuickAction href="/dashboard/village-stats" icon={PieChart} label="Update Statistik" color="teal" />
+                                <QuickAction href="/dashboard/institutions" icon={Building2} label="Kelola Lembaga" color="slate" />
+                                <QuickAction href="/dashboard/services" icon={ClipboardList} label="Layanan Surat" color="rose" />
+                            </div>
+                        </div>
+
+                        {/* Recent News Table */}
+                        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+                            <div className="p-6 border-b border-slate-50 flex items-center justify-between">
+                                <h3 className="font-semibold text-slate-800 text-lg">Publikasi Terbaru</h3>
+                                <Link href="/dashboard/posts" className="text-sm font-medium text-emerald-600 hover:text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-full hover:bg-emerald-100 transition-colors">
+                                    Lihat Semua
+                                </Link>
+                            </div>
+                            <div className="divide-y divide-slate-50">
+                                {latest_posts.length > 0 ? (
+                                    latest_posts.map((post) => (
+                                        <div key={post.id} className="p-4 flex items-center justify-between hover:bg-slate-50 transition-colors group">
+                                            <div className="flex items-center gap-4">
+                                                <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300 shadow-sm">
+                                                    <FileText className="w-6 h-6" />
+                                                </div>
+                                                <div>
+                                                    <h4 className="font-medium text-slate-900 group-hover:text-emerald-700 transition-colors line-clamp-1 text-base">{post.title}</h4>
+                                                    <div className="flex items-center gap-3 mt-1.5">
+                                                        <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 font-semibold border border-slate-200">
+                                                            {post.category}
+                                                        </span>
+                                                        <span className="text-xs text-slate-400">
+                                                            {new Date(post.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <Link href={`/dashboard/posts/${post.id}/edit`} className="p-2 text-slate-300 hover:text-emerald-600 hover:bg-emerald-50 rounded-full transition-all">
+                                                <ChevronRight className="w-5 h-5" />
+                                            </Link>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="p-12 text-center">
+                                        <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-300">
+                                            <FileText className="w-8 h-8" />
+                                        </div>
+                                        <p className="text-slate-500 text-lg font-medium">Belum ada konten</p>
+                                        <p className="text-slate-400 text-sm mt-1">Mulai dengan membuat berita baru.</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {/* Sidebar Area (1/3) */}
+                    <div className="space-y-8">
+
+                        {/* Demographics Summary */}
+                        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 relative overflow-hidden">
+                            {/* Decorative header bg */}
+                            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-500" />
+
+                            <h3 className="font-semibold text-slate-800 mb-6 text-lg">Ringkasan Demografi</h3>
+                            <div className="space-y-5">
+                                {demographics_data.map((item, idx) => {
+                                    const total = demographics_data.reduce((acc, curr) => acc + curr.value, 0);
+                                    const percentage = total > 0 ? Math.round((item.value / total) * 100) : 0;
+                                    const barColors = ['bg-indigo-500', 'bg-pink-500', 'bg-amber-500', 'bg-emerald-500'];
+                                    const color = barColors[idx % barColors.length];
+
+                                    return (
+                                        <div key={item.id}>
+                                            <div className="flex justify-between text-sm mb-2">
+                                                <span className="text-slate-600 font-medium">{item.label}</span>
+                                                <span className="font-bold text-slate-900">{item.value.toLocaleString('id-ID')}</span>
+                                            </div>
+                                            <div className="h-2.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                                                <div className={`h-full ${color} rounded-full`} style={{ width: `${percentage}%` }} />
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                            <div className="mt-8 pt-6 border-t border-slate-50">
+                                <Link href="/dashboard/demographics" className="block w-full py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-semibold text-sm rounded-xl text-center transition-colors">
+                                    Kelola Data Penduduk
+                                </Link>
+                            </div>
+                        </div>
+
+                        {/* System Status */}
+                        <div className="rounded-2xl p-1 bg-gradient-to-br from-emerald-500 to-teal-700 shadow-lg">
+                            <div className="bg-slate-900/90 rounded-xl p-6 text-white backdrop-blur-sm relative overflow-hidden">
+                                <div className="relative z-10">
+                                    <h3 className="font-semibold text-lg mb-1">Website Publik</h3>
+                                    <p className="text-emerald-100/70 text-sm mb-5">Sistem berjalan normal dan dapat diakses.</p>
+                                    <div className="flex items-center gap-3 mb-6 bg-white/5 p-3 rounded-lg border border-white/10">
+                                        <span className="relative flex h-3 w-3">
+                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                            <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                                        </span>
+                                        <span className="text-sm font-bold text-emerald-400 tracking-wide">SYSTEM ONLINE</span>
+                                    </div>
+                                    <Link href="/" target="_blank" className="inline-flex items-center justify-center w-full gap-2 text-sm font-medium text-slate-900 bg-white hover:bg-emerald-50 px-4 py-3 rounded-lg transition-colors shadow-lg">
+                                        Kunjungi Website <ChevronRight className="w-4 h-4" />
+                                    </Link>
+                                </div>
+                                <div className="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </AppSidebarLayout>
+    );
+}
+
+function StatsCard({ title, value, icon: Icon, trend, trendLabel, theme = 'emerald' }: any) {
+    // Definisi tema warna untuk card
+    const themes: Record<string, string> = {
+        emerald: 'from-emerald-500 to-green-600 text-white shadow-emerald-900/10',
+        blue: 'from-blue-500 to-indigo-600 text-white shadow-blue-900/10',
+        teal: 'from-teal-500 to-emerald-600 text-white shadow-teal-900/10',
+        orange: 'from-orange-500 to-amber-500 text-white shadow-orange-900/10',
+    };
+
+    const bgClass = themes[theme] || themes.emerald;
+
+    return (
+        <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${bgClass} p-6 shadow-xl transition-transform hover:-translate-y-1`}>
+            {/* Background Decoration */}
+            <div className="absolute -top-4 -right-4 h-24 w-24 rounded-full bg-white/10 blur-2xl" />
+            <div className="absolute bottom-0 left-0 h-20 w-20 rounded-full bg-black/5 blur-xl" />
+
+            <div className="relative z-10 flex flex-col h-full justify-between">
+                <div className="flex items-start justify-between mb-4">
+                    <div className="p-2.5 rounded-xl bg-white/20 backdrop-blur-sm shadow-inner ring-1 ring-white/30">
+                        <Icon className="w-6 h-6 text-white" />
+                    </div>
+                    {trend && (
+                        <span className="inline-flex items-center gap-1 text-xs font-bold text-white/90 bg-black/10 px-2.5 py-1 rounded-lg backdrop-blur-md">
+                            <TrendingUp className="w-3 h-3" /> {trend}
+                        </span>
+                    )}
+                </div>
+                <div>
+                    <p className="text-sm font-medium text-white/80">{title}</p>
+                    <h3 className="text-3xl font-bold text-white mt-1">{value.toLocaleString('id-ID')}</h3>
+                    {trendLabel && <p className="text-xs text-white/60 mt-1 capitalize font-medium tracking-wide">{trendLabel}</p>}
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function QuickAction({ href, icon: Icon, label, color }: any) {
+    const colorClasses: Record<string, string> = {
+        blue: 'text-blue-600 bg-blue-50 border-blue-100 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600',
+        orange: 'text-orange-600 bg-orange-50 border-orange-100 group-hover:bg-orange-600 group-hover:text-white group-hover:border-orange-600',
+        emerald: 'text-emerald-600 bg-emerald-50 border-emerald-100 group-hover:bg-emerald-600 group-hover:text-white group-hover:border-emerald-600',
+        purple: 'text-purple-600 bg-purple-50 border-purple-100 group-hover:bg-purple-600 group-hover:text-white group-hover:border-purple-600',
+        indigo: 'text-indigo-600 bg-indigo-50 border-indigo-100 group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-600',
+        teal: 'text-teal-600 bg-teal-50 border-teal-100 group-hover:bg-teal-600 group-hover:text-white group-hover:border-teal-600',
+        slate: 'text-slate-600 bg-slate-50 border-slate-100 group-hover:bg-slate-600 group-hover:text-white group-hover:border-slate-600',
+        rose: 'text-rose-600 bg-rose-50 border-rose-100 group-hover:bg-rose-600 group-hover:text-white group-hover:border-rose-600',
+    };
+
+    return (
+        <Link href={href} className="group flex flex-col items-center justify-center gap-3 p-5 rounded-2xl bg-white border border-slate-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+            <div className={`p-4 rounded-xl transition-all duration-300 border ${colorClasses[color]}`}>
+                <Icon className="w-6 h-6" />
+            </div>
+            <span className="text-xs font-semibold text-slate-600 group-hover:text-slate-900 text-center">{label}</span>
+        </Link>
     );
 }

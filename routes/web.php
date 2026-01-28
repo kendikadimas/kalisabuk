@@ -5,6 +5,8 @@ use Inertia\Inertia;
 use Laravel\Fortify\Features;
 
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\Public\DevelopmentController as PublicDevelopmentController;
+use App\Http\Controllers\Public\ServiceController as PublicServiceController;
 
 Route::get('/', [PublicController::class, 'home'])->name('home');
 Route::get('/profile', [PublicController::class, 'profile'])->name('profile');
@@ -13,6 +15,13 @@ Route::get('/data', [PublicController::class, 'data'])->name('data');
 Route::get('/institutions', [PublicController::class, 'institutions'])->name('institutions');
 Route::get('/news', [PublicController::class, 'news'])->name('news.index');
 Route::get('/news/{slug}', [PublicController::class, 'newsShow'])->name('news.show');
+
+Route::get('/pembangunan', [PublicDevelopmentController::class, 'index'])->name('public.developments.index');
+Route::get('/pembangunan/{slug}', [PublicDevelopmentController::class, 'show'])->name('public.developments.show');
+
+Route::get('/layanan', [PublicServiceController::class, 'index'])->name('public.services.index');
+Route::post('/layanan', [PublicServiceController::class, 'store'])->name('public.services.store');
+Route::get('/layanan/sukses/{ticket_code}', [PublicServiceController::class, 'success'])->name('public.services.success');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
@@ -33,7 +42,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('potentials', \App\Http\Controllers\Admin\PotentialController::class);
         Route::resource('institutions', \App\Http\Controllers\Admin\InstitutionController::class);
         Route::resource('demographics', \App\Http\Controllers\Admin\DemographicController::class);
+        Route::resource('developments', \App\Http\Controllers\Admin\DevelopmentController::class);
+        Route::resource('services', \App\Http\Controllers\Admin\ServiceTypeController::class); // Managing types
+        Route::resource('service-requests', \App\Http\Controllers\Admin\ServiceRequestController::class);
+        Route::resource('village-officials', \App\Http\Controllers\Admin\VillageOfficialController::class);
+        Route::resource('village-stats', \App\Http\Controllers\Admin\VillageStatController::class);
+        Route::resource('announcements', \App\Http\Controllers\Admin\AnnouncementController::class);
         Route::post('stats/general', [\App\Http\Controllers\Admin\DemographicController::class, 'updateGeneralStats'])->name('stats.general.update');
+        
+        // User Management
+        Route::get('users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
+        Route::post('users/{user}/role', [\App\Http\Controllers\Admin\UserController::class, 'updateRole'])->name('users.role');
+        Route::delete('users/{user}', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('users.destroy');
     });
 });
 

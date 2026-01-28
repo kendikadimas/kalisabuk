@@ -21,6 +21,7 @@ export default function NewsCard({ post }: { post: Post }) {
                         className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                         src={post.image_path ? (post.image_path.startsWith('http') ? post.image_path : `/storage/${post.image_path}`) : 'https://placehold.co/600x400?text=Berita+Desa'}
                         alt={post.title}
+                        loading="lazy"
                     />
                 </div>
                 {/* Gradient Overlay on Hover */}

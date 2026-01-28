@@ -17,6 +17,7 @@ export default function Institutions({ institutions }: InstitutionsProps) {
                     <img
                         src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2000&auto=format&fit=crop"
                         alt="Lembaga Desa"
+                        loading="lazy"
                         className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-emerald-950/80"></div>

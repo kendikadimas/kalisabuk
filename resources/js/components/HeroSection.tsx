@@ -1,78 +1,122 @@
+import { useState, useEffect } from 'react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+
+const images = [
+    "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2000",
+    "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2000",
+    "https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=2000"
+];
+
 export default function HeroSection() {
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    // Auto-slide effect
+    useEffect(() => {
+        const interval = setInterval(() => {
+            nextSlide();
+        }, 5000); // Change every 5 seconds
+
+        return () => clearInterval(interval);
+    }, [currentIndex]);
+
+    const nextSlide = () => {
+        setCurrentIndex((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
+    };
+
+    const prevSlide = () => {
+        setCurrentIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
+    };
+
     return (
-        <div className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-slate-50 overflow-hidden">
-            {/* Background Pattern */}
-            <div className="absolute inset-0 -z-10 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#059669 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
+        <div className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden bg-slate-900">
+            {/* Background Images with Fade Transition */}
+            {images.map((img, index) => (
+                <div
+                    key={index}
+                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentIndex ? 'opacity-100' : 'opacity-0'
+                        }`}
+                >
+                    <img
+                        src={img}
+                        alt={`Slide ${index + 1}`}
+                        loading={index === 0 ? "eager" : "lazy"}
+                        className="w-full h-full object-cover"
+                    />
+                    {/* Gradient Overlay for Text Readability - Includes Top Gradient for Navbar */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-transparent h-32"></div>
+                </div>
+            ))}
 
-            <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
-                <div className="lg:grid lg:grid-cols-12 lg:gap-16 items-center">
-                    {/* Text Section */}
-                    <div className="lg:col-span-6 text-center lg:text-left">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-emerald-100 text-emerald-800 text-xs font-bold tracking-widest uppercase mb-8 shadow-sm">
-                            <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                            </span>
-                            Website Resmi Desa
-                        </div>
-                        <h1 className="text-5xl md:text-7xl font-black font-serif text-slate-900 tracking-tight mb-8 leading-[1.1]">
-                            Maju Bersama <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-emerald-900">
-                                Desa Kalisabuk.
-                            </span>
-                        </h1>
-                        <p className="text-lg md:text-xl text-slate-600 mb-10 leading-relaxed max-w-lg mx-auto lg:mx-0 font-normal">
-                            Pusat informasi pemerintahan, pelayanan publik, dan potensi desa yang transparan, akuntabel, ve inovatif.
-                        </p>
-                        <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                            <a
-                                href="#news"
-                                className="px-8 py-4 bg-emerald-900 text-white rounded-full font-bold text-sm tracking-wide hover:bg-emerald-800 transition-all shadow-xl shadow-emerald-900/20 hover:-translate-y-1"
-                            >
-                                Jelajahi Berita
-                            </a>
-                            <a
-                                href="/profile"
-                                className="px-8 py-4 bg-white text-slate-900 border border-slate-200 rounded-full font-bold text-sm tracking-wide hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm hover:shadow-md"
-                            >
-                                Profil Desa
-                            </a>
-                        </div>
+            {/* Content Container */}
+            <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8">
+                <div className="max-w-3xl">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold tracking-widest uppercase mb-6 shadow-lg">
+                        <span className="relative flex h-2 w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+                        </span>
+                        Website Resmi Desa
                     </div>
 
-                    {/* Image Section */}
-                    <div className="lg:col-span-6 mt-20 lg:mt-0 relative">
-                        {/* Decorative Blur */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-emerald-500/10 rounded-full blur-[100px] -z-10"></div>
+                    <h1 className="text-5xl lg:text-7xl font-black font-serif text-white tracking-tight mb-6 leading-[1.1] drop-shadow-2xl">
+                        Maju Bersama <br />
+                        <span className="text-white underline decoration-emerald-500 decoration-4 underline-offset-4">Desa Kalisabuk.</span>
+                    </h1>
 
-                        <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl shadow-emerald-900/10">
-                            <img
-                                src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013&auto=format&fit=crop"
-                                alt="Desa Kalisabuk"
-                                className="w-full aspect-[4/3] object-cover hover:scale-105 transition-transform duration-[1.5s]"
-                            />
+                    <p className="text-lg md:text-xl text-white mb-10 leading-relaxed max-w-xl font-normal drop-shadow-md">
+                        Pusat informasi pemerintahan, pelayanan publik, dan potensi desa yang transparan, akuntabel, dan inovatif.
+                    </p>
 
-                            {/* Floating Stats Card - Example */}
-                            <div className="absolute bottom-8 left-8 right-8 bg-white/90 backdrop-blur-md p-6 rounded-2xl border border-white/50 shadow-lg hidden md:block">
-                                <div className="flex justify-between items-center">
-                                    <div>
-                                        <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Populasi</p>
-                                        <p className="text-2xl font-black text-slate-900">12,500+</p>
-                                    </div>
-                                    <div className="h-10 w-px bg-slate-200"></div>
-                                    <div>
-                                        <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Luas Wilayah</p>
-                                        <p className="text-2xl font-black text-slate-900">8.5 km²</p>
-                                    </div>
-                                    <div className="h-10 w-px bg-slate-200"></div>
-                                    <div>
-                                        <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Tahun</p>
-                                        <p className="text-2xl font-black text-slate-900">2024</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div className="flex flex-col sm:flex-row gap-4">
+                        <a
+                            href="#news"
+                            className="px-8 py-4 bg-emerald-600 text-white rounded-full font-bold text-sm tracking-wide hover:bg-emerald-500 transition-all shadow-xl shadow-emerald-900/20 hover:-translate-y-1 text-center"
+                        >
+                            Jelajahi Berita
+                        </a>
+                        <a
+                            href="/profile"
+                            className="px-8 py-4 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-full font-bold text-sm tracking-wide hover:bg-white/20 transition-all shadow-sm hover:shadow-md text-center"
+                        >
+                            Profil Desa
+                        </a>
                     </div>
+                </div>
+            </div>
+
+            {/* Navigation Buttons */}
+            <div className="absolute bottom-10 left-0 right-0 z-20 px-6 lg:px-8 max-w-7xl mx-auto flex justify-between items-end">
+                {/* Dots Indicators */}
+                <div className="flex gap-2 mb-2">
+                    {images.map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => setCurrentIndex(index)}
+                            className={`h-1.5 rounded-full transition-all duration-300 ${index === currentIndex ? 'w-8 bg-emerald-400' : 'w-2 bg-white/30 hover:bg-white/50'
+                                }`}
+                            aria-label={`Go to slide ${index + 1}`}
+                        />
+                    ))}
+                </div>
+
+                {/* Arrow Controls */}
+                <div className="flex gap-4">
+                    <button
+                        onClick={prevSlide}
+                        className="p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-emerald-600 hover:border-emerald-500 transition-all group"
+                        aria-label="Previous Slide"
+                    >
+                        <ArrowLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
+                    </button>
+                    <button
+                        onClick={nextSlide}
+                        className="p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-emerald-600 hover:border-emerald-500 transition-all group"
+                        aria-label="Next Slide"
+                    >
+                        <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                    </button>
                 </div>
             </div>
         </div>

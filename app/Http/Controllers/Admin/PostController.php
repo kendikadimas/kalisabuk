@@ -40,7 +40,7 @@ class PostController extends Controller
             'content' => 'required|string',
             'category' => 'required|in:news,announcement',
             'published_at' => 'nullable|date',
-            'image' => 'required|image|max:2048',
+            'image' => 'required|image|max:10240',
         ]);
 
         $path = null;
@@ -80,7 +80,7 @@ class PostController extends Controller
             'content' => 'required|string',
             'category' => 'required|in:news,announcement',
             'published_at' => 'nullable|date',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:10240',
         ]);
 
         if ($request->hasFile('image')) {

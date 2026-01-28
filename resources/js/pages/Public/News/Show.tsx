@@ -50,8 +50,7 @@ export default function Show({ post, related }: NewsShowProps) {
                                 <div className="aspect-[16/9] w-full mb-10 overflow-hidden rounded-2xl bg-slate-100 border border-slate-100 shadow-inner">
                                     <img
                                         src={post.image_path ? (post.image_path.startsWith('http') ? post.image_path : `/storage/${post.image_path}`) : 'https://placehold.co/1200x800/f1f5f9/94a3b8?text=Berita+Desa'}
-                                        alt={post.title}
-                                        className="h-full w-full object-cover"
+                                        alt={post.title}                                        loading="lazy"                                        className="h-full w-full object-cover"
                                     />
                                 </div>
 
