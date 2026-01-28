@@ -13,7 +13,7 @@ import { route } from 'ziggy-js';
 export default function Create() {
     const breadcrumbs: BreadcrumbItem[] = [
         { title: 'Dashboard', href: '/dashboard' },
-        { title: 'Pengumuman', href: route('admin.announcements.index') },
+        { title: 'Pengumuman', href: route('announcements.index') },
         { title: 'Tambah', href: '#' },
     ];
 
@@ -35,7 +35,7 @@ export default function Create() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        post(route('admin.announcements.store'));
+        post(route('announcements.store'));
     };
 
     return (
@@ -46,7 +46,7 @@ export default function Create() {
                 {/* Header */}
                 <div className="flex items-center gap-4">
                     <Link
-                        href={route('admin.announcements.index')}
+                        href={route('announcements.index')}
                         className="p-2.5 rounded-xl bg-white border border-slate-200 text-slate-500 hover:text-emerald-600 hover:border-emerald-200 transition-all shadow-sm"
                     >
                         <ArrowLeft className="w-5 h-5" />
@@ -171,7 +171,7 @@ export default function Create() {
 
                                 <div className="flex gap-4">
                                     <Link
-                                        href={route('admin.announcements.index')}
+                                        href={route('announcements.index')}
                                         className="px-6 py-2.5 rounded-xl border border-slate-200 text-slate-700 font-medium hover:bg-slate-50 transition-colors"
                                     >
                                         Batal

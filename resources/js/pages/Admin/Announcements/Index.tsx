@@ -36,7 +36,7 @@ export default function Index({ announcements }: Props) {
     ];
 
     const handleDelete = (id: number) => {
-        router.delete(route('admin.announcements.destroy', id));
+        router.delete(route('announcements.destroy', id));
     };
 
     const getTypeIcon = (type: string) => {
@@ -77,7 +77,7 @@ export default function Index({ announcements }: Props) {
                         </p>
                     </div>
                     <div className="flex items-center gap-2">
-                        <Link href={route('admin.announcements.create')}>
+                        <Link href={route('announcements.create')}>
                             <Button className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-600/20 rounded-xl">
                                 <Plus className="w-4 h-4 mr-2" />
                                 Buat Pengumuman
@@ -161,7 +161,7 @@ export default function Index({ announcements }: Props) {
                                                     </DropdownMenuTrigger>
                                                     <DropdownMenuContent align="end">
                                                         <DropdownMenuLabel>Aksi</DropdownMenuLabel>
-                                                        <Link href={route('admin.announcements.edit', announcement.id)}>
+                                                        <Link href={route('announcements.edit', announcement.id)}>
                                                             <DropdownMenuItem>
                                                                 <Edit className="mr-2 h-4 w-4" />
                                                                 Edit
@@ -224,8 +224,8 @@ export default function Index({ announcements }: Props) {
                                             key={index}
                                             href={link.url || '#'}
                                             className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${link.active
-                                                    ? 'bg-emerald-600 text-white shadow-sm'
-                                                    : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
+                                                ? 'bg-emerald-600 text-white shadow-sm'
+                                                : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
                                                 } ${!link.url && 'opacity-50 cursor-not-allowed'}`}
                                             dangerouslySetInnerHTML={{ __html: link.label }}
                                         />
