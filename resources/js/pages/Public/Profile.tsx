@@ -1,7 +1,7 @@
 import { Head } from '@inertiajs/react';
 import PublicLayout from '@/layouts/PublicLayout';
 import PageHeader from '@/components/PageHeader';
-import { MapPin, Users, Award, Target, History } from 'lucide-react';
+import { MapPin, Users, Award, Target, History, Building2 } from 'lucide-react';
 
 interface ProfileProps {
     villageInfo: any;
@@ -207,6 +207,90 @@ export default function Profile({ villageInfo, institutions }: ProfileProps) {
                     </div>
                 </section>
             )}
+
+            {/* Fasilitas Desa Section */}
+            <section className="py-24 bg-slate-50 border-t border-slate-200">
+                <div className="max-w-7xl mx-auto px-6 lg:px-8">
+                    <div className="text-center max-w-2xl mx-auto mb-16">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-bold tracking-widest uppercase mb-6">
+                            <Building2 className="w-4 h-4" />
+                            Sarana & Prasarana
+                        </div>
+                        <h2 className="text-4xl font-black font-serif text-slate-900 mb-6 tracking-tight">Fasilitas Desa</h2>
+                        <p className="text-slate-500 text-lg">
+                            Desa Kalisabuk dilengkapi dengan berbagai fasilitas pendukung untuk menunjang kesejahteraan dan kebutuhan masyarakat.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {/* Pendidikan */}
+                        <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
+                            <div className="w-14 h-14 bg-indigo-100 rounded-2xl flex items-center justify-center text-indigo-600 mb-6">
+                                <Award className="w-7 h-7" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">Pendidikan</h3>
+                            <ul className="space-y-4">
+                                {[
+                                    'SD Negeri 1 Kalisabuk',
+                                    'SD Negeri 2 Kalisabuk',
+                                    'MI Ma\'arif Kalisabuk',
+                                    'TK/PAUD Diponegoro',
+                                    'TK Pertiwi'
+                                ].map((item, i) => (
+                                    <li key={i} className="flex items-center gap-3 text-slate-600 border-b border-slate-50 pb-3 last:border-0 last:pb-0">
+                                        <div className="w-2 h-2 rounded-full bg-indigo-400"></div>
+                                        {item}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Kesehatan */}
+                        <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
+                            <div className="w-14 h-14 bg-rose-100 rounded-2xl flex items-center justify-center text-rose-600 mb-6">
+                                <Target className="w-7 h-7" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">Kesehatan</h3>
+                            <ul className="space-y-4">
+                                {[
+                                    'Polindes Kalisabuk',
+                                    'Posyandu Melati 1 (Dusun Gumelar)',
+                                    'Posyandu Melati 2 (Dusun Kalisabuk)',
+                                    'Posyandu Melati 3 (Dusun Brondong)',
+                                    'Posyandu Lansia Sejahtera'
+                                ].map((item, i) => (
+                                    <li key={i} className="flex items-center gap-3 text-slate-600 border-b border-slate-50 pb-3 last:border-0 last:pb-0">
+                                        <div className="w-2 h-2 rounded-full bg-rose-400"></div>
+                                        {item}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Fasilitas Umum */}
+                        <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
+                            <div className="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 mb-6">
+                                <Users className="w-7 h-7" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">Fasilitas Umum</h3>
+                            <ul className="space-y-4">
+                                {[
+                                    'Masjid Jami\' Baiturrahman',
+                                    'Musholla Al-Ikhlas',
+                                    'Lapangan Olahraga Desa',
+                                    'Gedung Serbaguna',
+                                    'Pasar Desa Kalisabuk'
+                                ].map((item, i) => (
+                                    <li key={i} className="flex items-center gap-3 text-slate-600 border-b border-slate-50 pb-3 last:border-0 last:pb-0">
+                                        <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
+                                        {item}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
         </PublicLayout>
     );

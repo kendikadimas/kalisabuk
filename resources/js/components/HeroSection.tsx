@@ -8,8 +8,20 @@ const images = [
     "https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=2000"
 ];
 
-export default function HeroSection() {
+interface HeroSectionProps {
+    slides?: any[];
+}
+
+const defaultSlides = [
+    { image_path: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013&auto=format&fit=crop" },
+    { image_path: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2000" },
+    { image_path: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2000" },
+    { image_path: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=2000" }
+];
+
+export default function HeroSection({ slides }: HeroSectionProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const heroSlides = slides && slides.length > 0 ? slides : defaultSlides;
 
     // Auto-slide effect
     useEffect(() => {
@@ -18,28 +30,36 @@ export default function HeroSection() {
         }, 5000); // Change every 5 seconds
 
         return () => clearInterval(interval);
-    }, [currentIndex]);
+    }, [currentIndex, heroSlides]);
 
     const nextSlide = () => {
-        setCurrentIndex((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
+        setCurrentIndex((prevIndex) => (prevIndex === heroSlides.length - 1 ? 0 : prevIndex + 1));
     };
 
     const prevSlide = () => {
-        setCurrentIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
+        setCurrentIndex((prevIndex) => (prevIndex === 0 ? heroSlides.length - 1 : prevIndex - 1));
+    };
+
+    const currentSlide = heroSlides[currentIndex];
+
+    // Helper to get image URL
+    const getImageUrl = (path: string) => {
+        if (path.startsWith('http')) return path;
+        return `/storage/${path}`;
     };
 
     return (
         <div className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden bg-slate-900">
             {/* Background Images with Fade Transition */}
-            {images.map((img, index) => (
+            {heroSlides.map((slide, index) => (
                 <div
                     key={index}
                     className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentIndex ? 'opacity-100' : 'opacity-0'
                         }`}
                 >
                     <img
-                        src={img}
-                        alt={`Slide ${index + 1}`}
+                        src={getImageUrl(slide.image_path)}
+                        alt={slide.title || `Slide ${index + 1}`}
                         loading={index === 0 ? "eager" : "lazy"}
                         className="w-full h-full object-cover"
                     />
@@ -61,12 +81,18 @@ export default function HeroSection() {
                     </div>
 
                     <h1 className="text-5xl lg:text-7xl font-black font-serif text-white tracking-tight mb-6 leading-[1.1] drop-shadow-2xl">
-                        Maju Bersama <br />
-                        <span className="text-white underline decoration-emerald-500 decoration-4 underline-offset-4">Desa Kalisabuk.</span>
+                        {currentSlide.title ? (
+                            <span>{currentSlide.title}</span>
+                        ) : (
+                            <>
+                                Maju Bersama <br />
+                                <span className="text-white underline decoration-emerald-500 decoration-4 underline-offset-4">Desa Kalisabuk.</span>
+                            </>
+                        )}
                     </h1>
 
                     <p className="text-lg md:text-xl text-white mb-10 leading-relaxed max-w-xl font-normal drop-shadow-md">
-                        Pusat informasi pemerintahan, pelayanan publik, dan potensi desa yang transparan, akuntabel, dan inovatif.
+                        {currentSlide.subtitle || "Pusat informasi pemerintahan, pelayanan publik, dan potensi desa yang transparan, akuntabel, dan inovatif."}
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4">
@@ -90,7 +116,7 @@ export default function HeroSection() {
             <div className="absolute bottom-10 left-0 right-0 z-20 px-6 lg:px-8 max-w-7xl mx-auto flex justify-between items-end">
                 {/* Dots Indicators */}
                 <div className="flex gap-2 mb-2">
-                    {images.map((_, index) => (
+                    {heroSlides.map((_, index) => (
                         <button
                             key={index}
                             onClick={() => setCurrentIndex(index)}

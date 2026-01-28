@@ -15,6 +15,7 @@ Route::get('/data', [PublicController::class, 'data'])->name('data');
 Route::get('/institutions', [PublicController::class, 'institutions'])->name('institutions');
 Route::get('/news', [PublicController::class, 'news'])->name('news.index');
 Route::get('/news/{slug}', [PublicController::class, 'newsShow'])->name('news.show');
+Route::post('/news/{slug}/like', [PublicController::class, 'likePost'])->name('news.like');
 
 Route::get('/pembangunan', [PublicDevelopmentController::class, 'index'])->name('public.developments.index');
 Route::get('/pembangunan/{slug}', [PublicDevelopmentController::class, 'show'])->name('public.developments.show');
@@ -47,9 +48,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('service-requests', \App\Http\Controllers\Admin\ServiceRequestController::class);
         Route::resource('village-officials', \App\Http\Controllers\Admin\VillageOfficialController::class);
         Route::resource('village-stats', \App\Http\Controllers\Admin\VillageStatController::class);
+        Route::resource('hero-slides', \App\Http\Controllers\Admin\HeroSlideController::class);
         Route::resource('announcements', \App\Http\Controllers\Admin\AnnouncementController::class);
         Route::post('stats/general', [\App\Http\Controllers\Admin\DemographicController::class, 'updateGeneralStats'])->name('stats.general.update');
-        
+
         // User Management
         Route::get('users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
         Route::post('users/{user}/role', [\App\Http\Controllers\Admin\UserController::class, 'updateRole'])->name('users.role');

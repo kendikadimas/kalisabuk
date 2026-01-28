@@ -65,31 +65,7 @@ export default function Potentials({ potentials }: PotentialsProps) {
                         )}
                     </div>
 
-                    {/* Investment CTA */}
-                    <div className="mt-32 relative group">
-                        <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-teal-500 rounded-[3rem] transform rotate-1 group-hover:rotate-0 transition-transform duration-500 opacity-20 blur-xl"></div>
-                        <div className="relative bg-emerald-900 rounded-[2.5rem] p-10 md:p-20 text-center shadow-2xl overflow-hidden isolate">
-                            {/* Glow Effects */}
-                            <div className="absolute top-0 right-0 -mr-32 -mt-32 w-96 h-96 bg-emerald-500/20 rounded-full blur-[100px]"></div>
-                            <div className="absolute bottom-0 left-0 -ml-32 -mb-32 w-96 h-96 bg-teal-500/20 rounded-full blur-[100px]"></div>
 
-                            <div className="relative z-10 max-w-3xl mx-auto">
-                                <div className="inline-flex items-center justify-center p-3 bg-white/10 rounded-2xl mb-8 backdrop-blur-sm border border-white/10">
-                                    <Sparkles className="w-8 h-8 text-emerald-300" />
-                                </div>
-                                <h2 className="text-4xl md:text-5xl font-black font-serif text-white mb-8 leading-tight">
-                                    Tertarik Berinvestasi <br />di <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-200 to-teal-200">Kalisabuk</span>?
-                                </h2>
-                                <p className="text-xl text-emerald-100/90 mb-12 font-medium leading-relaxed max-w-2xl mx-auto">
-                                    Kami membuka peluang kerjasama seluas-luasnya untuk pengembangan potensi desa yang berkelanjutan dan saling menguntungkan.
-                                </p>
-                                <button className="inline-flex items-center gap-2 px-10 py-5 bg-white text-emerald-900 font-bold rounded-full hover:bg-emerald-50 transition-all hover:scale-105 shadow-xl group">
-                                    <span>Hubungi BUMDes</span>
-                                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </PublicLayout>

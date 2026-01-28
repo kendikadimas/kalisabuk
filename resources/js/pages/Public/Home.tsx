@@ -3,7 +3,7 @@ import PublicLayout from '@/layouts/PublicLayout';
 import HeroSection from '@/components/HeroSection';
 import SectionTitle from '@/components/SectionTitle';
 import NewsCard from '@/components/NewsCard';
-import { Users, MapPin, Building2, CheckCircle, ArrowRight, Calendar, MapPinned, Bell, AlertCircle, Info, ChevronLeft, ChevronRight, UserCheck, Phone, Mail } from 'lucide-react';
+import { Users, MapPin, Building2, CheckCircle, ArrowRight, Calendar, MapPinned, Bell, AlertCircle, Info, ChevronLeft, ChevronRight, UserCheck, Phone, Mail, Tag, ShoppingBag, Mountain } from 'lucide-react';
 import { useState, useRef } from 'react';
 
 interface HomeProps {
@@ -14,13 +14,14 @@ interface HomeProps {
     featuredPotentials: any[];
     announcements: any[];
     developments: any[];
+    heroSlides: any[];
     stats: {
         population: number;
         area: string;
     };
 }
 
-export default function Home({ villageInfo, villageHead, villageOfficials, latestNews, featuredPotentials, announcements, developments, stats }: HomeProps) {
+export default function Home({ villageInfo, villageHead, villageOfficials, latestNews, featuredPotentials, announcements, developments, stats, heroSlides }: HomeProps) {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [currentOfficialSlide, setCurrentOfficialSlide] = useState(0);
     const carouselRef = useRef<HTMLDivElement>(null);
@@ -72,7 +73,57 @@ export default function Home({ villageInfo, villageHead, villageOfficials, lates
         <PublicLayout headerStyle="light">
             <Head title="Beranda - Desa Kalisabuk" />
 
-            <HeroSection />
+            <HeroSection slides={heroSlides} />
+
+            {/* Introduction Section */}
+            <section className="py-20 relative overflow-hidden bg-slate-50">
+                {/* Decorative background elements */}
+                <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+                    <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-emerald-100/50 blur-3xl"></div>
+                    <div className="absolute bottom-[10%] right-[5%] w-[30%] h-[30%] rounded-full bg-blue-100/50 blur-3xl"></div>
+                </div>
+
+                <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+                    <div className="text-center max-w-3xl mx-auto">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold tracking-widest uppercase mb-6">
+                            Tentang Kami
+                        </div>
+                        <h2 className="text-3xl md:text-4xl font-black font-serif text-slate-900 mb-6 leading-tight">
+                            Selamat Datang di <span className="text-emerald-600">Desa Kalisabuk</span>
+                        </h2>
+                        <div className="prose prose-lg prose-slate mx-auto text-slate-600 leading-relaxed md:px-8">
+                            <p>
+                                Desa Kalisabuk adalah wujud harmoni antara alam yang asri dan masyarakat yang guyub rukun.
+                                Terletak di kawasan yang strategis, kami terus berinovasi membangun desa yang mandiri,
+                                maju, dan sejahtera dengan tetap memegang teguh kearifan lokal.
+                            </p>
+                            <p className="mt-4">
+                                Melalui transparansi pelayanan publik dan optimalisasi potensi desa,
+                                kami bertekad memberikan yang terbaik bagi seluruh warga.
+                            </p>
+                        </div>
+
+                        <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-slate-200/60 pt-10">
+                            <div>
+                                <h4 className="text-3xl font-bold text-emerald-600 mb-1">{villageInfo?.hamlet_count || '10'}</h4>
+                                <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">Dusun</span>
+                            </div>
+                            <div>
+                                <h4 className="text-3xl font-bold text-emerald-600 mb-1">{stats?.population ? (stats.population / 1000).toFixed(1) + 'k' : '5k+'}</h4>
+                                <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">Penduduk</span>
+                            </div>
+                            <div>
+                                <h4 className="text-3xl font-bold text-emerald-600 mb-1">{villageInfo?.area_size ? parseInt(villageInfo.area_size) + '+' : '120+'}</h4>
+                                <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">Hektar</span>
+                            </div>
+                            <div>
+                                <h4 className="text-3xl font-bold text-emerald-600 mb-1">24/7</h4>
+                                <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">Layanan</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
 
 
@@ -124,11 +175,11 @@ export default function Home({ villageInfo, villageHead, villageOfficials, lates
                                     )}
                                 </div>
                                 <div className="mt-10 pt-10 border-t border-slate-100 flex items-center gap-6">
-                                    <img 
-                                        src={villageHead.photo ? `/storage/${villageHead.photo}` : `https://ui-avatars.com/api/?name=${encodeURIComponent(villageHead.name)}&background=047857&color=fff`} 
+                                    <img
+                                        src={villageHead.photo ? `/storage/${villageHead.photo}` : `https://ui-avatars.com/api/?name=${encodeURIComponent(villageHead.name)}&background=047857&color=fff`}
                                         alt={villageHead.name}
                                         loading="lazy"
-                                        className="h-12 w-12 rounded-full ring-2 ring-white shadow-md object-cover" 
+                                        className="h-12 w-12 rounded-full ring-2 ring-white shadow-md object-cover"
                                     />
                                     <div>
                                         <p className="font-serif text-slate-900 text-lg font-bold">{villageHead.name}</p>
@@ -173,7 +224,7 @@ export default function Home({ villageInfo, villageHead, villageOfficials, lates
                                 {[
                                     'Dusun Gumelar Kulon',
                                     'Dusun Gumelar Wetan',
-                                    'Dusun Bonmanis', 
+                                    'Dusun Bonmanis',
                                     'Dusun Kalisabuk',
                                     'Dusun Brondong',
                                     'Dusun Banteran',
@@ -236,11 +287,157 @@ export default function Home({ villageInfo, villageHead, villageOfficials, lates
                 </div>
             </section>
 
+            {/* Potensi - Premium Carousel */}
+            <section className="py-24 bg-slate-50 relative overflow-hidden">
+                <div className="max-w-7xl mx-auto px-6 lg:px-8">
+                    <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                        <div>
+                            <span className="text-emerald-600 font-bold tracking-widest uppercase text-xs mb-2 block">Keunggulan Lokal</span>
+                            <h2 className="text-4xl font-black font-serif text-slate-900 tracking-tight">Potensi Desa</h2>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <a href="/potentials" className="group flex items-center gap-2 text-slate-900 font-bold border-b-2 border-slate-200 hover:border-emerald-900 transition-all pb-1">
+                                Lihat Semua
+                                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                            </a>
+                        </div>
+                    </div>
+
+                    {featuredPotentials && featuredPotentials.length > 0 ? (
+                        <div className="relative">
+                            {/* Carousel Container */}
+                            <div
+                                ref={carouselRef}
+                                className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide gap-8 pb-4"
+                                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                            >
+                                {featuredPotentials.map((item: any) => (
+                                    <div
+                                        key={item.id}
+                                        className="min-w-full snap-center px-4 md:px-12"
+                                    >
+                                        <div className="group relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-emerald-900 to-emerald-950 shadow-2xl flex flex-col md:flex-row h-auto md:h-[500px]">
+                                            {/* Image Section */}
+                                            <div className="md:w-1/2 relative h-72 md:h-full overflow-hidden">
+                                                <div className="absolute top-6 left-6 z-20">
+                                                    <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg backdrop-blur-md border border-white/20 ${item.category === 'tourism'
+                                                        ? 'bg-blue-500/90 text-white'
+                                                        : 'bg-emerald-500/90 text-white'
+                                                        }`}>
+                                                        {item.category === 'tourism' ? <Mountain className="w-3.5 h-3.5" /> : <ShoppingBag className="w-3.5 h-3.5" />}
+                                                        {item.category === 'tourism' ? 'Wisata Desa' : 'Produk Unggulan'}
+                                                    </span>
+                                                </div>
+                                                <img
+                                                    src={item.image_path ? `/storage/${item.image_path}` : 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1000'}
+                                                    alt={item.name}
+                                                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                                />
+                                                <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/80 to-transparent md:bg-gradient-to-l md:from-emerald-950/20 md:to-transparent"></div>
+                                            </div>
+
+                                            {/* Content Section */}
+                                            <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center relative">
+                                                {/* Decorative background pattern */}
+                                                <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
+                                                    <Building2 className="w-64 h-64 text-white transform rotate-12 translate-x-12 -translate-y-12" />
+                                                </div>
+
+                                                <div className="relative z-10">
+                                                    <h3 className="text-3xl md:text-4xl font-black font-serif text-white mb-4 leading-tight">
+                                                        {item.name}
+                                                    </h3>
+                                                    <p className="text-emerald-100/90 text-base md:text-lg leading-relaxed line-clamp-3 mb-8 font-light">
+                                                        {item.description}
+                                                    </p>
+
+                                                    <div className="space-y-4 mb-8">
+                                                        {item.location && (
+                                                            <div className="flex items-start gap-4 text-emerald-50">
+                                                                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/10">
+                                                                    <MapPin className="w-5 h-5 text-emerald-400" />
+                                                                </div>
+                                                                <div>
+                                                                    <p className="text-xs font-bold uppercase tracking-wider text-emerald-400/80 mb-0.5">Lokasi</p>
+                                                                    <p className="font-medium">{item.location}</p>
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                        {item.contact_info && (
+                                                            <div className="flex items-start gap-4 text-emerald-50">
+                                                                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/10">
+                                                                    <Phone className="w-5 h-5 text-emerald-400" />
+                                                                </div>
+                                                                <div>
+                                                                    <p className="text-xs font-bold uppercase tracking-wider text-emerald-400/80 mb-0.5">Kontak</p>
+                                                                    <p className="font-medium">{item.contact_info}</p>
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                    </div>
+
+                                                    <a
+                                                        href={`/potentials`}
+                                                        className="inline-flex items-center gap-2 text-white font-bold border-b-2 border-emerald-500 pb-1 hover:text-emerald-400 hover:border-emerald-400 transition-all w-fit group/link"
+                                                    >
+                                                        Lihat Detail
+                                                        <ArrowRight className="w-4 h-4 transform transition-transform group-hover/link:translate-x-1" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Navigation Buttons */}
+                            {featuredPotentials.length > 1 && (
+                                <>
+                                    <button
+                                        onClick={prevSlide}
+                                        className="absolute left-0 md:left-0 top-1/2 -translate-y-1/2 translate-x-2 md:-translate-x-4 w-12 h-12 rounded-full bg-white shadow-xl border border-slate-200 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-all hover:scale-110 z-10"
+                                        aria-label="Previous slide"
+                                    >
+                                        <ChevronLeft className="w-6 h-6" />
+                                    </button>
+                                    <button
+                                        onClick={nextSlide}
+                                        className="absolute right-0 md:right-0 top-1/2 -translate-y-1/2 -translate-x-2 md:translate-x-4 w-12 h-12 rounded-full bg-white shadow-xl border border-slate-200 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-all hover:scale-110 z-10"
+                                        aria-label="Next slide"
+                                    >
+                                        <ChevronRight className="w-6 h-6" />
+                                    </button>
+
+                                    {/* Dots Indicator */}
+                                    <div className="flex justify-center gap-2 mt-8">
+                                        {featuredPotentials.map((_: any, index: number) => (
+                                            <button
+                                                key={index}
+                                                onClick={() => scrollToSlide(index)}
+                                                className={`h-3 rounded-full transition-all ${currentSlide === index
+                                                    ? 'w-8 bg-emerald-600'
+                                                    : 'w-3 bg-slate-300 hover:bg-slate-400'
+                                                    }`}
+                                                aria-label={`Go to slide ${index + 1}`}
+                                            />
+                                        ))}
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            {[1, 2, 3].map(i => <div key={i} className="aspect-[3/4] bg-slate-200 rounded-3xl animate-pulse"></div>)}
+                        </div>
+                    )}
+                </div>
+            </section>
+
             {/* Perangkat Desa Carousel */}
             {villageOfficials && villageOfficials.length > 0 && (
                 <section className="py-24 bg-gradient-to-br from-slate-50 to-white relative overflow-hidden">
                     <div className="absolute top-0 left-0 -ml-64 -mt-64 w-[600px] h-[600px] bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-full blur-3xl opacity-40"></div>
-                    
+
                     <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
                         <div className="text-center max-w-2xl mx-auto mb-16">
                             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold tracking-widest uppercase mb-6">
@@ -257,14 +454,14 @@ export default function Home({ villageInfo, villageHead, villageOfficials, lates
 
                         <div className="relative">
                             {/* Carousel Container */}
-                            <div 
+                            <div
                                 ref={officialCarouselRef}
                                 className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide gap-6 pb-4"
                                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                             >
                                 {villageOfficials.map((official: any) => (
-                                    <div 
-                                        key={official.id} 
+                                    <div
+                                        key={official.id}
                                         className="min-w-full md:min-w-[calc(50%-0.75rem)] lg:min-w-[calc(25%-1.125rem)] snap-start"
                                     >
                                         <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-slate-100 hover:-translate-y-2 h-full">
@@ -276,7 +473,7 @@ export default function Home({ villageInfo, villageHead, villageOfficials, lates
                                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                                 />
                                                 <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/90 via-emerald-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                                                
+
                                                 {/* Hover Content */}
                                                 <div className="absolute inset-x-0 bottom-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                                                     {official.phone && (
@@ -293,7 +490,7 @@ export default function Home({ villageInfo, villageHead, villageOfficials, lates
                                                     )}
                                                 </div>
                                             </div>
-                                            
+
                                             <div className="p-6">
                                                 <div className="mb-3">
                                                     <div className="inline-flex items-center px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold mb-3">
@@ -342,11 +539,10 @@ export default function Home({ villageInfo, villageHead, villageOfficials, lates
                                             <button
                                                 key={index}
                                                 onClick={() => scrollToOfficialSlide(index)}
-                                                className={`transition-all ${
-                                                    index === currentOfficialSlide
-                                                        ? 'w-8 bg-emerald-600'
-                                                        : 'w-3 bg-slate-300 hover:bg-slate-400'
-                                                } h-3 rounded-full`}
+                                                className={`transition-all ${index === currentOfficialSlide
+                                                    ? 'w-8 bg-emerald-600'
+                                                    : 'w-3 bg-slate-300 hover:bg-slate-400'
+                                                    } h-3 rounded-full`}
                                                 aria-label={`Go to official ${index + 1}`}
                                             />
                                         ))}
@@ -358,103 +554,11 @@ export default function Home({ villageInfo, villageHead, villageOfficials, lates
                 </section>
             )}
 
-            {/* Potensi - Premium Carousel */}
-            <section className="py-24 bg-slate-50 relative overflow-hidden">
-                <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                    <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-                        <div>
-                            <span className="text-emerald-600 font-bold tracking-widest uppercase text-xs mb-2 block">Keunggulan Lokal</span>
-                            <h2 className="text-4xl font-black font-serif text-slate-900 tracking-tight">Potensi Desa</h2>
-                        </div>
-                        <div className="flex items-center gap-4">
-                            <a href="/potentials" className="group flex items-center gap-2 text-slate-900 font-bold border-b-2 border-slate-200 hover:border-emerald-900 transition-all pb-1">
-                                Lihat Semua
-                                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                            </a>
-                        </div>
-                    </div>
-
-                    {featuredPotentials && featuredPotentials.length > 0 ? (
-                        <div className="relative">
-                            {/* Carousel Container */}
-                            <div 
-                                ref={carouselRef}
-                                className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide gap-8 pb-4"
-                                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                            >
-                                {featuredPotentials.map((item: any) => (
-                                    <div 
-                                        key={item.id} 
-                                        className="min-w-full md:min-w-[calc(50%-1rem)] lg:min-w-[calc(33.333%-1.5rem)] snap-start"
-                                    >
-                                        <div className="group relative aspect-[3/4] overflow-hidden rounded-3xl bg-slate-900 shadow-xl cursor-pointer h-full">
-                                            <img
-                                                src={item.image ? `/storage/${item.image}` : 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1000'}
-                                                alt={item.title}
-                                                className="h-full w-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-60"
-                                            />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-                                            <div className="absolute bottom-0 p-8">
-                                                <div className="w-12 h-1 bg-emerald-500 mb-4 transition-all duration-300 group-hover:w-20"></div>
-                                                <h3 className="text-2xl font-bold text-white font-serif mb-2">{item.title}</h3>
-                                                <p className="text-slate-300 line-clamp-2 text-sm leading-relaxed opacity-0 transform translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                                                    {item.description}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* Navigation Buttons */}
-                            {featuredPotentials.length > 1 && (
-                                <>
-                                    <button
-                                        onClick={prevSlide}
-                                        className="absolute left-0 md:left-0 top-1/2 -translate-y-1/2 translate-x-2 md:-translate-x-4 w-12 h-12 rounded-full bg-white shadow-xl border border-slate-200 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-all hover:scale-110 z-10"
-                                        aria-label="Previous slide"
-                                    >
-                                        <ChevronLeft className="w-6 h-6" />
-                                    </button>
-                                    <button
-                                        onClick={nextSlide}
-                                        className="absolute right-0 md:right-0 top-1/2 -translate-y-1/2 -translate-x-2 md:translate-x-4 w-12 h-12 rounded-full bg-white shadow-xl border border-slate-200 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-all hover:scale-110 z-10"
-                                        aria-label="Next slide"
-                                    >
-                                        <ChevronRight className="w-6 h-6" />
-                                    </button>
-
-                                    {/* Dots Indicator */}
-                                    <div className="flex justify-center gap-2 mt-8">
-                                        {featuredPotentials.map((_: any, index: number) => (
-                                            <button
-                                                key={index}
-                                                onClick={() => scrollToSlide(index)}
-                                                className={`h-3 rounded-full transition-all ${
-                                                    currentSlide === index 
-                                                        ? 'w-8 bg-emerald-600' 
-                                                        : 'w-3 bg-slate-300 hover:bg-slate-400'
-                                                }`}
-                                                aria-label={`Go to slide ${index + 1}`}
-                                            />
-                                        ))}
-                                    </div>
-                                </>
-                            )}
-                        </div>
-                    ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {[1, 2, 3].map(i => <div key={i} className="aspect-[3/4] bg-slate-200 rounded-3xl animate-pulse"></div>)}
-                        </div>
-                    )}
-                </div>
-            </section>
-
             {/* Announcements Section - Event & Info */}
             {announcements && announcements.length > 0 && (
                 <section className="py-24 bg-white relative overflow-hidden">
                     <div className="absolute top-0 left-0 -ml-64 -mt-64 w-[600px] h-[600px] bg-gradient-to-br from-blue-50 to-blue-100 rounded-full blur-3xl opacity-40"></div>
-                    
+
                     <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
                         <div className="text-center max-w-2xl mx-auto mb-16">
                             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-blue-800 text-xs font-bold tracking-widest uppercase mb-6">
@@ -561,18 +665,17 @@ export default function Home({ villageInfo, villageHead, villageOfficials, lates
                                 {developments.map((dev: any) => (
                                     <div key={dev.id} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:bg-white/10 transition-all group">
                                         <div className="aspect-video relative overflow-hidden bg-slate-800">
-                                            <img 
-                                                src={dev.image_before ? `/storage/${dev.image_before}` : 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=400&fit=crop'} 
-                                                alt={dev.title}                                                loading="lazy"                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                            <img
+                                                src={dev.image_before ? `/storage/${dev.image_before}` : 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=400&fit=crop'}
+                                                alt={dev.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                             />
                                             <div className="absolute top-3 right-3">
-                                                <span className={`px-3 py-1 rounded-full text-xs font-bold ${
-                                                    dev.status === 'completed' ? 'bg-emerald-500 text-white' :
+                                                <span className={`px-3 py-1 rounded-full text-xs font-bold ${dev.status === 'completed' ? 'bg-emerald-500 text-white' :
                                                     dev.status === 'progress' ? 'bg-blue-500 text-white' :
-                                                    'bg-amber-500 text-white'
-                                                }`}>
-                                                    {dev.status === 'completed' ? 'Selesai' : 
-                                                     dev.status === 'progress' ? 'Proses' : 'Direncanakan'}
+                                                        'bg-amber-500 text-white'
+                                                    }`}>
+                                                    {dev.status === 'completed' ? 'Selesai' :
+                                                        dev.status === 'progress' ? 'Proses' : 'Direncanakan'}
                                                 </span>
                                             </div>
                                         </div>
@@ -715,11 +818,11 @@ function AnnouncementCard({ announcement }: any) {
                         <div className="flex items-center gap-2 text-sm text-slate-500">
                             <Calendar className="w-4 h-4 text-blue-500" />
                             <span className="font-medium">
-                                {eventDate.toLocaleDateString('id-ID', { 
-                                    weekday: 'long', 
-                                    year: 'numeric', 
-                                    month: 'long', 
-                                    day: 'numeric' 
+                                {eventDate.toLocaleDateString('id-ID', {
+                                    weekday: 'long',
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric'
                                 })}
                             </span>
                         </div>

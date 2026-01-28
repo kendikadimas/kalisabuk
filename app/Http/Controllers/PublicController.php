@@ -37,7 +37,8 @@ class PublicController extends Controller
             'stats' => [
                 'population' => VillageInfo::first()->population ?? 0,
                 'area' => VillageInfo::first()->area_size ?? '120 Ha',
-            ]
+            ],
+            'heroSlides' => \App\Models\HeroSlide::active()->ordered()->get(),
         ]);
     }
 
@@ -85,9 +86,27 @@ class PublicController extends Controller
 
         $post->increment('views');
 
+        // Check if user has liked this post in current session
+        $hasLiked = in_array($post->id, session()->get('liked_posts', []));
+
         return Inertia::render('Public/News/Show', [
             'post' => $post,
             'related' => Post::where('id', '!=', $post->id)->latest()->take(3)->get(),
+            'hasLiked' => $hasLiked,
         ]);
+    }
+
+    public function likePost($slug)
+    {
+        $post = Post::where('slug', $slug)->firstOrFail();
+
+        $likedPosts = session()->get('liked_posts', []);
+
+        if (!in_array($post->id, $likedPosts)) {
+            $post->increment('likes');
+            session()->push('liked_posts', $post->id);
+        }
+
+        return back();
     }
 }
