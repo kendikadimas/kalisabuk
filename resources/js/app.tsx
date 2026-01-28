@@ -11,6 +11,9 @@ const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 // Expose Ziggy to the window object for use by ziggy-js
 if (typeof window !== 'undefined') {
+    Ziggy.url = window.location.origin;
+    // @ts-ignore
+    Ziggy.port = window.location.port ? parseInt(window.location.port) : null;
     (window as any).Ziggy = Ziggy;
 }
 

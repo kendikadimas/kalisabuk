@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { BreadcrumbItem } from '@/types';
+import { route } from 'ziggy-js';
 
 interface VillageOfficial {
     id: number;
@@ -56,7 +57,7 @@ export default function Edit({ official }: Props) {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(`/dashboard/village-officials/${official.id}`);
+        post(route('village-officials.update', official.id));
     };
 
     return (
