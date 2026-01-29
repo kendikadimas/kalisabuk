@@ -6,8 +6,9 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { initializeTheme } from './hooks/use-appearance';
 import { Ziggy } from './ziggy';
+import { route } from 'ziggy-js';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'Kalisabuk';
 
 // Expose Ziggy to the window object for use by ziggy-js
 if (typeof window !== 'undefined') {
@@ -15,6 +16,7 @@ if (typeof window !== 'undefined') {
     // @ts-ignore
     Ziggy.port = window.location.port ? parseInt(window.location.port) : null;
     (window as any).Ziggy = Ziggy;
+    (window as any).route = (name: string, params: any, absolute: any) => route(name, params, absolute, Ziggy as any);
 }
 
 createInertiaApp({

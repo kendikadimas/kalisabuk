@@ -26,7 +26,7 @@ class HeroSlideController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'image_path' => 'required|image|max:2048', // Max 2MB
+            'image_path' => 'required|image|max:10240', // Max 10MB
             'title' => 'nullable|string|max:255',
             'subtitle' => 'nullable|string|max:255',
             'order' => 'nullable|integer',
@@ -54,7 +54,7 @@ class HeroSlideController extends Controller
     public function update(Request $request, HeroSlide $heroSlide)
     {
         $validated = $request->validate([
-            'image_path' => 'nullable|image|max:2048',
+            'image_path' => 'nullable|image|max:10240', // Max 10MB
             'title' => 'nullable|string|max:255',
             'subtitle' => 'nullable|string|max:255',
             'order' => 'nullable|integer',

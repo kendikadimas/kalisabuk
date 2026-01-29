@@ -49,7 +49,7 @@ export default function ServiceRequestIndex({ requests, filters }: { requests: a
                             Permohonan Warga
                         </h1>
                         <p className="text-slate-500 text-sm">
-                            Daftar permohonan layanan surat yang diajukan oleh warga.
+                            Daftar permohonan layanan yang diajukan oleh warga.
                         </p>
                     </div>
                 </div>

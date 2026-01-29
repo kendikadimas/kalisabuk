@@ -9,7 +9,7 @@ import RichTextEditor from '@/components/RichTextEditor';
 import { ArrowLeft, FileText, Save, Image, Calendar, Tag } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-export default function PostCreate() {
+export default function PostCreate({ categories }: { categories: any[] }) {
     const breadcrumbs: BreadcrumbItem[] = [
         { title: 'Dashboard', href: '/dashboard' },
         { title: 'Berita', href: '/dashboard/posts' },
@@ -19,13 +19,13 @@ export default function PostCreate() {
     const { data, setData, post, processing, errors } = useForm<{
         title: string;
         content: string;
-        category: string;
+        post_category_id: string;
         published_at: string;
         image: File | null;
     }>({
         title: '',
         content: '',
-        category: 'news',
+        post_category_id: categories.length > 0 ? String(categories[0].id) : '',
         published_at: new Date().toISOString().split('T')[0],
         image: null,
     });
@@ -94,24 +94,24 @@ export default function PostCreate() {
                             </div>
 
                             <div className="space-y-4">
-                                <Label htmlFor="category" className="text-slate-700 font-semibold flex items-center gap-2">
+                                <Label htmlFor="post_category_id" className="text-slate-700 font-semibold flex items-center gap-2">
                                     <Tag className="w-4 h-4 text-emerald-500" />
                                     Kategori
                                 </Label>
                                 <Select
-                                    value={data.category}
-                                    onValueChange={(val) => setData('category', val)}
+                                    value={String(data.post_category_id)}
+                                    onValueChange={(val) => setData('post_category_id', val)}
                                 >
                                     <SelectTrigger className="w-full h-12 border-slate-200 focus:ring-emerald-500/20">
                                         <SelectValue placeholder="Pilih Kategori" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="news">Berita Desa</SelectItem>
-                                        <SelectItem value="announcement">Pengumuman</SelectItem>
-                                        <SelectItem value="article">Artikel / Edukasi</SelectItem>
+                                        {categories.map((cat) => (
+                                            <SelectItem key={cat.id} value={String(cat.id)}>{cat.name}</SelectItem>
+                                        ))}
                                     </SelectContent>
                                 </Select>
-                                {errors.category && <p className="text-sm text-red-500">{errors.category}</p>}
+                                {errors.post_category_id && <p className="text-sm text-red-500">{errors.post_category_id}</p>}
                             </div>
 
                             <div className="space-y-4">

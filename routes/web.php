@@ -40,7 +40,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('dashboard')->group(function () {
         Route::resource('posts', \App\Http\Controllers\Admin\PostController::class);
+        Route::resource('post-categories', \App\Http\Controllers\Admin\PostCategoryController::class);
         Route::resource('potentials', \App\Http\Controllers\Admin\PotentialController::class);
+        Route::resource('potential-categories', \App\Http\Controllers\Admin\PotentialCategoryController::class);
         Route::resource('institutions', \App\Http\Controllers\Admin\InstitutionController::class);
         Route::resource('demographics', \App\Http\Controllers\Admin\DemographicController::class);
         Route::resource('developments', \App\Http\Controllers\Admin\DevelopmentController::class);
@@ -50,6 +52,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('village-stats', \App\Http\Controllers\Admin\VillageStatController::class);
         Route::resource('hero-slides', \App\Http\Controllers\Admin\HeroSlideController::class);
         Route::resource('announcements', \App\Http\Controllers\Admin\AnnouncementController::class);
+        Route::resource('facilities', \App\Http\Controllers\Admin\FacilityCategoryController::class);
+        Route::resource('facility-items', \App\Http\Controllers\Admin\FacilityItemController::class)->only(['store', 'update', 'destroy']);
         Route::post('stats/general', [\App\Http\Controllers\Admin\DemographicController::class, 'updateGeneralStats'])->name('stats.general.update');
 
         // User Management

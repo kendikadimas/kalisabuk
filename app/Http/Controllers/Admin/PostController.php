@@ -18,7 +18,7 @@ class PostController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Posts/Index', [
-            'posts' => Post::latest()->paginate(10),
+            'posts' => Post::with('categoryData')->latest()->paginate(10),
         ]);
     }
 
@@ -27,7 +27,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Posts/Create');
+        return Inertia::render('Admin/Posts/Create', [
+            'categories' => \App\Models\PostCategory::where('is_active', true)->get()
+        ]);
     }
 
     /**
@@ -38,7 +40,7 @@ class PostController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'category' => 'required|in:news,announcement',
+            'post_category_id' => 'required|exists:post_categories,id',
             'published_at' => 'nullable|date',
             'image' => 'required|image|max:10240',
         ]);
@@ -48,11 +50,14 @@ class PostController extends Controller
             $path = $request->file('image')->store('posts', 'public');
         }
 
+        $category = \App\Models\PostCategory::find($validated['post_category_id']);
+
         Post::create([
             'title' => $validated['title'],
             'slug' => Str::slug($validated['title']) . '-' . Str::random(5),
             'content' => $validated['content'],
-            'category' => $validated['category'],
+            'post_category_id' => $validated['post_category_id'],
+            'category' => 'news', // Default fallback
             'published_at' => $validated['published_at'] ?? now(),
             'image_path' => $path,
         ]);
@@ -67,6 +72,7 @@ class PostController extends Controller
     {
         return Inertia::render('Admin/Posts/Edit', [
             'post' => $post,
+            'categories' => \App\Models\PostCategory::where('is_active', true)->get()
         ]);
     }
 
@@ -78,7 +84,7 @@ class PostController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'category' => 'required|in:news,announcement',
+            'post_category_id' => 'required|exists:post_categories,id',
             'published_at' => 'nullable|date',
             'image' => 'nullable|image|max:10240',
         ]);
@@ -88,10 +94,13 @@ class PostController extends Controller
             $post->image_path = $path;
         }
 
+        $category = \App\Models\PostCategory::find($validated['post_category_id']);
+
         $post->update([
             'title' => $validated['title'],
             'content' => $validated['content'],
-            'category' => $validated['category'],
+            'post_category_id' => $validated['post_category_id'],
+            'category' => 'news', // Default fallback
             'published_at' => $validated['published_at'],
         ]);
 

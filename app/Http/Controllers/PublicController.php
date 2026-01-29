@@ -39,6 +39,11 @@ class PublicController extends Controller
                 'area' => VillageInfo::first()->area_size ?? '120 Ha',
             ],
             'heroSlides' => \App\Models\HeroSlide::active()->ordered()->get(),
+            'facilities' => \App\Models\FacilityCategory::with([
+                'items' => function ($query) {
+                    $query->where('is_active', true);
+                }
+            ])->where('is_active', true)->get(),
         ]);
     }
 
@@ -48,6 +53,11 @@ class PublicController extends Controller
             'villageInfo' => VillageInfo::first(),
             // Organization structure usually implies an image or hierarchy, listing institutions for now
             'institutions' => Institution::all(),
+            'facilities' => \App\Models\FacilityCategory::with([
+                'items' => function ($query) {
+                    $query->where('is_active', true);
+                }
+            ])->where('is_active', true)->get(),
         ]);
     }
 

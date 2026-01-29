@@ -41,10 +41,10 @@ export default function ServiceTypeIndex({ serviceTypes }: { serviceTypes: any[]
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="space-y-1">
                         <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-                            Jenis Layanan Surat
+                            Jenis Layanan
                         </h1>
                         <p className="text-slate-500 text-sm">
-                            Kelola daftar layanan surat yang tersedia untuk diajukan oleh masyarakat.
+                            Kelola daftar layanan yang tersedia untuk diajukan oleh masyarakat.
                         </p>
                     </div>
                     <div className="flex items-center gap-2">

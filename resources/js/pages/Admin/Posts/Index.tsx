@@ -38,10 +38,15 @@ export default function PostIndex({ posts }: { posts: any }) {
                         </p>
                     </div>
                     <div className="flex items-center gap-2">
+                        <Link href={'/dashboard/post-categories'}>
+                            <Button variant="outline" className="border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-emerald-700 rounded-xl">
+                                Kelola Kategori
+                            </Button>
+                        </Link>
                         <Link href={'/dashboard/posts/create'}>
                             <Button className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-600/20 rounded-xl">
                                 <Plus className="w-4 h-4 mr-2" />
-                                Tulist Berita
+                                Tulis Berita
                             </Button>
                         </Link>
                     </div>
@@ -66,7 +71,7 @@ export default function PostIndex({ posts }: { posts: any }) {
                                     )}
                                     <div className="absolute top-2 right-2">
                                         <Badge variant="secondary" className="bg-white/90 backdrop-blur text-slate-700 shadow-sm text-xs font-normal">
-                                            {post.category?.name || 'Berita'}
+                                            {post.category_data ? post.category_data.name : (post.category === 'news' ? 'Berita Desa' : 'Pengumuman')}
                                         </Badge>
                                     </div>
                                 </div>
@@ -166,8 +171,8 @@ export default function PostIndex({ posts }: { posts: any }) {
                                         key={index}
                                         href={link.url || '#'}
                                         className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${link.active
-                                                ? 'bg-emerald-600 text-white shadow-sm'
-                                                : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
+                                            ? 'bg-emerald-600 text-white shadow-sm'
+                                            : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
                                             } ${!link.url && 'opacity-50 cursor-not-allowed'}`}
                                         dangerouslySetInnerHTML={{ __html: link.label }}
                                     />

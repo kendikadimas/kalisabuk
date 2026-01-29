@@ -13,20 +13,22 @@ class PotentialController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Potentials/Index', [
-            'potentials' => Potential::latest()->paginate(10),
+            'potentials' => Potential::with('categoryData')->latest()->paginate(10),
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Admin/Potentials/Create');
+        return Inertia::render('Admin/Potentials/Create', [
+            'categories' => \App\Models\PotentialCategory::where('is_active', true)->get()
+        ]);
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'category' => 'required|in:tourism,product',
+            'potential_category_id' => 'required|exists:potential_categories,id',
             'description' => 'required|string',
             'location' => 'required|string',
             'contact_info' => 'nullable|string',
@@ -38,9 +40,12 @@ class PotentialController extends Controller
             $path = $request->file('image')->store('potentials', 'public');
         }
 
+        $category = \App\Models\PotentialCategory::find($validated['potential_category_id']);
+
         Potential::create([
             'name' => $validated['name'],
-            'category' => $validated['category'],
+            'potential_category_id' => $validated['potential_category_id'],
+            'category' => $category ? $category->slug : 'other', // Fallback for backward compatibility
             'description' => $validated['description'],
             'location' => $validated['location'],
             'contact_info' => $validated['contact_info'],
@@ -54,6 +59,7 @@ class PotentialController extends Controller
     {
         return Inertia::render('Admin/Potentials/Edit', [
             'potential' => $potential,
+            'categories' => \App\Models\PotentialCategory::where('is_active', true)->get()
         ]);
     }
 
@@ -61,7 +67,7 @@ class PotentialController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'category' => 'required|in:tourism,product',
+            'potential_category_id' => 'required|exists:potential_categories,id',
             'description' => 'required|string',
             'location' => 'required|string',
             'contact_info' => 'nullable|string',
@@ -73,9 +79,12 @@ class PotentialController extends Controller
             $potential->image_path = $path;
         }
 
+        $category = \App\Models\PotentialCategory::find($validated['potential_category_id']);
+
         $potential->update([
             'name' => $validated['name'],
-            'category' => $validated['category'],
+            'potential_category_id' => $validated['potential_category_id'],
+            'category' => $category ? $category->slug : 'other',
             'description' => $validated['description'],
             'location' => $validated['location'],
             'contact_info' => $validated['contact_info'],

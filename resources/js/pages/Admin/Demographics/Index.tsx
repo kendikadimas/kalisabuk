@@ -7,6 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useForm } from '@inertiajs/react';
 
+declare var route: any;
+
 export default function DemographicIndex({ villageInfo }: { villageInfo: any }) {
     const breadcrumbs: BreadcrumbItem[] = [
         { title: 'Dashboard', href: '/dashboard' },
@@ -94,29 +96,6 @@ export default function DemographicIndex({ villageInfo }: { villageInfo: any }) 
                                         className="bg-slate-50 border-slate-200 focus:border-emerald-500 focus:ring-emerald-500"
                                     />
                                     {errors.area_size && <span className="text-xs text-red-500">{errors.area_size}</span>}
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="founded_year" className="text-slate-600 font-semibold">Tahun Berdiri</Label>
-                                    <Input
-                                        id="founded_year"
-                                        type="number"
-                                        placeholder="1800"
-                                        value={data.founded_year}
-                                        onChange={e => setData('founded_year', e.target.value)}
-                                        className="bg-slate-50 border-slate-200 focus:border-emerald-500 focus:ring-emerald-500"
-                                    />
-                                    {errors.founded_year && <span className="text-xs text-red-500">{errors.founded_year}</span>}
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="village_status" className="text-slate-600 font-semibold">Status Desa</Label>
-                                    <Input
-                                        id="village_status"
-                                        placeholder="Contoh: Mandiri"
-                                        value={data.village_status}
-                                        onChange={e => setData('village_status', e.target.value)}
-                                        className="bg-slate-50 border-slate-200 focus:border-emerald-500 focus:ring-emerald-500"
-                                    />
-                                    {errors.village_status && <span className="text-xs text-red-500">{errors.village_status}</span>}
                                 </div>
                             </div>
                         </div>

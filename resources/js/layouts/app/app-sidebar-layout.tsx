@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
 import { type BreadcrumbItem, type SharedData } from '@/types';
@@ -21,7 +21,9 @@ import {
     ChevronDown,
     ChevronRight,
     Search,
-    Bell
+    Bell,
+    Image,
+    Activity,
 } from 'lucide-react';
 import {
     DropdownMenu,
@@ -34,6 +36,10 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
 
+import { Toaster } from '@/components/ui/sonner';
+import { toast } from 'sonner';
+import { useEffect } from 'react';
+
 export default function AppSidebarLayout({
     children,
     breadcrumbs = [],
@@ -41,6 +47,25 @@ export default function AppSidebarLayout({
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const { url, props } = usePage<SharedData>();
     const user = props.auth.user;
+    const flash = props.flash;
+    const lastFlash = useRef<string | null>(null);
+
+    useEffect(() => {
+        // Simple deduplication based on message content and timestamp approximation
+        // In a real app, adding a unique ID to flash messages from the backend is better.
+        const flashMessage = flash?.success || flash?.error || flash?.message;
+
+        if (flashMessage && lastFlash.current !== JSON.stringify(flash)) {
+            if (flash?.success) {
+                toast.success('Berhasil!', { description: flash.success });
+            } else if (flash?.error) {
+                toast.error('Gagal!', { description: flash.error });
+            } else if (flash?.message) {
+                toast.info('Info', { description: flash.message });
+            }
+            lastFlash.current = JSON.stringify(flash);
+        }
+    }, [flash]);
 
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
@@ -51,27 +76,44 @@ export default function AppSidebarLayout({
             icon: LayoutGrid,
         },
         {
-            title: 'Konten',
+            title: 'Publikasi & Informasi',
             url: '#',
             icon: BookOpen,
             items: [
+                { title: 'Slider Beranda', url: '/dashboard/hero-slides', icon: Image },
                 { title: 'Berita & Artikel', url: '/dashboard/posts', icon: FileText },
-                { title: 'Potensi Desa', url: '/dashboard/potentials', icon: Folder },
                 { title: 'Pengumuman', url: '/dashboard/announcements', icon: Megaphone },
+                { title: 'Potensi Desa', url: '/dashboard/potentials', icon: Folder },
             ],
         },
         {
-            title: 'Infrastruktur',
+            title: 'Pemerintahan',
             url: '#',
             icon: Building2,
             items: [
+                { title: 'Perangkat Desa', url: '/dashboard/village-officials', icon: UserCheck },
                 { title: 'Lembaga Desa', url: '/dashboard/institutions', icon: Building2 },
-                { title: 'Pembangunan', url: '/dashboard/developments', icon: Building },
             ],
         },
-        { title: 'Layanan Desa', url: '/dashboard/services', icon: Tag },
-        { title: 'Statistik Desa', url: '/dashboard/village-stats', icon: PieChart },
-        { title: 'Perangkat Desa', url: '/dashboard/village-officials', icon: UserCheck },
+        {
+            title: 'Layanan & Pembangunan',
+            url: '#',
+            icon: Tag,
+            items: [
+                { title: 'Layanan Desa', url: '/dashboard/services', icon: Tag },
+                { title: 'Pembangunan', url: '/dashboard/developments', icon: Building },
+                { title: 'Fasilitas Desa', url: '/dashboard/facilities', icon: Building2 },
+            ],
+        },
+        {
+            title: 'Data & Statistik',
+            url: '#',
+            icon: PieChart,
+            items: [
+                { title: 'Statistik Website', url: '/dashboard/demographics', icon: Activity },
+                { title: 'Statistik Kependudukan', url: '/dashboard/village-stats', icon: PieChart },
+            ],
+        },
         { title: 'Manajemen User', url: '/dashboard/users', icon: Users },
     ];
 
@@ -203,6 +245,7 @@ export default function AppSidebarLayout({
                     {children}
                 </main>
             </div>
+            <Toaster />
         </div>
     );
 }
@@ -220,7 +263,7 @@ function NavItem({ item, currentUrl }: { item: any, currentUrl: string }) {
                 <button
                     onClick={() => setIsOpen(!isOpen)}
                     className={cn(
-                        "w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
+                        "w-full text-left flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
                         isSubActive || isOpen
                             ? "bg-emerald-800/50 text-white"
                             : "text-emerald-100 hover:bg-emerald-800/30 hover:text-white"
@@ -239,7 +282,7 @@ function NavItem({ item, currentUrl }: { item: any, currentUrl: string }) {
                                 key={idx}
                                 href={sub.url}
                                 className={cn(
-                                    "block px-3 py-2 rounded-lg text-sm transition-colors",
+                                    "block w-full text-left px-3 py-2 rounded-lg text-sm transition-colors",
                                     currentUrl.startsWith(sub.url)
                                         ? "text-emerald-400 bg-emerald-900/50 font-medium"
                                         : "text-emerald-200/80 hover:text-white hover:bg-emerald-800/30"
@@ -258,7 +301,7 @@ function NavItem({ item, currentUrl }: { item: any, currentUrl: string }) {
         <Link
             href={item.url}
             className={cn(
-                "flex items-center gap-3 px-3 py-2.5 mb-1 rounded-lg text-sm font-medium transition-all duration-200",
+                "w-full text-left flex items-center gap-3 px-3 py-2.5 mb-1 rounded-lg text-sm font-medium transition-all duration-200",
                 isActive
                     ? "bg-emerald-600 text-white shadow-md shadow-emerald-900/20"
                     : "text-emerald-100 hover:bg-emerald-800/30 hover:text-white"

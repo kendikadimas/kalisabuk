@@ -6,9 +6,10 @@ import { MapPin, Users, Award, Target, History, Building2 } from 'lucide-react';
 interface ProfileProps {
     villageInfo: any;
     institutions: any[];
+    facilities: any[];
 }
 
-export default function Profile({ villageInfo, institutions }: ProfileProps) {
+export default function Profile({ villageInfo, institutions, facilities }: ProfileProps) {
     const breadcrumbs = [
         { label: 'Beranda', href: '/' },
         { label: 'Profil Desa' }
@@ -35,7 +36,7 @@ export default function Profile({ villageInfo, institutions }: ProfileProps) {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 p-8 grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
                         <div className="p-2 group hover:-translate-y-1 transition-transform">
-                            <span className="block text-4xl font-black text-emerald-900 mb-2 group-hover:scale-110 transition-transform duration-300 inline-block">{villageInfo?.total_population ? villageInfo.total_population.toLocaleString('id-ID') : '-'}</span>
+                            <span className="block text-4xl font-black text-emerald-900 mb-2 group-hover:scale-110 transition-transform duration-300 inline-block">{villageInfo?.population ? villageInfo.population.toLocaleString('id-ID') : '-'}</span>
                             <span className="block text-xs font-bold text-slate-400 uppercase tracking-widest">Penduduk</span>
                         </div>
                         <div className="p-2 group hover:-translate-y-1 transition-transform border-l border-slate-200">
@@ -223,71 +224,33 @@ export default function Profile({ villageInfo, institutions }: ProfileProps) {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {/* Pendidikan */}
-                        <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
-                            <div className="w-14 h-14 bg-indigo-100 rounded-2xl flex items-center justify-center text-indigo-600 mb-6">
-                                <Award className="w-7 h-7" />
+                        {facilities && facilities.length > 0 ? (
+                            facilities.map((category: any) => (
+                                <div key={category.id} className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
+                                    <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">{category.name}</h3>
+                                    <ul className="space-y-4">
+                                        {category.items && category.items.length > 0 ? (
+                                            category.items.map((item: any) => (
+                                                <li key={item.id} className="flex items-center gap-3 text-slate-600 border-b border-slate-50 pb-3 last:border-0 last:pb-0">
+                                                    <div className={`w-2 h-2 rounded-full shrink-0 ${category.name.toLowerCase().includes('pendidikan') ? 'bg-indigo-400' :
+                                                        category.name.toLowerCase().includes('kesehatan') ? 'bg-rose-400' :
+                                                            'bg-emerald-400'
+                                                        }`}></div>
+                                                    <span className="text-sm">{item.name}</span>
+                                                </li>
+                                            ))
+                                        ) : (
+                                            <li className="text-slate-400 italic text-sm">Belum ada item</li>
+                                        )}
+                                    </ul>
+                                </div>
+                            ))
+                        ) : (
+                            // Fallback or empty state
+                            <div className="col-span-full text-center py-10 bg-white rounded-3xl border border-dashed border-slate-200">
+                                <p className="text-slate-500">Data fasilitas belum tersedia.</p>
                             </div>
-                            <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">Pendidikan</h3>
-                            <ul className="space-y-4">
-                                {[
-                                    'SD Negeri 1 Kalisabuk',
-                                    'SD Negeri 2 Kalisabuk',
-                                    'MI Ma\'arif Kalisabuk',
-                                    'TK/PAUD Diponegoro',
-                                    'TK Pertiwi'
-                                ].map((item, i) => (
-                                    <li key={i} className="flex items-center gap-3 text-slate-600 border-b border-slate-50 pb-3 last:border-0 last:pb-0">
-                                        <div className="w-2 h-2 rounded-full bg-indigo-400"></div>
-                                        {item}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        {/* Kesehatan */}
-                        <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
-                            <div className="w-14 h-14 bg-rose-100 rounded-2xl flex items-center justify-center text-rose-600 mb-6">
-                                <Target className="w-7 h-7" />
-                            </div>
-                            <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">Kesehatan</h3>
-                            <ul className="space-y-4">
-                                {[
-                                    'Polindes Kalisabuk',
-                                    'Posyandu Melati 1 (Dusun Gumelar)',
-                                    'Posyandu Melati 2 (Dusun Kalisabuk)',
-                                    'Posyandu Melati 3 (Dusun Brondong)',
-                                    'Posyandu Lansia Sejahtera'
-                                ].map((item, i) => (
-                                    <li key={i} className="flex items-center gap-3 text-slate-600 border-b border-slate-50 pb-3 last:border-0 last:pb-0">
-                                        <div className="w-2 h-2 rounded-full bg-rose-400"></div>
-                                        {item}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        {/* Fasilitas Umum */}
-                        <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
-                            <div className="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 mb-6">
-                                <Users className="w-7 h-7" />
-                            </div>
-                            <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">Fasilitas Umum</h3>
-                            <ul className="space-y-4">
-                                {[
-                                    'Masjid Jami\' Baiturrahman',
-                                    'Musholla Al-Ikhlas',
-                                    'Lapangan Olahraga Desa',
-                                    'Gedung Serbaguna',
-                                    'Pasar Desa Kalisabuk'
-                                ].map((item, i) => (
-                                    <li key={i} className="flex items-center gap-3 text-slate-600 border-b border-slate-50 pb-3 last:border-0 last:pb-0">
-                                        <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
-                                        {item}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                        )}
                     </div>
                 </div>
             </section>

@@ -25,12 +25,19 @@ export default function PotentialIndex({ potentials }: { potentials: any }) {
                             Kelola data potensi wisata dan produk unggulan desa.
                         </p>
                     </div>
-                    <Button asChild>
-                        <Link href="/dashboard/potentials/create">
-                            <Plus className="mr-2 h-4 w-4" />
-                            Tambah Potensi
+                    <div className="flex items-center gap-2">
+                        <Link href={'/dashboard/potential-categories'}>
+                            <Button variant="outline" className="border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-emerald-700 rounded-xl">
+                                Kelola Kategori
+                            </Button>
                         </Link>
-                    </Button>
+                        <Button asChild className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-600/20 rounded-xl">
+                            <Link href="/dashboard/potentials/create">
+                                <Plus className="mr-2 h-4 w-4" />
+                                Tambah Potensi
+                            </Link>
+                        </Button>
+                    </div>
                 </div>
 
                 {flash?.success && (
@@ -46,23 +53,16 @@ export default function PotentialIndex({ potentials }: { potentials: any }) {
                                 {potential.image_path ? (
                                     <div className="h-48 w-full overflow-hidden bg-slate-100 relative">
                                         <img src={`/storage/${potential.image_path}`} alt={potential.name} loading="lazy" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                                        <div className={`absolute bottom-0 left-0 right-0 h-1.5 ${potential.category === 'tourism' ? 'bg-emerald-500' : 'bg-purple-500'}`}></div>
+                                        <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
                                     </div>
                                 ) : (
-                                    <>
-                                        {potential.category === 'tourism' && (
-                                            <div className="h-2 bg-emerald-500 w-full"></div>
-                                        )}
-                                        {potential.category !== 'tourism' && (
-                                            <div className="h-2 bg-purple-500 w-full"></div>
-                                        )}
-                                    </>
+                                    <div className="h-2 bg-gradient-to-r from-emerald-500 to-teal-500 w-full"></div>
                                 )}
 
                                 <div className="p-6 flex-1 flex flex-col gap-4">
                                     <div className="flex justify-between items-start">
-                                        <Badge variant={potential.category === 'tourism' ? 'default' : 'secondary'} className={potential.category === 'tourism' ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' : 'bg-purple-100 text-purple-800 hover:bg-purple-200'}>
-                                            {potential.category === 'tourism' ? 'Wisata' : 'Produk Unggulan'}
+                                        <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200">
+                                            {potential.category_data ? potential.category_data.name : (potential.category === 'tourism' ? 'Wisata' : potential.category)}
                                         </Badge>
                                     </div>
 

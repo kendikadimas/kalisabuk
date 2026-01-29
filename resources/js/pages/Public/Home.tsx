@@ -19,6 +19,7 @@ interface HomeProps {
         population: number;
         area: string;
     };
+    facilities: any[];
 }
 
 export default function Home({ villageInfo, villageHead, villageOfficials, latestNews, featuredPotentials, announcements, developments, stats, heroSlides }: HomeProps) {
@@ -376,13 +377,6 @@ export default function Home({ villageInfo, villageHead, villageOfficials, lates
                                                         )}
                                                     </div>
 
-                                                    <a
-                                                        href={`/potentials`}
-                                                        className="inline-flex items-center gap-2 text-white font-bold border-b-2 border-emerald-500 pb-1 hover:text-emerald-400 hover:border-emerald-400 transition-all w-fit group/link"
-                                                    >
-                                                        Lihat Detail
-                                                        <ArrowRight className="w-4 h-4 transform transition-transform group-hover/link:translate-x-1" />
-                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
