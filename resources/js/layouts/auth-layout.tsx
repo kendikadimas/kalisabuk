@@ -14,7 +14,7 @@ export default function AuthLayout({
                 {/* Background Image */}
                 <div className="absolute inset-0 z-0">
                     <img
-                        src="https://images.unsplash.com/photo-1596422846543-75c6fc197f07?q=80&w=2000"
+                        src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2000"
                         alt="Desa Kalisabuk Landscape"
                         className="w-full h-full object-cover opacity-50 transition-transform duration-[20s] hover:scale-110"
                         loading="eager"
@@ -28,8 +28,8 @@ export default function AuthLayout({
                 {/* Content Overlay */}
                 <div className="relative z-10">
                     <div className="flex items-center gap-3">
-                        <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-lg">
-                            <span className="font-serif font-black text-xl">D</span>
+                        <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-lg overflow-hidden p-1">
+                            <img src="/images/cropped-Logo-Cilacap.png" alt="Logo Cilacap" className="w-full h-full object-contain" />
                         </div>
                         <span className="text-xl font-bold text-white tracking-wide font-serif">Desa Kalisabuk</span>
                     </div>
@@ -54,8 +54,8 @@ export default function AuthLayout({
             <div className="relative flex flex-col justify-center items-center p-6 sm:p-12 lg:p-16 overflow-y-auto">
                 {/* Mobile Branding (Visible only on mobile) */}
                 <div className="lg:hidden absolute top-8 left-6 sm:left-12 flex items-center gap-2 mb-8">
-                    <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-900 text-white shadow-md">
-                        <span className="font-serif font-black text-sm">D</span>
+                    <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-white shadow-md overflow-hidden p-1 border border-emerald-100">
+                        <img src="/images/cropped-Logo-Cilacap.png" alt="Logo Cilacap" className="w-full h-full object-contain" />
                     </div>
                     <span className="font-bold text-slate-900 tracking-wide font-serif">Desa Kalisabuk</span>
                 </div>
@@ -80,8 +80,8 @@ export default function AuthLayout({
                         </p>
                     </div>
 
-                    {/* Form Content */}
-                    <div className="bg-white p-8 rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 ring-1 ring-slate-100 [&_*]:text-slate-900">
+                    {/* Form Content - Remove aggressive text color override */}
+                    <div className="bg-white p-8 rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 ring-1 ring-slate-100 text-slate-900">
                         {children}
                     </div>
 

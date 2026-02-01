@@ -23,7 +23,9 @@ export default function EditDevelopment({ development }: { development: any }) {
         description: development.description || '',
         contractor: development.contractor || '',
         status: development.status || 'planned',
+        progress_percentage: development.progress_percentage || 0,
         image_before: null as File | null,
+        image_progress: null as File | null,
         image_after: null as File | null,
     });
 
@@ -161,6 +163,43 @@ export default function EditDevelopment({ development }: { development: any }) {
                                 </div>
 
                                 <div className="space-y-2">
+                                    <Label className="text-slate-700">Progress Pembangunan</Label>
+                                    <div className="flex gap-3">
+                                        <button
+                                            type="button"
+                                            onClick={() => setData('progress_percentage', 0)}
+                                            className={`flex-1 px-4 py-3 rounded-xl border-2 font-medium transition-all ${data.progress_percentage === 0
+                                                    ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
+                                                    : 'border-slate-200 text-slate-600 hover:border-slate-300'
+                                                }`}
+                                        >
+                                            0%
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setData('progress_percentage', 50)}
+                                            className={`flex-1 px-4 py-3 rounded-xl border-2 font-medium transition-all ${data.progress_percentage === 50
+                                                    ? 'border-blue-500 bg-blue-50 text-blue-700'
+                                                    : 'border-slate-200 text-slate-600 hover:border-slate-300'
+                                                }`}
+                                        >
+                                            50%
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setData('progress_percentage', 100)}
+                                            className={`flex-1 px-4 py-3 rounded-xl border-2 font-medium transition-all ${data.progress_percentage === 100
+                                                    ? 'border-teal-500 bg-teal-50 text-teal-700'
+                                                    : 'border-slate-200 text-slate-600 hover:border-slate-300'
+                                                }`}
+                                        >
+                                            100%
+                                        </button>
+                                    </div>
+                                    <p className="text-xs text-slate-500">Pilih persentase kemajuan pembangunan saat ini</p>
+                                </div>
+
+                                <div className="space-y-2">
                                     <Label htmlFor="description" className="text-slate-700">Deskripsi Singkat</Label>
                                     <textarea
                                         id="description"
@@ -174,7 +213,7 @@ export default function EditDevelopment({ development }: { development: any }) {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-slate-100 pt-6">
+                        <div className={`grid grid-cols-1 ${data.progress_percentage === 50 ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-8 border-t border-slate-100 pt-6`}>
                             <div className="space-y-3">
                                 <Label htmlFor="image_before" className="text-slate-700 font-medium">Foto Kondisi Awal / 0%</Label>
                                 <div className="border-2 border-dashed border-slate-200 rounded-xl p-6 hover:bg-slate-50 transition-colors text-center cursor-pointer group relative">
@@ -190,6 +229,7 @@ export default function EditDevelopment({ development }: { development: any }) {
                                             <ImageIcon className="w-6 h-6 text-slate-400 group-hover:text-emerald-500" />
                                         </div>
                                         <p className="text-sm text-slate-500 font-medium">{development.image_before ? 'Ganti Foto 0%' : 'Upload Foto 0%'}</p>
+                                        {data.image_before && <p className="text-xs text-emerald-600 font-medium mt-1">✓ {data.image_before.name}</p>}
                                     </div>
                                 </div>
                                 {development.image_before && (
@@ -199,6 +239,34 @@ export default function EditDevelopment({ development }: { development: any }) {
                                 )}
                                 {errors.image_before && <p className="text-red-500 text-sm">{errors.image_before}</p>}
                             </div>
+
+                            {data.progress_percentage === 50 && (
+                                <div className="space-y-3">
+                                    <Label htmlFor="image_progress" className="text-slate-700 font-medium">Foto Progress 50% (Opsional)</Label>
+                                    <div className="border-2 border-dashed border-blue-200 rounded-xl p-6 hover:bg-blue-50 transition-colors text-center cursor-pointer group relative">
+                                        <Input
+                                            id="image_progress"
+                                            type="file"
+                                            onChange={(e) => setData('image_progress', e.target.files ? e.target.files[0] : null)}
+                                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                                            accept="image/*"
+                                        />
+                                        <div className="flex flex-col items-center gap-2">
+                                            <div className="p-3 bg-blue-100 rounded-full group-hover:bg-blue-200 transition-colors">
+                                                <ImageIcon className="w-6 h-6 text-blue-400 group-hover:text-blue-600" />
+                                            </div>
+                                            <p className="text-sm text-blue-600 font-medium">{development.image_progress ? 'Ganti Foto 50%' : 'Upload Foto 50%'}</p>
+                                            {data.image_progress && <p className="text-xs text-blue-600 font-medium mt-1">✓ {data.image_progress.name}</p>}
+                                        </div>
+                                    </div>
+                                    {development.image_progress && (
+                                        <a href={`/storage/${development.image_progress}`} target="_blank" className="flex items-center text-xs text-blue-600 hover:underline mt-1">
+                                            <ExternalLink className="w-3 h-3 mr-1" /> Lihat foto saat ini
+                                        </a>
+                                    )}
+                                    {errors.image_progress && <p className="text-red-500 text-sm">{errors.image_progress}</p>}
+                                </div>
+                            )}
 
                             <div className="space-y-3">
                                 <Label htmlFor="image_after" className="text-slate-700 font-medium">Foto Hasil Akhir / 100%</Label>
@@ -215,6 +283,7 @@ export default function EditDevelopment({ development }: { development: any }) {
                                             <ImageIcon className="w-6 h-6 text-slate-400 group-hover:text-emerald-500" />
                                         </div>
                                         <p className="text-sm text-slate-500 font-medium">{development.image_after ? 'Ganti Foto 100%' : 'Upload Foto 100%'}</p>
+                                        {data.image_after && <p className="text-xs text-emerald-600 font-medium mt-1">✓ {data.image_after.name}</p>}
                                     </div>
                                 </div>
                                 {development.image_after && (

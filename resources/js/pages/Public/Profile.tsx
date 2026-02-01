@@ -1,7 +1,8 @@
 import { Head } from '@inertiajs/react';
 import PublicLayout from '@/layouts/PublicLayout';
 import PageHeader from '@/components/PageHeader';
-import { MapPin, Users, Award, Target, History, Building2 } from 'lucide-react';
+import { MapPin, Users, Award, Target, History, Building2, Shield, Briefcase } from 'lucide-react';
+import { useState } from 'react';
 
 interface ProfileProps {
     villageInfo: any;
@@ -15,10 +16,23 @@ export default function Profile({ villageInfo, institutions, facilities }: Profi
         { label: 'Profil Desa' }
     ];
 
-    // Safe access for villageInfo
-    const vision = villageInfo?.vision || '';
-    const missions = villageInfo?.mission ? villageInfo.mission.split('\n') : [];
-    const history = villageInfo?.history || '';
+    const [activeTab, setActiveTab] = useState<'pemerintahan' | 'keamanan'>('pemerintahan');
+
+    // Hardcoded Visi & Misi
+    const vision = 'Terwujudnya masyarakat yang beriman, bertaqwa kepada Tuhan Yang Maha Esa, Aman, Tentram, Damai dan Sejahtera dengan memiliki pemikiran yang tinggi untuk maju dan mandiri untuk membangun.';
+
+    const missions = {
+        pemerintahan: [
+            'Meningkatkan sumber daya perangkat desa agar lebih efektif dan efisien dalam melaksanakan tugas fungsi dan pokoknya sebagai perangkat desa.',
+            'Memfungsikan lembaga-lembaga desa yang ada baiknya dalam proses perencanaan maupun pelaksanaan pembangunan/melaksanakan pelayanan kepada masyarakat secara prima.'
+        ],
+        keamanan: [
+            'Menumbuh kembangkan sistem keamanan lingkungan terpadu.',
+            'Memperbaiki sarana dan prasarana lingkungan.',
+            'Menciptakan sarana keamanan dengan meningkatkan hubungan baik antar desa dan dinas terkait.',
+            'Meningkatkan persatuan dan kesatuan serta toleransi beragama demi terwujudnya kedamaian, ketentraman, keamanan, kenyamanan dan ketertiban dalam kehidupan bermasyarakat berbangsa dan bernegara.'
+        ]
+    };
 
     return (
         <PublicLayout>
@@ -76,25 +90,55 @@ export default function Profile({ villageInfo, institutions, facilities }: Profi
                                 <h3 className="text-xl font-bold tracking-widest text-emerald-400 mb-6 flex items-center gap-4">
                                     <span className="w-8 h-px bg-emerald-400"></span> VISI
                                 </h3>
-                                <blockquote className="text-3xl md:text-4xl font-serif leading-tight">
+                                <blockquote className="text-2xl md:text-3xl font-serif leading-tight">
                                     "{vision}"
                                 </blockquote>
                             </div>
                         </div>
 
-                        {/* Misi List */}
+                        {/* Misi with Tabs */}
                         <div className="pt-8">
                             <h3 className="text-xl font-bold tracking-widest text-emerald-900 mb-8 flex items-center gap-4">
                                 <span className="w-8 h-1 bg-emerald-500"></span> MISI
                             </h3>
-                            <div className="space-y-6">
-                                {missions.map((misi: string, idx: number) => (
-                                    <div key={idx} className="flex gap-6 group">
-                                        <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-slate-50 text-emerald-900 flex items-center justify-center font-black text-lg border border-slate-100 group-hover:bg-emerald-900 group-hover:text-white transition-colors duration-300">
-                                            {String(idx + 1).padStart(2, '0')}
+
+                            {/* Tabs */}
+                            <div className="flex gap-3 mb-8">
+                                <button
+                                    onClick={() => setActiveTab('pemerintahan')}
+                                    className={`flex-1 px-6 py-4 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-3 ${activeTab === 'pemerintahan'
+                                        ? 'bg-emerald-900 text-white shadow-xl scale-105'
+                                        : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200'
+                                        }`}
+                                >
+                                    <Briefcase className="w-5 h-5" />
+                                    <span>Bidang Pemerintahan</span>
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab('keamanan')}
+                                    className={`flex-1 px-6 py-4 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-3 ${activeTab === 'keamanan'
+                                        ? 'bg-emerald-900 text-white shadow-xl scale-105'
+                                        : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200'
+                                        }`}
+                                >
+                                    <Shield className="w-5 h-5" />
+                                    <span>Bidang Keamanan</span>
+                                </button>
+                            </div>
+
+                            {/* Tab Content */}
+                            <div className="space-y-5">
+                                {missions[activeTab].map((item, idx) => (
+                                    <div
+                                        key={idx}
+                                        className="flex gap-4 group animate-fadeIn"
+                                        style={{ animationDelay: `${idx * 100}ms` }}
+                                    >
+                                        <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-slate-50 text-emerald-900 flex items-center justify-center font-bold text-base border border-slate-100 group-hover:bg-emerald-900 group-hover:text-white transition-all duration-300 group-hover:scale-110">
+                                            {idx + 1}
                                         </div>
-                                        <p className="text-lg text-slate-600 leading-relaxed pt-2 font-medium group-hover:text-slate-900 transition-colors">
-                                            {misi}
+                                        <p className="text-base text-slate-600 leading-relaxed pt-2 font-medium group-hover:text-slate-900 transition-colors">
+                                            {item}
                                         </p>
                                     </div>
                                 ))}
@@ -137,23 +181,21 @@ export default function Profile({ villageInfo, institutions, facilities }: Profi
                                 Jejak Langkah
                             </div>
                             <h2 className="text-4xl font-black font-serif text-slate-900 mb-8 leading-tight">
-                                Sejarah Panjang <br /><span className="text-emerald-700">Bumi Kalisabuk.</span>
+                                Asal Usul <br /><span className="text-emerald-700">Desa Kalisabuk.</span>
                             </h2>
 
                             <div className="prose prose-lg prose-emerald text-slate-500 font-normal leading-loose">
                                 <p>
-                                    Desa Kalisabuk memiliki akar sejarah yang kuat, tumbuh dari semangat para leluhur yang membabat alas dengan gotong royong.
-                                    Terletak strategis di wilayah yang subur, desa ini telah menjadi pusat kehidupan agraris sejak masa lampau.
+                                    Nama "Kalisabuk" memiliki dua riwayat yang sama-sama menarik. Pertama, nama ini diambil dari kondisi geografis desa yang dikelilingi oleh aliran sungai (kali) yang meliuk indah layaknya sebuah sabuk pelindung. Filosofi ini tertanam kuat dalam karakter masyarakatnya: melindungi sesama, mengikat persaudaraan, dan menjaga harmoni alam.
                                 </p>
                                 <p>
-                                    {history}
+                                    Konon dalam cerita lain, nama Kalisabuk diambil dari kejadian awal desa tersebut, ketika diriwayatkan Desa Kalisabuk dikelilingi oleh sungai hasil dari sisa perjalanan sebuah batang pohon aren yang sangat besar yang dibawa oleh seorang sakti dengan diikat memakai sabuk.
                                 </p>
                                 <div className="my-10 pl-6 border-l-4 border-emerald-500 italic text-slate-700 text-xl font-serif">
-                                    "Warisan terbesarnya bukanlah tanah yang subur, melainkan semangat guyub rukun yang tak lekang oleh zaman."
+                                    "Dari legenda kali dan sabuk, lahirlah nama Kalisabuk yang menjadi identitas desa hingga kini."
                                 </div>
                                 <p>
-                                    Kini, Kalisabuk bertransformasi menjadi desa modern yang adaptif. Memadukan kearifan lokal dengan inovasi digital untuk
-                                    memberikan pelayanan terbaik bagi warganya.
+                                    Kini, Kalisabuk bertransformasi menjadi desa modern yang adaptif. Memadukan kearifan lokal dengan inovasi digital untuk memberikan pelayanan terbaik bagi warganya, sambil tetap menjaga warisan budaya dan sejarah yang telah diwariskan oleh para leluhur.
                                 </p>
                             </div>
                         </div>
@@ -202,9 +244,9 @@ export default function Profile({ villageInfo, institutions, facilities }: Profi
                             ))}
                         </div>
 
-                        <a href="/lembaga" className="mt-12 inline-block px-8 py-3 rounded-full border border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50 hover:text-emerald-900 transition-colors">
+                        {/* <a href="/lembaga" className="mt-12 inline-block px-8 py-3 rounded-full border border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50 hover:text-emerald-900 transition-colors">
                             Lihat Semua Lembaga
-                        </a>
+                        </a> */}
                     </div>
                 </section>
             )}

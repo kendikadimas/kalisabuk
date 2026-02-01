@@ -24,17 +24,19 @@ Route::get('/layanan', [PublicServiceController::class, 'index'])->name('public.
 Route::post('/layanan', [PublicServiceController::class, 'store'])->name('public.services.store');
 Route::get('/layanan/sukses/{ticket_code}', [PublicServiceController::class, 'success'])->name('public.services.success');
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard', [
             'stats' => [
                 'posts' => \App\Models\Post::count(),
                 'potentials' => \App\Models\Potential::count(),
-                'users' => \App\Models\User::count(),
-                'demographics' => \App\Models\Demographic::where('type', 'gender')->sum('value'),
+                'developments' => \App\Models\Development::count(),
+                'announcements' => \App\Models\Announcement::count(),
+                'population' => \App\Models\VillageInfo::first()->population ?? 0,
             ],
             'latest_posts' => \App\Models\Post::latest()->take(3)->get(),
-            'demographics_data' => \App\Models\Demographic::where('type', 'gender')->get(),
+            'latest_announcements' => \App\Models\Announcement::latest()->take(5)->get(),
+            // 'demographics_data' => \App\Models\Demographic::where('type', 'job')->orderBy('value', 'desc')->take(5)->get(),
         ]);
     })->name('dashboard');
 
@@ -44,7 +46,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('potentials', \App\Http\Controllers\Admin\PotentialController::class);
         Route::resource('potential-categories', \App\Http\Controllers\Admin\PotentialCategoryController::class);
         Route::resource('institutions', \App\Http\Controllers\Admin\InstitutionController::class);
+
+        Route::post('demographic-types', [\App\Http\Controllers\Admin\DemographicController::class, 'storeType'])->name('demographic-types.store');
+        Route::put('demographic-types/{type}', [\App\Http\Controllers\Admin\DemographicController::class, 'updateType'])->name('demographic-types.update');
+        Route::delete('demographic-types/{type}', [\App\Http\Controllers\Admin\DemographicController::class, 'destroyType'])->name('demographic-types.destroy');
         Route::resource('demographics', \App\Http\Controllers\Admin\DemographicController::class);
+
         Route::resource('developments', \App\Http\Controllers\Admin\DevelopmentController::class);
         Route::resource('services', \App\Http\Controllers\Admin\ServiceTypeController::class); // Managing types
         Route::resource('service-requests', \App\Http\Controllers\Admin\ServiceRequestController::class);

@@ -37,9 +37,9 @@ export default function PublicLayout({ children, headerStyle = 'light', forceBac
                     <div className="flex items-center justify-between">
                         {/* Logo */}
                         <div className="flex items-center gap-3">
-                            <div className={`flex items-center justify-center rounded-xl transition-all duration-300 ${isScrolled ? 'w-10 h-10 bg-primary text-white shadow-emerald-900/20 shadow-lg' : 'w-12 h-12 bg-white text-emerald-900 shadow-xl'
+                            <div className={`flex items-center justify-center rounded-xl transition-all duration-300 overflow-hidden ${isScrolled ? 'w-10 h-10 bg-white shadow-emerald-900/20 shadow-lg' : 'w-12 h-12 bg-white shadow-xl'
                                 }`}>
-                                <span className="font-serif font-black text-xl">D</span>
+                                <img src="/images/cropped-Logo-Cilacap.png" alt="Logo Cilacap" className="w-full h-full object-contain p-1" />
                             </div>
                             <Link href="/" className="flex flex-col group">
                                 <span className={`text-xl font-bold tracking-tight leading-none font-serif transition-colors ${isScrolled
@@ -139,8 +139,8 @@ export default function PublicLayout({ children, headerStyle = 'light', forceBac
                 <div className="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 relative z-10">
                     <div className="col-span-1 lg:col-span-2">
                         <div className="flex items-center gap-3 mb-6">
-                            <div className="w-10 h-10 bg-emerald-500 rounded-lg flex items-center justify-center text-slate-900 font-black font-serif text-xl">
-                                D
+                            <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center p-1 shadow-lg">
+                                <img src="/images/cropped-Logo-Cilacap.png" alt="Logo Cilacap" className="w-full h-full object-contain" />
                             </div>
                             <span className="text-2xl font-black text-white tracking-tight font-serif">Desa Kalisabuk</span>
                         </div>

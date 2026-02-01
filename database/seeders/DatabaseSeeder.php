@@ -30,8 +30,8 @@ class DatabaseSeeder extends Seeder
         VillageInfo::create([
             'name' => 'Desa Kalisabuk',
             'description' => 'Desa yang subur, makmur, dan menjunjung tinggi nilai gotong royong.',
-            'vision' => 'Terwujudnya Desa Kalisabuk yang Mandiri, Sejahtera, dan Berakhlak Mulia.',
-            'mission' => "1. Mewujudkan penyelenggaraan pemerintahan desa yang transparan dan akuntabel.\n2. Meningkatkan kualitas pelayanan publik prima untuk masyarakat.\n3. Menggali dan mengembangkan potensi sumber daya alam dan ekonomi desa.\n4. Meningkatkan kualitas sumber daya manusia melalui pendidikan dan kesehatan.\n5. Melestarikan nilai-nilai sosial budaya dan kearifan lokal.",
+            'vision' => 'Terwujudnya masyarakat yang beriman, bertaqwa kepada Tuhan Yang Maha Esa, Aman, Tentram, Damai dan Sejahtera dengan memiliki pemikiran yang tinggi untuk maju dan mandiri untuk membangun.',
+            'mission' => "BIDANG PEMERINTAHAN\n\n1. Meningkatkan sumber daya perangkat desa agar lebih efektif dan efisien dalam melaksanakan tugas fungsi dan pokoknya sebagai perangkat desa.\n\n2. Memfungsikan lembaga-lembaga desa yang ada baiknya dalam proses perencanaan maupun pelaksanaan pembangunan/melaksanakan pelayanan kepada masyarakat secara prima.\n\nBIDANG KEAMANAN\n\n1. Menumbuh kembangkan sistem keamanan lingkungan terpadu.\n\n2. Memperbaiki sarana dan prasarana lingkungan.\n\n3. Menciptakan sarana keamanan dengan meningkatkan hubungan baik antar desa dan dinas terkait.\n\n4. Meningkatkan persatuan dan kesatuan serta toleransi beragama demi terwujudnya kedamaian, ketentraman, keamanan, kenyamanan dan ketertiban dalam kehidupan bermasyarakat berbangsa dan bernegara.",
             'history' => 'Nama "Kalisabuk" konon berasal dari aliran sungai yang meliuk indah mengelilingi desa layaknya sebuah sabuk pelindung. Filosofi ini tertanam kuat dalam karakter masyarakatnya: melindungi sesama, mengikat persaudaraan, dan menjaga harmoni alam.',
             'address' => 'Jl. Raya Kalisabuk No. 1, Kec. Kesugihan, Kab. Cilacap, Jawa Tengah',
             'phone' => '(0282) 123-4567',
@@ -164,6 +164,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Administrator',
                 'email' => 'admin@kalisabuk.desa.id',
                 'password' => bcrypt('password'), // Change this in production
+                'role' => 'admin',
                 'email_verified_at' => now(),
             ]);
         }

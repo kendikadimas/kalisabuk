@@ -2,7 +2,7 @@ import { Head, Link } from '@inertiajs/react';
 import PublicLayout from '@/layouts/PublicLayout';
 import PageHeader from '@/components/PageHeader';
 import NewsCard from '@/components/NewsCard';
-import { Search, ChevronRight, Tag } from 'lucide-react';
+import { Search, Tag } from 'lucide-react';
 
 interface NewsIndexProps {
     posts: {
@@ -27,7 +27,7 @@ export default function Index({ posts }: NewsIndexProps) {
                 subtitle="Informasi terkini, pengumuman, dan artikel menarik seputar kegiatan Desa Kalisabuk."
                 breadcrumbs={breadcrumbs}
                 // Optional: Put a real image here suitable for the village news
-                image="https://images.unsplash.com/photo-1577791465805-4c070cb3c530?q=80&w=2070&auto=format&fit=crop"
+                image="https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2070&auto=format&fit=crop"
             />
 
             <div className="bg-slate-50 py-16 lg:py-24">
@@ -78,7 +78,8 @@ export default function Index({ posts }: NewsIndexProps) {
                         {/* Sidebar */}
                         <div className="lg:col-span-4 space-y-8">
                             {/* Search Widget */}
-                            <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-slate-100 lg:sticky lg:top-24">\n                                <h3 className="text-xl font-bold font-serif text-slate-900 mb-6">Cari Berita</h3>
+                            <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-slate-100 lg:sticky lg:top-24">
+                                <h3 className="text-xl font-bold font-serif text-slate-900 mb-6">Cari Berita</h3>
                                 <div className="relative group">
                                     <input
                                         type="text"
@@ -88,26 +89,6 @@ export default function Index({ posts }: NewsIndexProps) {
                                     <button className="absolute right-3 top-3 p-1 text-slate-400 hover:text-emerald-600 transition-colors">
                                         <Search className="w-6 h-6" />
                                     </button>
-                                </div>
-
-                                <hr className="my-8 border-slate-100" />
-
-                                {/* Categories Widget */}
-                                <div>
-                                    <h3 className="text-xl font-bold font-serif text-slate-900 mb-6 flex items-center gap-2">
-                                        Kategori
-                                    </h3>
-                                    <div className="space-y-3">
-                                        {['Pengumuman', 'Kegiatan Desa', 'Pembangunan', 'Layanan Publik', 'Potensi Desa'].map((cat) => (
-                                            <a key={cat} href="#" className="flex justify-between items-center p-4 rounded-xl hover:bg-emerald-50 group transition-all duration-300 border border-transparent hover:border-emerald-100">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-emerald-500 transition-colors"></div>
-                                                    <span className="text-slate-600 font-medium group-hover:text-emerald-900 transition-colors">{cat}</span>
-                                                </div>
-                                                <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-emerald-500 transition-colors" />
-                                            </a>
-                                        ))}
-                                    </div>
                                 </div>
 
                                 {/* Newsletter / Subscribe Widget */}

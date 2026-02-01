@@ -40,12 +40,14 @@ class VillageStatController extends Controller
             'unit' => 'nullable|string|max:255',
             'icon' => 'required|string|max:255',
             'color' => 'required|string|max:255',
-            'size' => 'required|in:small,medium,large',
             'description' => 'nullable|string',
             'category' => 'nullable|string|max:255',
             'order' => 'nullable|integer',
             'is_active' => 'boolean',
         ]);
+
+        // Default size since we removed it from frontend
+        $validated['size'] = 'small';
 
         VillageStat::create($validated);
 
@@ -84,7 +86,6 @@ class VillageStatController extends Controller
             'unit' => 'nullable|string|max:255',
             'icon' => 'required|string|max:255',
             'color' => 'required|string|max:255',
-            'size' => 'required|in:small,medium,large',
             'description' => 'nullable|string',
             'category' => 'nullable|string|max:255',
             'order' => 'nullable|integer',

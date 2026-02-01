@@ -129,8 +129,8 @@ export default function AppSidebarLayout({
                 {/* Logo Section */}
                 <div className="h-16 flex items-center px-6 bg-emerald-950/30 border-b border-emerald-800/50 shrink-0">
                     <Link href="/dashboard" className="flex items-center gap-3">
-                        <div className="p-1.5 bg-white/10 rounded-lg backdrop-blur-sm">
-                            <AppLogoIcon className="w-6 h-6 text-emerald-400 fill-current" />
+                        <div className="p-1 bg-white rounded-lg backdrop-blur-sm shadow-sm overflow-hidden w-9 h-9 flex items-center justify-center">
+                            <img src="/images/cropped-Logo-Cilacap.png" alt="Admin Logo" className="w-full h-full object-contain" />
                         </div>
                         <div className="grid flex-1 text-left text-base leading-tight">
                             <span className="truncate font-bold text-white tracking-wide text-lg">
@@ -201,10 +201,55 @@ export default function AppSidebarLayout({
                             />
                         </div>
 
-                        <button className="relative p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-colors">
-                            <Bell className="w-5 h-5" />
-                            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
-                        </button>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <button className="relative p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-colors outline-none">
+                                    <Bell className="w-5 h-5" />
+                                    {props.auth.notifications?.length > 0 && (
+                                        <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-white animate-pulse"></span>
+                                    )}
+                                </button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="w-80 mt-2 p-0 bg-white border border-slate-200 shadow-xl rounded-xl">
+                                <div className="p-3 border-b border-slate-100 flex justify-between items-center bg-slate-50/50 rounded-t-xl">
+                                    <h3 className="font-semibold text-slate-800 text-sm">Aktivitas Terbaru</h3>
+                                    <span className="text-xs bg-white border border-slate-200 text-slate-600 px-2 py-0.5 rounded-full shadow-sm">
+                                        {props.auth.notifications?.length || 0} Baru
+                                    </span>
+                                </div>
+                                <div className="max-h-[350px] overflow-y-auto">
+                                    {props.auth.notifications?.length > 0 ? (
+                                        props.auth.notifications.map((notif: any) => (
+                                            <div key={notif.id} className="p-4 border-b border-slate-50 hover:bg-slate-50 transition-colors flex gap-3 text-left group cursor-pointer">
+                                                <div className={`mt-1.5 w-2 h-2 rounded-full shrink-0 ${notif.data.action === 'create' ? 'bg-emerald-500' :
+                                                    notif.data.action === 'update' ? 'bg-blue-500' : 'bg-red-500'
+                                                    }`} />
+                                                <div className="space-y-1">
+                                                    <p className="text-sm text-slate-700 leading-snug group-hover:text-slate-900">{notif.data.message}</p>
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">{notif.data.model}</span>
+                                                        <span className="text-[10px] text-slate-300">•</span>
+                                                        <span className="text-[10px] text-slate-400">Baru saja</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <div className="py-8 text-center">
+                                            <Bell className="w-8 h-8 text-slate-200 mx-auto mb-2" />
+                                            <p className="text-slate-400 text-sm">Belum ada notifikasi</p>
+                                        </div>
+                                    )}
+                                </div>
+                                {props.auth.notifications?.length > 0 && (
+                                    <div className="p-2 border-t border-slate-50 bg-slate-50/50 rounded-b-xl text-center">
+                                        <button className="text-xs font-medium text-emerald-600 hover:text-emerald-700 transition-colors">
+                                            Tandai semua dibaca
+                                        </button>
+                                    </div>
+                                )}
+                            </DropdownMenuContent>
+                        </DropdownMenu>
 
                         <div className="h-8 w-px bg-slate-200 mx-1"></div>
 
@@ -226,7 +271,7 @@ export default function AppSidebarLayout({
                                 <DropdownMenuLabel>Akun Saya</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem className="cursor-pointer">
-                                    <Link href="/profile" className="flex items-center w-full">
+                                    <Link href="/settings/profile" className="flex items-center w-full">
                                         <UserCheck className="w-4 h-4 mr-2" /> Profil
                                     </Link>
                                 </DropdownMenuItem>

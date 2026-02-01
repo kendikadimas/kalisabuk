@@ -31,7 +31,7 @@ export default function Potentials({ potentials }: PotentialsProps) {
 
                 <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
                     {/* Category Tabs */}
-                    <div className="flex flex-wrap justify-center gap-4 mb-16">
+                    {/* <div className="flex flex-wrap justify-center gap-4 mb-16">
                         {[
                             { label: 'Semua', icon: Sparkles, active: true },
                             { label: 'Wisata Alam', icon: Mountain },
@@ -51,7 +51,7 @@ export default function Potentials({ potentials }: PotentialsProps) {
                                 {tab.label}
                             </button>
                         ))}
-                    </div>
+                    </div> */}
 
                     <div>
                         {potentials.length > 0 ? (

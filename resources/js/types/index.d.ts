@@ -1,8 +1,21 @@
 import { InertiaLinkProps } from '@inertiajs/react';
 import { LucideIcon } from 'lucide-react';
 
+export interface NotificationData {
+    id: string;
+    data: {
+        message: string;
+        action: string;
+        model: string;
+        url: string;
+    };
+    created_at: string;
+    read_at: string | null;
+}
+
 export interface Auth {
     user: User;
+    notifications: NotificationData[];
 }
 
 export interface BreadcrumbItem {

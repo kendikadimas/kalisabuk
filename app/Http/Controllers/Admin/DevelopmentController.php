@@ -33,7 +33,9 @@ class DevelopmentController extends Controller
             'description' => 'nullable|string',
             'contractor' => 'nullable|string',
             'status' => 'required|in:planned,progress,completed',
+            'progress_percentage' => 'required|integer|in:0,50,100',
             'image_before' => 'required|image|max:10240',
+            'image_progress' => 'nullable|image|max:10240',
             'image_after' => 'nullable|image|max:10240',
         ]);
 
@@ -42,6 +44,10 @@ class DevelopmentController extends Controller
 
         if ($request->hasFile('image_before')) {
             $data['image_before'] = $request->file('image_before')->store('developments', 'public');
+        }
+
+        if ($request->hasFile('image_progress')) {
+            $data['image_progress'] = $request->file('image_progress')->store('developments', 'public');
         }
 
         if ($request->hasFile('image_after')) {
@@ -70,7 +76,9 @@ class DevelopmentController extends Controller
             'description' => 'nullable|string',
             'contractor' => 'nullable|string',
             'status' => 'required|in:planned,progress,completed',
+            'progress_percentage' => 'required|integer|in:0,50,100',
             'image_before' => 'nullable|image|max:10240',
+            'image_progress' => 'nullable|image|max:10240',
             'image_after' => 'nullable|image|max:10240',
         ]);
 
@@ -82,6 +90,14 @@ class DevelopmentController extends Controller
             $data['image_before'] = $request->file('image_before')->store('developments', 'public');
         } else {
             unset($data['image_before']);
+        }
+
+        if ($request->hasFile('image_progress')) {
+            if ($development->image_progress)
+                Storage::disk('public')->delete($development->image_progress);
+            $data['image_progress'] = $request->file('image_progress')->store('developments', 'public');
+        } else {
+            unset($data['image_progress']);
         }
 
         if ($request->hasFile('image_after')) {

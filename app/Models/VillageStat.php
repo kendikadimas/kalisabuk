@@ -26,6 +26,10 @@ class VillageStat extends Model
         'is_active' => 'boolean',
     ];
 
+    protected $appends = [
+        'formatted_value',
+    ];
+
     /**
      * Scope untuk mengambil stats yang aktif
      */

@@ -12,7 +12,9 @@ import {
     UserCheck,
     PieChart,
     Building2,
-    Building
+    Building,
+    Megaphone,
+    Briefcase
 } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -27,23 +29,27 @@ interface DashboardProps {
         posts: number;
         potentials: number;
         users: number;
-        demographics: number;
+        developments: number;
+        announcements: number;
+        population: number;
     };
     latest_posts: Array<{
         id: number;
         title: string;
         category: string;
         created_at: string;
+        image_path?: string;
     }>;
-    demographics_data: Array<{
+    latest_announcements: Array<{
         id: number;
-        label: string;
-        value: number;
-        type: string;
+        title: string;
+        is_active: boolean;
+        created_at: string;
     }>;
+    demographics_data: any[]; // Keep types but unused
 }
 
-export default function Dashboard({ stats, latest_posts, demographics_data }: DashboardProps) {
+export default function Dashboard({ stats, latest_posts, latest_announcements, demographics_data }: DashboardProps) {
     const currentDate = new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 
     return (
@@ -74,39 +80,39 @@ export default function Dashboard({ stats, latest_posts, demographics_data }: Da
                     <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl" />
                 </div>
 
-                {/* Stats Grid */}
+                {/* Stats Grid - Updated with Important Metrics */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <StatsCard
                         title="Total Penduduk"
-                        value={stats.demographics}
+                        value={stats.population}
                         icon={Users}
-                        trend="+12%"
-                        trendLabel="bulan ini"
+                        trend="Live"
+                        trendLabel="data kependudukan"
                         theme="emerald"
                     />
                     <StatsCard
                         title="Berita & Artikel"
                         value={stats.posts}
                         icon={FileText}
-                        trend="+4"
-                        trendLabel="minggu ini"
-                        theme="blue"
+                        trend="Total"
+                        trendLabel="konten terpublikasi"
+                        theme="indigo"
                     />
                     <StatsCard
-                        title="Potensi Desa"
-                        value={stats.potentials}
-                        icon={Mountain}
-                        trend="Stabil"
-                        trendLabel="data"
-                        theme="teal"
-                    />
-                    <StatsCard
-                        title="Pengguna Sistem"
-                        value={stats.users}
-                        icon={UserCheck}
-                        trend="Aktif"
-                        trendLabel="user admin"
+                        title="Pengumuman"
+                        value={stats.announcements}
+                        icon={Megaphone}
+                        trend="Publik"
+                        trendLabel="informasi penting"
                         theme="orange"
+                    />
+                    <StatsCard
+                        title="Proyek Pembangunan"
+                        value={stats.developments}
+                        icon={Building}
+                        trend="Aktif"
+                        trendLabel="sedang berjalan"
+                        theme="blue"
                     />
                 </div>
 
@@ -124,14 +130,14 @@ export default function Dashboard({ stats, latest_posts, demographics_data }: Da
                                 Akses Cepat
                             </h3>
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <QuickAction href="/dashboard/announcements" icon={Megaphone} label="Buat Pengumuman" color="rose" />
                                 <QuickAction href="/dashboard/posts/create" icon={FileText} label="Tulis Berita" color="blue" />
+                                <QuickAction href="/dashboard/demographics" icon={Users} label="Input Penduduk" color="indigo" />
                                 <QuickAction href="/dashboard/developments/create" icon={Building} label="Input Proyek" color="orange" />
+                                <QuickAction href="/dashboard/village-stats" icon={PieChart} label="Data Statistik" color="teal" />
                                 <QuickAction href="/dashboard/potentials/create" icon={Mountain} label="Tambah Potensi" color="emerald" />
-                                <QuickAction href="/dashboard/village-officials/create" icon={UserCheck} label="Tambah Perangkat" color="purple" />
-                                <QuickAction href="/dashboard/demographics/create" icon={Users} label="Input Penduduk" color="indigo" />
-                                <QuickAction href="/dashboard/village-stats" icon={PieChart} label="Update Statistik" color="teal" />
-                                <QuickAction href="/dashboard/institutions" icon={Building2} label="Kelola Lembaga" color="slate" />
-                                <QuickAction href="/dashboard/services" icon={ClipboardList} label="Layanan Surat" color="rose" />
+                                <QuickAction href="/dashboard/village-officials/create" icon={UserCheck} label="Perangkat Desa" color="purple" />
+                                <QuickAction href="/dashboard/services" icon={ClipboardList} label="Info Layanan" color="slate" />
                             </div>
                         </div>
 
@@ -148,8 +154,12 @@ export default function Dashboard({ stats, latest_posts, demographics_data }: Da
                                     latest_posts.map((post) => (
                                         <div key={post.id} className="p-4 flex items-center justify-between hover:bg-slate-50 transition-colors group">
                                             <div className="flex items-center gap-4">
-                                                <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300 shadow-sm">
-                                                    <FileText className="w-6 h-6" />
+                                                <div className="w-16 h-12 rounded-lg bg-slate-100 flex-shrink-0 overflow-hidden shadow-sm border border-slate-200">
+                                                    <img
+                                                        src={post.image_path ? (post.image_path.startsWith('http') ? post.image_path : `/storage/${post.image_path}`) : 'https://placehold.co/100x100?text=IMG'}
+                                                        alt={post.title}
+                                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                                    />
                                                 </div>
                                                 <div>
                                                     <h4 className="font-medium text-slate-900 group-hover:text-emerald-700 transition-colors line-clamp-1 text-base">{post.title}</h4>
@@ -163,7 +173,7 @@ export default function Dashboard({ stats, latest_posts, demographics_data }: Da
                                                     </div>
                                                 </div>
                                             </div>
-                                            <Link href={`/dashboard/posts/${post.id}/edit`} className="p-2 text-slate-300 hover:text-emerald-600 hover:bg-emerald-50 rounded-full transition-all">
+                                            <Link href={`/dashboard/posts/${post.id}/edit`} className="p-2 text-slate-300 hover:text-emerald-600 hover:bg-emerald-50 rounded-full transition-all flex-shrink-0">
                                                 <ChevronRight className="w-5 h-5" />
                                             </Link>
                                         </div>
@@ -185,38 +195,92 @@ export default function Dashboard({ stats, latest_posts, demographics_data }: Da
                     {/* Sidebar Area (1/3) */}
                     <div className="space-y-8">
 
-                        {/* Demographics Summary */}
+                        {/* Announcements Widget (Replaces Demographics) */}
                         <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 relative overflow-hidden">
                             {/* Decorative header bg */}
-                            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-500" />
+                            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 to-amber-500" />
 
-                            <h3 className="font-semibold text-slate-800 mb-6 text-lg">Ringkasan Demografi</h3>
-                            <div className="space-y-5">
-                                {demographics_data.map((item, idx) => {
-                                    const total = demographics_data.reduce((acc, curr) => acc + curr.value, 0);
-                                    const percentage = total > 0 ? Math.round((item.value / total) * 100) : 0;
-                                    const barColors = ['bg-indigo-500', 'bg-pink-500', 'bg-amber-500', 'bg-emerald-500'];
-                                    const color = barColors[idx % barColors.length];
+                            <h3 className="font-semibold text-slate-800 mb-6 text-lg flex items-center justify-between">
+                                <span>Pengumuman Terbaru</span>
+                                <Link href="/dashboard/announcements" className="text-orange-600 hover:text-orange-700 bg-orange-50 p-1.5 rounded-lg transition-colors">
+                                    <ChevronRight className="w-4 h-4" />
+                                </Link>
+                            </h3>
 
-                                    return (
-                                        <div key={item.id}>
-                                            <div className="flex justify-between text-sm mb-2">
-                                                <span className="text-slate-600 font-medium">{item.label}</span>
-                                                <span className="font-bold text-slate-900">{item.value.toLocaleString('id-ID')}</span>
+                            <div className="space-y-4">
+                                {latest_announcements && latest_announcements.length > 0 ? (
+                                    latest_announcements.map((item) => (
+                                        <div key={item.id} className="flex gap-3 group">
+                                            <div className="mt-1 flex-shrink-0">
+                                                <div className="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center text-orange-600 group-hover:bg-orange-100 transition-colors">
+                                                    <Megaphone className="w-4 h-4" />
+                                                </div>
                                             </div>
-                                            <div className="h-2.5 w-full bg-slate-100 rounded-full overflow-hidden">
-                                                <div className={`h-full ${color} rounded-full`} style={{ width: `${percentage}%` }} />
+                                            <div className="flex-1 min-w-0">
+                                                <Link href={`/dashboard/announcements/${item.id}/edit`} className="block">
+                                                    <p className="text-sm font-medium text-slate-800 group-hover:text-orange-600 transition-colors line-clamp-2 leading-snug">
+                                                        {item.title}
+                                                    </p>
+                                                    <div className="flex items-center gap-2 mt-1">
+                                                        <span className={`w-1.5 h-1.5 rounded-full ${item.is_active ? 'bg-emerald-500' : 'bg-slate-300'}`}></span>
+                                                        <span className="text-xs text-slate-400">
+                                                            {new Date(item.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}
+                                                        </span>
+                                                    </div>
+                                                </Link>
                                             </div>
                                         </div>
-                                    );
-                                })}
+                                    ))
+                                ) : (
+                                    <p className="text-slate-400 text-sm text-center py-4 italic">Belum ada pengumuman.</p>
+                                )}
                             </div>
-                            <div className="mt-8 pt-6 border-t border-slate-50">
-                                <Link href="/dashboard/demographics" className="block w-full py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-semibold text-sm rounded-xl text-center transition-colors">
-                                    Kelola Data Penduduk
+
+                            <div className="mt-6 pt-5 border-t border-slate-50">
+                                <Link href="/dashboard/announcements/create" className="block w-full py-2.5 bg-orange-50 hover:bg-orange-100 text-orange-700 font-semibold text-sm rounded-xl text-center transition-colors">
+                                    Buat Pengumuman Baru
                                 </Link>
                             </div>
                         </div>
+
+                        {/* Job Stats Widget */}
+                        {/* <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 relative overflow-hidden">
+                            <h3 className="font-semibold text-slate-800 mb-6 flex items-center gap-2 text-lg">
+                                <span className="p-1.5 bg-indigo-50 rounded-lg text-indigo-600">
+                                    <Briefcase className="w-5 h-5" />
+                                </span>
+                                Statistik Pekerjaan
+                            </h3>
+                            <div className="space-y-5">
+                                {demographics_data && demographics_data.length > 0 ? (
+                                    demographics_data.map((item, idx) => {
+                                        const maxValue = Math.max(...demographics_data.map(d => d.value));
+                                        const percentage = maxValue > 0 ? (item.value / maxValue) * 100 : 0;
+                                        const barColors = ['bg-indigo-500', 'bg-blue-500', 'bg-sky-500', 'bg-cyan-500', 'bg-teal-500'];
+                                        const color = barColors[idx % barColors.length];
+
+                                        return (
+                                            <div key={item.id} className="group">
+                                                <div className="flex justify-between text-sm mb-1.5">
+                                                    <span className="text-slate-600 font-medium group-hover:text-indigo-600 transition-colors truncate pr-4">{item.label}</span>
+                                                    <span className="font-bold text-slate-900">{item.value.toLocaleString('id-ID')}</span>
+                                                </div>
+                                                <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                                                    <div className={`h-full ${color} rounded-full transition-all duration-1000 ease-out`} style={{ width: `${percentage}%` }} />
+                                                </div>
+                                            </div>
+                                        );
+                                    })
+                                ) : (
+                                    <p className="text-slate-400 text-sm italic text-center py-4">Data statistik belum tersedia.</p>
+                                )}
+                            </div>
+                            <div className="mt-6 pt-5 border-t border-slate-50 text-center">
+                                <Link href="/dashboard/demographics" className="text-sm font-medium text-emerald-600 hover:text-emerald-700 hover:underline">
+                                    Lihat Selengkapnya
+                                </Link>
+                            </div>
+                        </div> */}
 
                         {/* System Status */}
                         <div className="rounded-2xl p-1 bg-gradient-to-br from-emerald-500 to-teal-700 shadow-lg">

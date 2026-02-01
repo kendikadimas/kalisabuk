@@ -3,7 +3,6 @@ import { Head, Link, usePage } from '@inertiajs/react';
 import { type BreadcrumbItem } from '@/types';
 import { Plus, Pencil, Trash2, MapPin, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 
 export default function PotentialIndex({ potentials }: { potentials: any }) {
     const breadcrumbs: BreadcrumbItem[] = [
@@ -26,11 +25,6 @@ export default function PotentialIndex({ potentials }: { potentials: any }) {
                         </p>
                     </div>
                     <div className="flex items-center gap-2">
-                        <Link href={'/dashboard/potential-categories'}>
-                            <Button variant="outline" className="border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-emerald-700 rounded-xl">
-                                Kelola Kategori
-                            </Button>
-                        </Link>
                         <Button asChild className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-600/20 rounded-xl">
                             <Link href="/dashboard/potentials/create">
                                 <Plus className="mr-2 h-4 w-4" />
@@ -60,12 +54,6 @@ export default function PotentialIndex({ potentials }: { potentials: any }) {
                                 )}
 
                                 <div className="p-6 flex-1 flex flex-col gap-4">
-                                    <div className="flex justify-between items-start">
-                                        <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200">
-                                            {potential.category_data ? potential.category_data.name : (potential.category === 'tourism' ? 'Wisata' : potential.category)}
-                                        </Badge>
-                                    </div>
-
                                     <h3 className="text-xl font-bold text-slate-900 leading-tight group-hover:text-emerald-700 transition-colors">
                                         {potential.name}
                                     </h3>

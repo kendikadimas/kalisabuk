@@ -15,7 +15,7 @@ class AnnouncementController extends Controller
     public function index()
     {
         $announcements = Announcement::latest()->paginate(10);
-        
+
         return Inertia::render('Admin/Announcements/Index', [
             'announcements' => $announcements
         ]);
@@ -45,7 +45,7 @@ class AnnouncementController extends Controller
 
         Announcement::create($validated);
 
-        return redirect()->route('admin.announcements.index')
+        return redirect()->route('announcements.index')
             ->with('success', 'Pengumuman berhasil ditambahkan.');
     }
 
@@ -85,7 +85,7 @@ class AnnouncementController extends Controller
 
         $announcement->update($validated);
 
-        return redirect()->route('admin.announcements.index')
+        return redirect()->route('announcements.index')
             ->with('success', 'Pengumuman berhasil diperbarui.');
     }
 
@@ -96,7 +96,7 @@ class AnnouncementController extends Controller
     {
         $announcement->delete();
 
-        return redirect()->route('admin.announcements.index')
+        return redirect()->route('announcements.index')
             ->with('success', 'Pengumuman berhasil dihapus.');
     }
 }

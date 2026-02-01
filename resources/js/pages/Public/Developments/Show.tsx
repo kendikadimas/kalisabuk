@@ -6,7 +6,7 @@ import { MapPin, Calendar, CheckCircle2, User, Banknote, ArrowLeft } from 'lucid
 export default function PublicDevelopmentShow({ development }: { development: any }) {
 
     return (
-        <PublicLayout>
+        <PublicLayout forceBackground={true}>
             <Head title={development.title} />
 
             <div className="py-12 bg-slate-50 min-h-screen">
@@ -19,10 +19,16 @@ export default function PublicDevelopmentShow({ development }: { development: an
                     <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
                         {/* Compare Slider Area */}
                         <div className="w-full aspect-video bg-slate-100 relative">
-                            {development.image_after && development.image_before ? (
+                            {development.progress_percentage === 50 && development.image_progress && development.image_before ? (
                                 <ReactCompareSlider
-                                    itemOne={<ReactCompareSliderImage src={`/storage/${development.image_before}`} alt="Sebelum" />}
-                                    itemTwo={<ReactCompareSliderImage src={`/storage/${development.image_after}`} alt="Sesudah" />}
+                                    itemOne={<ReactCompareSliderImage src={`/storage/${development.image_before}`} alt="0%" />}
+                                    itemTwo={<ReactCompareSliderImage src={`/storage/${development.image_progress}`} alt="50%" />}
+                                    className="h-full w-full"
+                                />
+                            ) : development.image_after && development.image_before ? (
+                                <ReactCompareSlider
+                                    itemOne={<ReactCompareSliderImage src={`/storage/${development.image_before}`} alt="Sebelum (0%)" />}
+                                    itemTwo={<ReactCompareSliderImage src={`/storage/${development.image_after}`} alt="Sesudah (100%)" />}
                                     className="h-full w-full"
                                 />
                             ) : (
@@ -33,7 +39,7 @@ export default function PublicDevelopmentShow({ development }: { development: an
                                 />
                             )}
 
-                            {development.image_after && development.image_before && (
+                            {((development.image_after && development.image_before) || (development.image_progress && development.image_before)) && (
                                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 backdrop-blur-md px-4 py-2 rounded-full text-white text-xs font-medium pointer-events-none z-10">
                                     Geser untuk membandingkan
                                 </div>
@@ -72,6 +78,23 @@ export default function PublicDevelopmentShow({ development }: { development: an
                                         <h3 className="font-semibold text-slate-900 mb-4">Informasi Proyek</h3>
 
                                         <div className="space-y-4">
+                                            <div>
+                                                <div className="text-xs text-slate-500 mb-1 flex items-center">
+                                                    <CheckCircle2 className="w-3 h-3 mr-1" /> Progress
+                                                </div>
+                                                <div className="font-medium text-slate-900 mb-2">
+                                                    {development.progress_percentage}%
+                                                </div>
+                                                <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                                                    <div
+                                                        className={`h-full transition-all duration-500 ${development.progress_percentage === 100 ? 'bg-emerald-500' :
+                                                            development.progress_percentage === 50 ? 'bg-blue-500' : 'bg-slate-400'
+                                                            }`}
+                                                        style={{ width: `${development.progress_percentage}%` }}
+                                                    />
+                                                </div>
+                                            </div>
+
                                             <div>
                                                 <div className="text-xs text-slate-500 mb-1 flex items-center">
                                                     <Banknote className="w-3 h-3 mr-1" /> Anggaran

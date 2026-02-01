@@ -420,8 +420,14 @@ export default function Home({ villageInfo, villageHead, villageOfficials, lates
                             )}
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {[1, 2, 3].map(i => <div key={i} className="aspect-[3/4] bg-slate-200 rounded-3xl animate-pulse"></div>)}
+                        <div className="text-center py-16 bg-white rounded-[2.5rem] border border-slate-100 shadow-sm">
+                            <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <Mountain className="w-10 h-10 text-emerald-300" />
+                            </div>
+                            <h3 className="text-xl font-bold font-serif text-slate-900 mb-2">Belum Ada Data Potensi</h3>
+                            <p className="text-slate-500 max-w-md mx-auto leading-relaxed">
+                                Saat ini belum ada data potensi desa yang ditampilkan. Informasi akan segera diperbarui.
+                            </p>
                         </div>
                     )}
                 </div>
@@ -597,44 +603,37 @@ export default function Home({ villageInfo, villageHead, villageOfficials, lates
                         </div>
                         <div className="relative">
                             <div className="absolute inset-0 bg-gradient-to-tr from-emerald-600/20 to-transparent rounded-3xl transform rotate-3"></div>
-                            <div className="bg-white p-8 rounded-3xl shadow-xl relative border border-slate-100">
-                                <div className="space-y-4">
-                                    <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100">
-                                        <div className="w-10 h-10 flex-shrink-0 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                                            <Building2 className="w-5 h-5" />
-                                        </div>
-                                        <div className="flex-1">
-                                            <p className="font-bold text-slate-900 mb-1">Surat Keterangan Usaha</p>
-                                            <p className="text-xs text-slate-500 mb-2">Syarat: KTP, KK, Pas Foto</p>
-                                            <span className="inline-block text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full font-semibold">3 Hari Kerja</span>
-                                        </div>
+                            <div className="bg-white p-8 rounded-3xl shadow-xl relative border border-slate-100 h-full flex flex-col justify-center items-center text-center overflow-hidden group">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-bl-full z-0 transition-transform group-hover:scale-150 duration-700"></div>
+                                <div className="absolute bottom-0 left-0 w-24 h-24 bg-blue-50 rounded-tr-full z-0 transition-transform group-hover:scale-150 duration-700"></div>
+
+                                <div className="relative z-10 bg-white p-6 rounded-2xl shadow-sm border border-slate-100 mb-6 group-hover:-translate-y-2 transition-transform duration-300">
+                                    <Building2 className="w-16 h-16 text-emerald-600" />
+                                </div>
+
+                                <h3 className="relative z-10 text-2xl font-bold text-slate-900 mb-3">Siap Melayani Anda</h3>
+                                <p className="relative z-10 text-slate-500 mb-8 max-w-xs leading-relaxed">
+                                    Kami berkomitmen memberikan pelayanan administrasi terbaik untuk kebutuhan warga desa. Cepat, mudah, dan transparan.
+                                </p>
+
+                                <div className="relative z-10 grid grid-cols-3 gap-4 w-full mb-8">
+                                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                                        <p className="font-black text-emerald-600 text-xl">Sen-Jum</p>
+                                        <p className="text-[10px] uppercase font-bold text-slate-400">Hari Kerja</p>
                                     </div>
-                                    <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100">
-                                        <div className="w-10 h-10 flex-shrink-0 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
-                                            <Users className="w-5 h-5" />
-                                        </div>
-                                        <div className="flex-1">
-                                            <p className="font-bold text-slate-900 mb-1">Surat Pengantar Nikah</p>
-                                            <p className="text-xs text-slate-500 mb-2">Syarat: KTP, KK, Akta Lahir, N1-N4</p>
-                                            <span className="inline-block text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full font-semibold">1 Hari Kerja</span>
-                                        </div>
+                                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                                        <p className="font-black text-emerald-600 text-xl">08:00</p>
+                                        <p className="text-[10px] uppercase font-bold text-slate-400">Buka</p>
                                     </div>
-                                    <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100">
-                                        <div className="w-10 h-10 flex-shrink-0 rounded-full bg-orange-100 flex items-center justify-center text-orange-600">
-                                            <CheckCircle className="w-5 h-5" />
-                                        </div>
-                                        <div className="flex-1">
-                                            <p className="font-bold text-slate-900 mb-1">Surat Keterangan Domisili</p>
-                                            <p className="text-xs text-slate-500 mb-2">Syarat: KTP, KK</p>
-                                            <span className="inline-block text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full font-semibold">1 Hari Kerja</span>
-                                        </div>
+                                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                                        <p className="font-black text-emerald-600 text-xl">15:00</p>
+                                        <p className="text-[10px] uppercase font-bold text-slate-400">Tutup</p>
                                     </div>
                                 </div>
-                                <div className="mt-6 pt-6 border-t border-slate-200 text-center">
-                                    <p className="text-sm text-slate-600">
-                                        <span className="font-bold text-emerald-600">15+ Layanan</span> administrasi tersedia
-                                    </p>
-                                </div>
+
+                                <a href="/layanan" className="relative z-10 inline-flex items-center text-emerald-600 font-bold hover:text-emerald-700 transition-colors group/link">
+                                    Lihat Persyaratan Layanan <ArrowRight className="ml-2 w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                                </a>
                             </div>
                         </div>
                     </div>

@@ -4,7 +4,6 @@ import { type BreadcrumbItem } from '@/types';
 import { BookOpen, Plus, Pencil, Trash2, MoreHorizontal, Calendar, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { route } from 'ziggy-js';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
@@ -38,11 +37,6 @@ export default function PostIndex({ posts }: { posts: any }) {
                         </p>
                     </div>
                     <div className="flex items-center gap-2">
-                        <Link href={'/dashboard/post-categories'}>
-                            <Button variant="outline" className="border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-emerald-700 rounded-xl">
-                                Kelola Kategori
-                            </Button>
-                        </Link>
                         <Link href={'/dashboard/posts/create'}>
                             <Button className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-600/20 rounded-xl">
                                 <Plus className="w-4 h-4 mr-2" />
@@ -69,11 +63,6 @@ export default function PostIndex({ posts }: { posts: any }) {
                                             <BookOpen className="w-12 h-12" />
                                         </div>
                                     )}
-                                    <div className="absolute top-2 right-2">
-                                        <Badge variant="secondary" className="bg-white/90 backdrop-blur text-slate-700 shadow-sm text-xs font-normal">
-                                            {post.category_data ? post.category_data.name : (post.category === 'news' ? 'Berita Desa' : 'Pengumuman')}
-                                        </Badge>
-                                    </div>
                                 </div>
 
                                 <CardContent className="p-5 flex-1 flex flex-col gap-3">

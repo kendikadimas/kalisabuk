@@ -126,21 +126,6 @@ export default function Show({ post, related, hasLiked }: NewsShowProps) {
                                     ))}
                                 </div>
                             </div>
-
-                            {/* Categories Widget */}
-                            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                                <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                                    <span className="w-1 h-6 bg-amber-400 rounded-full"></span>
-                                    Kategori
-                                </h3>
-                                <div className="space-y-2">
-                                    {['Pengumuman', 'Kegiatan', 'Pembangunan', 'Layanan'].map((cat) => (
-                                        <a key={cat} href="/news" className="flex justify-between items-center p-3 rounded-lg hover:bg-slate-50 group transition-colors cursor-pointer border border-transparent hover:border-slate-100">
-                                            <span className="text-slate-600 font-medium group-hover:text-emerald-700">{cat}</span>
-                                        </a>
-                                    ))}
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

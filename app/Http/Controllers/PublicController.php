@@ -15,6 +15,7 @@ use App\Models\VillageOfficial;
 use App\Models\VillageStat;
 use App\Models\Announcement;
 use App\Models\Development;
+use App\Models\DemographicType;
 
 
 class PublicController extends Controller
@@ -68,10 +69,16 @@ class PublicController extends Controller
         ]);
     }
 
+
+
     public function data()
     {
         return Inertia::render('Public/Data', [
-            'demographics' => Demographic::all(),
+            'demographicTypes' => DemographicType::with([
+                'demographics' => function ($q) {
+                    $q->orderBy('value', 'desc');
+                }
+            ])->get(),
             'villageStats' => VillageStat::active()->ordered()->get(),
         ]);
     }

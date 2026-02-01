@@ -85,14 +85,14 @@ export default function HeroSection({ slides }: HeroSectionProps) {
                             <span>{currentSlide.title}</span>
                         ) : (
                             <>
-                                Maju Bersama <br />
-                                <span className="text-white underline decoration-emerald-500 decoration-4 underline-offset-4">Desa Kalisabuk.</span>
+                                Selamat Datang di<br />
+                                <span className="text-white">Website Desa Kalisabuk</span>
                             </>
                         )}
                     </h1>
 
-                    <p className="text-lg md:text-xl text-white mb-10 leading-relaxed max-w-xl font-normal drop-shadow-md">
-                        {currentSlide.subtitle || "Pusat informasi pemerintahan, pelayanan publik, dan potensi desa yang transparan, akuntabel, dan inovatif."}
+                    <p className="text-lg md:text-xl text-white mb-10 leading-relaxed max-w-2xl font-normal drop-shadow-md">
+                        {currentSlide.subtitle || "Pusat layanan dan informasi digital Desa Kalisabuk yang menyajikan berita terkini, transparansi pemerintahan, serta potensi desa secara akuntabel dan mudah diakses."}
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4">

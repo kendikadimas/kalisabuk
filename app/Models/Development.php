@@ -18,6 +18,7 @@ class Development extends Model
         'description',
         'contractor',
         'status',
+        'progress_percentage',
         'image_before',
         'image_progress',
         'image_after'
