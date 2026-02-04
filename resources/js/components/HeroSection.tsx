@@ -103,10 +103,10 @@ export default function HeroSection({ slides }: HeroSectionProps) {
                             Jelajahi Berita
                         </a>
                         <a
-                            href="/profile"
+                            href="https://www.instagram.com/infodesakalisabuk/"
                             className="px-8 py-4 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-full font-bold text-sm tracking-wide hover:bg-white/20 transition-all shadow-sm hover:shadow-md text-center"
                         >
-                            Profil Desa
+                            Instagram Resmi Desa
                         </a>
                     </div>
                 </div>

@@ -3,7 +3,7 @@ import PublicLayout from '@/layouts/PublicLayout';
 import HeroSection from '@/components/HeroSection';
 import SectionTitle from '@/components/SectionTitle';
 import NewsCard from '@/components/NewsCard';
-import { Users, MapPin, Building2, CheckCircle, ArrowRight, Calendar, MapPinned, Bell, AlertCircle, Info, ChevronLeft, ChevronRight, UserCheck, Phone, Mail, Tag, ShoppingBag, Mountain } from 'lucide-react';
+import { Users, MapPin, Building2, CheckCircle, ArrowRight, Calendar, MapPinned, Bell, AlertCircle, Info, ChevronLeft, ChevronRight, UserCheck, Phone, Mail, Tag, ShoppingBag, Mountain, Instagram } from 'lucide-react';
 import { useState, useRef } from 'react';
 
 interface HomeProps {
@@ -25,8 +25,23 @@ interface HomeProps {
 export default function Home({ villageInfo, villageHead, villageOfficials, latestNews, featuredPotentials, announcements, developments, stats, heroSlides }: HomeProps) {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [currentOfficialSlide, setCurrentOfficialSlide] = useState(0);
+    const [showMembers, setShowMembers] = useState(false);
     const carouselRef = useRef<HTMLDivElement>(null);
     const officialCarouselRef = useRef<HTMLDivElement>(null);
+
+    const kknMembers = [
+        { name: 'Alif Rizki M', role: 'Kormades', major: 'Ekonomi Pembangunan', image: '/images/KKN/ALIP.jpg' },
+        { name: 'Khusna Wahyu R', role: 'Sekretaris', major: 'Kimia', image: '/images/KKN/KHUSNA.jpg' },
+        { name: 'Andhara Uma B', role: 'Bendahara', major: 'Peternakan', image: '/images/KKN/ANDHARA.jpg' },
+        { name: 'Sasha Kamila S', role: 'Ekonomi', major: 'Ekonomi Pembangunan', image: '/images/KKN/SASHA.jpg' },
+        { name: 'Salsabila Aulia', role: 'Ekonomi', major: 'Ekonomi Pembangunan', image: '/images/KKN/SALSA.jpg' },
+        { name: 'May Cahya Wulan', role: 'Pendidikan', major: 'Sastra Indonesia', image: '/images/KKN/MAY.jpg' },
+        { name: 'Thomas Aquinas D.G.R', role: 'Kesehatan', major: 'Pendidikan Jasmani', image: '/images/KKN/THOMAS.jpg' },
+        { name: 'Lukman Surbakti', role: 'Lingkungan', major: 'Agroteknologi', image: '/images/KKN/LUKMAN.jpg' },
+        { name: 'Dian C.A. Habeahan', role: 'Lingkungan', major: 'Agroteknologi', image: '/images/KKN/DIAN.jpg' },
+        { name: 'Naia Zahro H', role: 'Pemdes', major: 'Ilmu Kelautan', image: '/images/KKN/NAIA.jpg' },
+        { name: 'Dimas Kendika F', role: 'Pemdes', major: 'Informatika', image: '/images/KKN/DIMAS.jpg' },
+    ];
 
     const scrollToSlide = (index: number) => {
         if (carouselRef.current) {
@@ -735,6 +750,132 @@ export default function Home({ villageInfo, villageHead, villageOfficials, lates
                         <a href="/news" className="inline-flex items-center justify-center px-8 py-4 border border-slate-200 rounded-full text-sm font-bold text-slate-700 hover:bg-slate-50 hover:text-emerald-900 transition-all">
                             Lihat Arsip Berita
                         </a>
+                    </div>
+                </div>
+            </section>
+
+            {/* KKN Unsoed Section */}
+            <section className="py-24 bg-slate-50 relative overflow-hidden" id="kkn-section">
+                {/* Decorative Elements */}
+                <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                    <div className="absolute -top-[10%] -right-[5%] w-[40%] h-[40%] rounded-full bg-yellow-400/5 blur-3xl"></div>
+                    <div className="absolute bottom-[10%] left-[5%] w-[30%] h-[30%] rounded-full bg-blue-400/5 blur-3xl"></div>
+                </div>
+
+                <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                        {/* Left: Content */}
+                        <div className="order-2 lg:order-1">
+                            <span className="text-emerald-600 font-bold tracking-widest uppercase text-xs mb-2 block flex items-center gap-2">
+                                <span className="w-8 h-[2px] bg-emerald-600"></span>
+                                Kolaborasi
+                            </span>
+                            <h2 className="text-4xl md:text-5xl font-black font-serif text-slate-900 tracking-tight mb-6 leading-tight">
+                                Dibuat oleh <span className="text-emerald-600">KKN Unsoed</span><br />
+                                Desa Kalisabuk 2026
+                            </h2>
+                            <p className="text-slate-600 text-lg mb-8 leading-relaxed">
+                                Website ini merupakan hasil dedikasi, inovasi, dan kolaborasi mahasiswa KKN Universitas Jenderal Soedirman periode Januari-Februari 2026. Kami berkomitmen mendukung digitalisasi Desa Kalisabuk untuk pelayanan publik yang lebih baik.
+                            </p>
+
+                            <div className="flex flex-wrap items-center gap-4">
+                                <button
+                                    onClick={() => setShowMembers(!showMembers)}
+                                    className={`px-6 py-4 rounded-xl font-bold shadow-lg transition-all flex items-center gap-3 ${showMembers
+                                        ? 'bg-slate-800 text-white shadow-slate-900/20 hover:bg-slate-900'
+                                        : 'bg-emerald-600 text-white shadow-emerald-600/20 hover:bg-emerald-700 hover:-translate-y-1'
+                                        }`}
+                                >
+                                    <Users className="w-5 h-5" />
+                                    {showMembers ? 'Sembunyikan Anggota' : 'Lihat Anggota KKN'}
+                                </button>
+
+                                <div className="flex gap-3">
+                                    <a
+                                        href="https://www.instagram.com/kalisabukjourney/"
+                                        target="_blank"
+                                        className="p-4 bg-white rounded-xl text-pink-600 border border-slate-200 hover:scale-110 hover:shadow-md transition-all duration-300 group"
+                                        aria-label="Instagram KKN"
+                                    >
+                                        <Instagram className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                                    </a>
+                                    <a
+                                        href="https://www.tiktok.com/@kalisabukjourney"
+                                        target="_blank"
+                                        className="p-4 bg-white rounded-xl text-black border border-slate-200 hover:scale-110 hover:shadow-md transition-all duration-300 group relative"
+                                        aria-label="TikTok KKN"
+                                    >
+                                        {/* Simple TikTok SVG Icon */}
+                                        <svg className="w-5 h-5 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.002-.001.002.001a2.895 2.895 0 0 1 3.183-4.51v-3.5a6.394 6.394 0 0 0-5.394 6.365c0 3.31 2.69 6.013 6.02 6.013 3.33 0 6.013-2.695 6.013-6.02V8.531a9.7 9.7 0 0 0 6.69 2.597v-3.41c-1.58.003-3.07-.611-4.095-1.03l-.001-.002Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Right: Dynamic Visual */}
+                        <div className="order-1 lg:order-2 h-[450px] transition-all duration-500">
+                            {showMembers ? (
+                                <div className="bg-white p-6 rounded-[2.5rem] shadow-2xl h-full border border-slate-100 overflow-hidden relative animate-in fade-in zoom-in-95 duration-500">
+                                    <h3 className="text-center font-bold text-slate-900 mb-6 font-serif text-xl border-b border-slate-100 pb-4">Tim KKN Unsoed 2026</h3>
+
+                                    <div
+                                        className="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory"
+                                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                                    >
+                                        {kknMembers.map((member, idx) => (
+                                            <div key={idx} className="min-w-[160px] sm:min-w-[180px] w-[45%] flex-shrink-0 snap-center relative rounded-2xl overflow-hidden aspect-[3/4] group shadow-sm bg-slate-100 border border-slate-200">
+                                                <img
+                                                    src={member.image}
+                                                    alt={member.name}
+                                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                                />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/90 via-emerald-950/20 to-transparent"></div>
+
+                                                <div className="absolute bottom-0 left-0 w-full p-4 transform translate-y-1 group-hover:translate-y-0 transition-transform">
+                                                    <p className="font-bold text-white text-sm leading-tight mb-1">{member.name}</p>
+                                                    <div className="inline-block px-2 py-0.5 rounded-md bg-emerald-600/90 backdrop-blur-sm text-[10px] font-bold text-white mb-1 shadow-sm">
+                                                        {member.role}
+                                                    </div>
+                                                    <p className="text-[10px] text-emerald-100 opacity-80 line-clamp-1">{member.major}</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl h-full group cursor-pointer" onClick={() => setShowMembers(true)}>
+                                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-yellow-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
+                                    <img
+                                        src="/images/KKN/together.jpg"
+                                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 group-hover:opacity-20 z-10"
+                                        alt="KKN Team Collaboration"
+                                    />
+                                    {/* Overlay with original image visible by default */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent z-20 group-hover:from-transparent group-hover:via-transparent"></div>
+
+                                    <div className="absolute bottom-0 left-0 p-8 z-30 transition-transform duration-500 group-hover:-translate-y-4">
+                                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/30 text-xs font-bold tracking-widest uppercase mb-4">
+                                            <Users className="w-3 h-3" />
+                                            Tim Kami
+                                        </div>
+                                        <h3 className="text-3xl font-bold text-white mb-2 font-serif group-hover:text-slate-900 transition-colors">Generasi Soedirman</h3>
+                                        <p className="text-slate-200 text-sm max-w-xs group-hover:text-slate-800 transition-colors font-medium">
+                                            Bersama membangun desa melalui inovasi teknologi dan pemberdayaan masyarakat.
+                                        </p>
+                                    </div>
+
+                                    {/* Action Prompt on Hover */}
+                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100">
+                                        <div className="bg-white text-slate-900 px-6 py-3 rounded-full font-bold shadow-xl flex items-center gap-2">
+                                            <Users className="w-5 h-5 text-emerald-600" />
+                                            Lihat Personil
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </section>
