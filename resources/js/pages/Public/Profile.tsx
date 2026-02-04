@@ -157,17 +157,7 @@ export default function Profile({ villageInfo, institutions, facilities }: Profi
                         <div className="lg:w-1/2 relative">
                             <div className="sticky top-32">
                                 <div className="aspect-square rounded-[2rem] overflow-hidden shadow-2xl border-8 border-white bg-slate-200">
-                                    <iframe
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.265736209581!2d109.0664673!3d-7.6545733!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e656d0d5718eb29%3A0x673403301a974753!2sBalai%20Desa%20Kalisabuk!5e0!3m2!1sen!2sid!4v1704070000000!5m2!1sen!2sid"
-                                        width="100%"
-                                        height="100%"
-                                        style={{ border: 0 }}
-                                        allowFullScreen
-                                        loading="lazy"
-                                        referrerPolicy="no-referrer-when-downgrade"
-                                        title="Peta Desa Kalisabuk"
-                                        className="grayscale hover:grayscale-0 transition-all duration-700"
-                                    ></iframe>
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31634.873426778195!2d109.07866529118928!3d-7.64446951176838!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e656b841b4aa529%3A0x5027a76e3571e90!2sKalisabuk%2C%20Kec.%20Kesugihan%2C%20Kabupaten%20Cilacap%2C%20Jawa%20Tengah!5e0!3m2!1sid!2sid!4v1770230164994!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                                 </div>
                                 <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-emerald-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
                                 <div className="absolute -top-10 -left-10 w-64 h-64 bg-teal-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>

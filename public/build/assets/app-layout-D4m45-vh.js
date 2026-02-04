@@ -1,0 +1,1 @@
+import{j as s}from"./app-Czansj8V.js";import{A as t}from"./app-sidebar-layout-D_a0VO35.js";const i=({children:a,breadcrumbs:o,...r})=>s.jsx("div",{className:"bg-slate-50 min-h-screen",children:s.jsx(t,{breadcrumbs:o,...r,children:a})});export{i as A};
