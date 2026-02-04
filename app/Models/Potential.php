@@ -8,8 +8,8 @@ class Potential extends Model
 {
     protected $guarded = [];
 
-    public function categoryData()
-    {
-        return $this->belongsTo(PotentialCategory::class, 'potential_category_id');
-    }
+    // public function categoryData()
+    // {
+    //     return $this->belongsTo(PotentialCategory::class, 'potential_category_id');
+    // }
 }

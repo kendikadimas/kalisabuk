@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ArrowLeft, Save, MapPin, Phone, Mountain, FileText, ExternalLink } from 'lucide-react';
 
-export default function PotentialEdit({ potential, categories }: { potential: any, categories: any[] }) {
+export default function PotentialEdit({ potential }: { potential: any }) {
     const breadcrumbs: BreadcrumbItem[] = [
         { title: 'Dashboard', href: '/dashboard' },
         { title: 'Potensi Desa', href: '/dashboard/potentials' },
@@ -17,7 +17,6 @@ export default function PotentialEdit({ potential, categories }: { potential: an
     const { data, setData, post: submitPost, processing, errors } = useForm({
         _method: 'PUT',
         name: potential.name,
-        potential_category_id: potential.potential_category_id || (categories.length > 0 ? categories[0].id : ''),
         description: potential.description,
         location: potential.location,
         contact_info: potential.contact_info || '',
@@ -69,29 +68,6 @@ export default function PotentialEdit({ potential, categories }: { potential: an
                                         <Mountain className="absolute left-3 top-3.5 w-5 h-5 text-slate-400" />
                                     </div>
                                     {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
-                                </div>
-
-                                <div className="space-y-2">
-                                    <Label htmlFor="potential_category_id" className="text-slate-700">Kategori</Label>
-                                    <div className="relative">
-                                        <select
-                                            id="potential_category_id"
-                                            value={data.potential_category_id}
-                                            onChange={(e) => setData('potential_category_id', e.target.value)}
-                                            className="w-full h-12 px-3 pl-10 rounded-md border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 bg-white appearance-none"
-                                        >
-                                            <option value="" disabled>Pilih Kategori</option>
-                                            {categories.map((cat) => (
-                                                <option key={cat.id} value={cat.id}>{cat.name}</option>
-                                            ))}
-                                        </select>
-                                        <div className="absolute left-3 top-3.5 pointer-events-none">
-                                            <div className="w-5 h-5 bg-emerald-100 rounded-full flex items-center justify-center">
-                                                <div className="w-2 h-2 bg-emerald-500 rounded-full" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {errors.potential_category_id && <p className="text-sm text-red-500">{errors.potential_category_id}</p>}
                                 </div>
 
                                 <div className="space-y-2">
